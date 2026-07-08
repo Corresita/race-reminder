@@ -14,7 +14,7 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 - Filter by series and distance (20K / 50K / 100K / 100M)
 - Registration window countdowns — time until registration opens, or time left to register
 - Race status tracking: announced → registration open → closed / sold out → completed
-- Simple admin page for adding races
+- `npm run scrape` — checks every UTMB race against its official site (dates and per-distance registration status)
 
 ## Roadmap
 
@@ -63,7 +63,7 @@ Race data lives in [`data/races.json`](data/races.json). Each race record looks 
 - [Next.js](https://nextjs.org) (App Router) + React
 - Tailwind CSS
 - JSON file as the data store (deliberately simple for now)
-- `scripts/scrape.ts` — experimental scraper for pulling registration dates from race websites (`npm run scrape`)
+- `scripts/scrape.ts` — dependency-free checker that reads event dates and registration status straight from the `__NEXT_DATA__` JSON embedded in UTMB race sites
 
 ## Project journey
 

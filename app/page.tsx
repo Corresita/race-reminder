@@ -1,7 +1,6 @@
 import { RaceBrowser, type Race } from "@/app/components/race-browser";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -31,12 +30,6 @@ export default async function Home() {
           Track UTMB World Series and World Trail Majors races, registration
           windows, and never miss an opening.
         </p>
-        <Link
-          className="mt-4 inline-flex text-sm text-zinc-600 transition-colors hover:text-zinc-900"
-          href="/admin"
-        >
-          Add race
-        </Link>
       </header>
 
       <RaceBrowser races={raceData} />

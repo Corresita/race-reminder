@@ -1,146 +1,104 @@
-import { load } from "cheerio";
-import { readFile, writeFile } from "node:fs/promises";
+/**
+ * Checks every UTMB World Series race in data/races.json against its
+ * official site. UTMB subdomains are Next.js apps that embed event dates
+ * and per-distance registration status in the __NEXT_DATA__ JSON blob,
+ * so no HTML parsing or headless browser is needed.
+ *
+ * Usage: npm run scrape
+ */
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 type RaceRecord = {
   id: string;
   name: string;
   raceDate: string;
-  registrationOpens: string | null;
-  registrationCloses: string | null;
   officialUrl: string;
   status: string;
 };
 
-type ScrapeConfig = {
-  raceId: string;
-  url: string;
-  selectors: string[];
+type SubRace = {
+  name?: string;
+  startDate?: string;
+  raceStatus?: { status?: string };
 };
 
-const DEFAULT_CONFIG: ScrapeConfig = {
-  // Simple starter target: static event-style page text.
-  raceId: "eiger-ultra-trail-2026",
-  url: "https://www.runvan.org/first-half/",
-  selectors: [
-    "main",
-    "article",
-    ".entry-content",
-    ".content",
-    "body",
-  ],
-};
-
-const MONTH_DATE_REGEX =
-  /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4}(?:\s+\d{1,2}:\d{2}\s*(?:AM|PM))?\b/i;
-const ISO_REGEX = /\b\d{4}-\d{2}-\d{2}(?:[T\s]\d{2}:\d{2}(?::\d{2})?)?\b/;
-const KEYWORD_CONTEXT_REGEX =
-  /(.{0,100}(registration|register|deadline|entries close|entry closes|closing date).{0,140})/gi;
-
-function getArg(flag: string): string | undefined {
-  const idx = process.argv.findIndex((arg) => arg === flag);
-  if (idx < 0) return undefined;
-  return process.argv[idx + 1];
-}
-
-function hasFlag(flag: string): boolean {
-  return process.argv.includes(flag);
-}
-
-function normalizeToIso(dateText: string): string | null {
-  const parsed = new Date(dateText);
-  if (Number.isNaN(parsed.getTime())) return null;
-  return parsed.toISOString();
-}
-
-function extractDeadlineText(html: string, selectors: string[]): string | null {
-  const $ = load(html);
-  const chunks: string[] = [];
-
-  for (const selector of selectors) {
-    const text = $(selector).first().text().replace(/\s+/g, " ").trim();
-    if (text) chunks.push(text);
+function findSubRaces(node: unknown): SubRace[] | null {
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      const found = findSubRaces(item);
+      if (found) return found;
+    }
+    return null;
   }
-
-  const searchableText = chunks.join(" ");
-  const contexts = Array.from(searchableText.matchAll(KEYWORD_CONTEXT_REGEX)).map(
-    (match) => match[1],
-  );
-
-  for (const context of contexts) {
-    const dateInContext = context.match(MONTH_DATE_REGEX)?.[0] ?? context.match(ISO_REGEX)?.[0];
-    if (dateInContext) {
-      return dateInContext;
+  if (node && typeof node === "object") {
+    const record = node as Record<string, unknown>;
+    const races = record.races;
+    if (
+      Array.isArray(races) &&
+      races.length > 0 &&
+      typeof races[0] === "object" &&
+      races[0] !== null &&
+      "raceStatus" in (races[0] as object)
+    ) {
+      return races as SubRace[];
+    }
+    for (const value of Object.values(record)) {
+      const found = findSubRaces(value);
+      if (found) return found;
     }
   }
-
-  // Fallback for pages that do not include explicit deadline keywords.
-  return searchableText.match(MONTH_DATE_REGEX)?.[0] ?? searchableText.match(ISO_REGEX)?.[0] ?? null;
+  return null;
 }
 
-async function updateRaceDeadline(raceId: string, isoDeadline: string, write: boolean) {
-  const racesPath = path.join(process.cwd(), "data", "races.json");
-  const current = await readFile(racesPath, "utf-8");
-  const races = JSON.parse(current) as RaceRecord[];
-
-  const target = races.find((race) => race.id === raceId);
-  if (!target) {
-    throw new Error(`Race with id "${raceId}" not found in data/races.json`);
-  }
-
-  const previousDeadline = target.registrationCloses;
-  target.registrationCloses = isoDeadline;
-
-  if (write) {
-    await writeFile(racesPath, `${JSON.stringify(races, null, 2)}\n`, "utf-8");
-  }
-
-  return { previousDeadline, nextDeadline: isoDeadline };
-}
-
-async function main() {
-  const raceId = getArg("--raceId") ?? DEFAULT_CONFIG.raceId;
-  const url = getArg("--url") ?? DEFAULT_CONFIG.url;
-  const selectorArg = getArg("--selectors");
-  const selectors = selectorArg
-    ? selectorArg.split(",").map((s) => s.trim()).filter(Boolean)
-    : DEFAULT_CONFIG.selectors;
-  const write = hasFlag("--write");
-
-  const response = await fetch(url, {
-    headers: {
-      "user-agent": "race-radar-scraper/1.0",
-    },
+async function checkRace(race: RaceRecord) {
+  const response = await fetch(race.officialUrl, {
+    headers: { "user-agent": "race-radar/1.0 (+https://github.com/Corresita/race-radar)" },
   });
-
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+    throw new Error(`${response.status} ${response.statusText}`);
   }
 
   const html = await response.text();
-  const foundText = extractDeadlineText(html, selectors);
-
-  if (!foundText) {
-    throw new Error("Could not detect a registration deadline on the page.");
+  const match = html.match(/__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/);
+  if (!match) {
+    throw new Error("no __NEXT_DATA__ found (not a utmb.world-style site?)");
   }
 
-  const isoDeadline = normalizeToIso(foundText);
-  if (!isoDeadline) {
-    throw new Error(`Detected deadline text "${foundText}" but could not parse into a date.`);
+  const data = JSON.parse(match[1]) as {
+    props?: { pageProps?: { event?: { name?: string; eventDate?: string; begin?: string } } };
+  };
+  const event = data.props?.pageProps?.event;
+
+  console.log(`\n${race.name} (${race.id})`);
+  console.log(`  local:  raceDate=${race.raceDate.slice(0, 10)} status=${race.status}`);
+  console.log(`  remote: ${event?.eventDate ?? "?"} (begin=${event?.begin?.slice(0, 10) ?? "?"})`);
+
+  for (const sub of findSubRaces(data) ?? []) {
+    console.log(`    - ${sub.name}: ${sub.raceStatus?.status ?? "?"} (${sub.startDate ?? "?"})`);
   }
+}
 
-  const { previousDeadline, nextDeadline } = await updateRaceDeadline(raceId, isoDeadline, write);
+async function main() {
+  const racesPath = path.join(process.cwd(), "data", "races.json");
+  const races = JSON.parse(await readFile(racesPath, "utf-8")) as RaceRecord[];
 
-  console.log(`Scraped from: ${url}`);
-  console.log(`Detected deadline text: ${foundText}`);
-  console.log(`Race id: ${raceId}`);
-  console.log(`Old deadline: ${previousDeadline}`);
-  console.log(`New deadline: ${nextDeadline}`);
-  console.log(write ? "Updated data/races.json" : "Dry run only. Add --write to persist.");
+  const utmbRaces = races.filter(
+    (race) => race.officialUrl.includes("utmb.world") && race.status !== "completed",
+  );
+  console.log(`Checking ${utmbRaces.length} UTMB races against official sites...`);
+
+  for (const race of utmbRaces) {
+    try {
+      await checkRace(race);
+    } catch (error) {
+      console.log(`\n${race.name} (${race.id})`);
+      console.log(`  FAILED: ${error instanceof Error ? error.message : error}`);
+    }
+  }
 }
 
 main().catch((error) => {
-  console.error("Scrape failed:");
-  console.error(error instanceof Error ? error.message : error);
+  console.error(error);
   process.exit(1);
 });

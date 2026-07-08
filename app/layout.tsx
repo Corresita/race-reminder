@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trail Race Calendar",
-  description: "Minimalist race calendar for a professional trail runner",
+  title: "Race Radar",
+  description:
+    "Registration-window tracker for UTMB World Series and World Trail Majors races",
 };
 
 export default function RootLayout({
