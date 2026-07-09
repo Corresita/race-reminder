@@ -12,9 +12,8 @@ import path from "node:path";
 type RaceRecord = {
   id: string;
   name: string;
-  raceDate: string;
+  raceDate: string | null;
   officialUrl: string;
-  status: string;
 };
 
 type SubRace = {
@@ -71,7 +70,7 @@ async function checkRace(race: RaceRecord) {
   const event = data.props?.pageProps?.event;
 
   console.log(`\n${race.name} (${race.id})`);
-  console.log(`  local:  raceDate=${race.raceDate.slice(0, 10)} status=${race.status}`);
+  console.log(`  local:  raceDate=${race.raceDate?.slice(0, 10) ?? "TBA"}`);
   console.log(`  remote: ${event?.eventDate ?? "?"} (begin=${event?.begin?.slice(0, 10) ?? "?"})`);
 
   for (const sub of findSubRaces(data) ?? []) {
@@ -83,9 +82,7 @@ async function main() {
   const racesPath = path.join(process.cwd(), "data", "races.json");
   const races = JSON.parse(await readFile(racesPath, "utf-8")) as RaceRecord[];
 
-  const utmbRaces = races.filter(
-    (race) => race.officialUrl.includes("utmb.world") && race.status !== "completed",
-  );
+  const utmbRaces = races.filter((race) => race.officialUrl.includes("utmb.world"));
   console.log(`Checking ${utmbRaces.length} UTMB races against official sites...`);
 
   for (const race of utmbRaces) {

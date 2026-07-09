@@ -7,11 +7,7 @@ export const dynamic = "force-dynamic";
 async function getRaceData() {
   const racesPath = path.join(process.cwd(), "data", "races.json");
   const racesRaw = await readFile(racesPath, "utf-8");
-  const races = JSON.parse(racesRaw) as Race[];
-
-  return races.sort(
-    (a, b) => new Date(a.raceDate).getTime() - new Date(b.raceDate).getTime(),
-  );
+  return JSON.parse(racesRaw) as Race[];
 }
 
 export default async function Home() {
@@ -27,8 +23,8 @@ export default async function Home() {
           Trail and Ultra Calendar
         </h1>
         <p className="mt-3 max-w-2xl text-sm text-zinc-600 sm:text-base">
-          Track UTMB World Series and World Trail Majors races, registration
-          windows, and never miss an opening.
+          Never miss a registration window. UTMB World Series and World Trail
+          Majors races, sorted by what needs action next.
         </p>
       </header>
 

@@ -1,28 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { RegistrationCountdown } from "@/app/components/deadline-countdown";
+import {
+  deriveStatus,
+  type Race as RaceFacts,
+  type Urgency,
+} from "@/lib/deriveStatus";
 
-export type RaceStatus =
-  | "announced"
-  | "reg_open"
-  | "reg_closed"
-  | "sold_out"
-  | "completed";
-
-export type Race = {
-  id: string;
-  name: string;
+export type Race = RaceFacts & {
   series: string;
   country: string | null;
-  raceDate: string;
-  registrationOpens: string | null;
-  registrationCloses: string | null;
-  entryMethod: "lottery" | "first-come" | "qualification" | null;
   entryRequirement: string | null;
   distances: string[];
   officialUrl: string;
-  status: RaceStatus;
 };
 
 type RaceBrowserProps = {
@@ -31,45 +21,25 @@ type RaceBrowserProps = {
 
 const seriesTabs = ["UTMB World Series", "World Trail Majors"] as const;
 
-const statusLabels: Record<RaceStatus, string> = {
-  announced: "Announced",
-  reg_open: "Registration Open",
-  reg_closed: "Registration Closed",
-  sold_out: "Sold Out",
-  completed: "Completed",
+const urgencyStyles: Record<Urgency, string> = {
+  critical: "border-red-500/40 text-red-700 bg-red-50",
+  warning: "border-amber-500/40 text-amber-700 bg-amber-50",
+  normal: "border-emerald-500/40 text-emerald-700 bg-emerald-50",
+  none: "border-zinc-300 text-zinc-600 bg-zinc-100",
 };
 
-const badgeStyles: Record<RaceStatus, string> = {
-  reg_open: "border-emerald-500/40 text-emerald-700 bg-emerald-50",
-  announced: "border-amber-500/40 text-amber-700 bg-amber-50",
-  reg_closed: "border-zinc-300 text-zinc-600 bg-zinc-100",
-  sold_out: "border-red-300 text-red-700 bg-red-50",
-  completed: "border-zinc-300 text-zinc-500 bg-zinc-100",
-};
-
-const entryMethodLabels: Record<string, string> = {
+const registrationTypeLabels: Record<string, string> = {
   lottery: "Lottery",
-  "first-come": "First come, first served",
+  fcfs: "First come, first served",
   qualification: "Qualification",
 };
 
-function formatRaceDate(isoDate: string) {
-  const parsedDate = new Date(isoDate);
-  if (Number.isNaN(parsedDate.getTime())) return "TBD";
+function formatDate(iso: string | null | undefined) {
+  if (!iso) return null;
+  const parsed = new Date(iso);
+  if (Number.isNaN(parsed.getTime())) return null;
 
-  return parsedDate.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function formatRegistrationDate(isoDate: string | null) {
-  if (!isoDate) return "TBA";
-  const parsedDate = new Date(isoDate);
-  if (Number.isNaN(parsedDate.getTime())) return "TBA";
-
-  return parsedDate.toLocaleDateString("en-US", {
+  return parsed.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -80,17 +50,20 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
   const [activeSeries, setActiveSeries] =
     useState<(typeof seriesTabs)[number]>("UTMB World Series");
   const [activeDistance, setActiveDistance] = useState<string | null>(null);
-  const [showCompleted, setShowCompleted] = useState(false);
+  // Frozen at first render so server and client agree during hydration.
+  const [now] = useState(() => new Date());
   const trailDistanceFilters = ["20K", "50K", "100K", "100M"];
 
   const visibleRaces = useMemo(() => {
-    return races.filter((race) => {
-      if (race.series !== activeSeries) return false;
-      if (!showCompleted && race.status === "completed") return false;
-      if (activeDistance && !race.distances.includes(activeDistance)) return false;
-      return true;
-    });
-  }, [races, activeSeries, activeDistance, showCompleted]);
+    return races
+      .filter((race) => {
+        if (race.series !== activeSeries) return false;
+        if (activeDistance && !race.distances.includes(activeDistance)) return false;
+        return true;
+      })
+      .map((race) => ({ race, status: deriveStatus(race, now) }))
+      .sort((a, b) => a.status.sortKey - b.status.sortKey);
+  }, [races, activeSeries, activeDistance, now]);
 
   return (
     <>
@@ -114,7 +87,7 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
         ))}
       </section>
 
-      <section className="mb-8 flex flex-wrap items-center gap-2">
+      <section className="mb-8 flex flex-wrap gap-2">
         {trailDistanceFilters.map((distance) => (
           <button
             key={distance}
@@ -133,35 +106,19 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
             {distance}
           </button>
         ))}
-        <button
-          type="button"
-          onClick={() => setShowCompleted((current) => !current)}
-          className={`ml-auto rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
-            showCompleted
-              ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-              : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-          }`}
-        >
-          {showCompleted ? "Hide past races" : "Show past races"}
-        </button>
       </section>
 
       <section className="rounded-2xl border border-zinc-200 bg-white">
         <ul className="divide-y divide-zinc-200">
-          {visibleRaces.map((race) => (
+          {visibleRaces.map(({ race, status }) => (
             <li
               key={race.id}
               className="grid gap-3 px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7"
             >
               <div>
-                <div className="flex items-center gap-2">
-                  <p className="text-lg font-medium tracking-tight text-zinc-900">{race.name}</p>
-                  <span
-                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium tracking-[0.08em] uppercase ${badgeStyles[race.status]}`}
-                  >
-                    {statusLabels[race.status]}
-                  </span>
-                </div>
+                <p className="text-lg font-medium tracking-tight text-zinc-900">
+                  {race.name}
+                </p>
                 <a
                   className="mt-1 inline-flex text-sm text-zinc-600 transition-colors hover:text-zinc-900"
                   href={race.officialUrl}
@@ -189,13 +146,11 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
               <div>
                 <p className="text-xs tracking-wide text-zinc-500 uppercase">Race Date</p>
                 <p className="mt-1 text-sm font-medium text-zinc-800">
-                  {formatRaceDate(race.raceDate)}
+                  {formatDate(race.raceDate) ?? "TBA"}
                 </p>
-                {race.entryMethod ? (
-                  <p className="mt-1 text-xs text-zinc-500">
-                    Entry: {entryMethodLabels[race.entryMethod] ?? race.entryMethod}
-                  </p>
-                ) : null}
+                <p className="mt-1 text-xs text-zinc-500">
+                  Entry: {registrationTypeLabels[race.registrationType]}
+                </p>
                 {race.entryRequirement ? (
                   <p className="mt-1 text-xs text-zinc-500">
                     Requires: {race.entryRequirement}
@@ -205,15 +160,21 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
 
               <div>
                 <p className="text-xs tracking-wide text-zinc-500 uppercase">Registration</p>
-                <p className="mt-1 text-sm font-medium text-zinc-800">
-                  {formatRegistrationDate(race.registrationOpens)} –{" "}
-                  {formatRegistrationDate(race.registrationCloses)}
-                </p>
-                <RegistrationCountdown
-                  registrationOpens={race.registrationOpens}
-                  registrationCloses={race.registrationCloses}
-                  status={race.status}
-                />
+                <span
+                  className={`mt-1 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${urgencyStyles[status.urgency]}`}
+                >
+                  {status.label}
+                </span>
+                {formatDate(race.registrationOpens) ? (
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Opens {formatDate(race.registrationOpens)}
+                  </p>
+                ) : null}
+                {formatDate(race.registrationCloses) ? (
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Closes {formatDate(race.registrationCloses)}
+                  </p>
+                ) : null}
               </div>
             </li>
           ))}
@@ -221,7 +182,7 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
 
         {visibleRaces.length === 0 ? (
           <p className="px-5 py-8 text-sm text-zinc-500 sm:px-7">
-            {activeSeries} 当前暂无符合筛选条件的比赛。
+            No races match the current filters.
           </p>
         ) : null}
       </section>
