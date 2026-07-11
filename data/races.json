@@ -1,79 +1,207 @@
 [
   {
-    "id": "tarawera-ultra-trail",
-    "name": "Tarawera Ultra-Trail by UTMB",
+    "id": "ultra-trail-xiamen",
+    "name": "Ultra-Trail Xiamen by UTMB",
     "series": "utmb-world-series",
     "organizer": null,
-    "country": "New Zealand",
-    "raceDate": "2027-02-13T06:00:00+13:00",
+    "country": "China",
+    "raceDate": "2026-03-14",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
-    "distances": [
-      "20K",
-      "50K",
-      "100K",
-      "100M"
-    ],
-    "officialUrl": "https://tarawera.utmb.world/"
-  },
-  {
-    "id": "chianti-ultra-trail",
-    "name": "Chianti Ultra Trail by UTMB",
-    "series": "utmb-world-series",
-    "organizer": null,
-    "country": "Italy",
-    "raceDate": "2027-03-20T06:00:00+01:00",
-    "registrationOpens": null,
-    "registrationCloses": null,
-    "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": null,
     "distances": [
       "20K",
       "50K",
       "100K"
     ],
-    "officialUrl": "https://chianti.utmb.world/"
+    "officialUrl": "https://xiamen.utmb.world"
   },
   {
-    "id": "canyons-endurance-runs",
-    "name": "Canyons Endurance Runs by UTMB",
+    "id": "ushuaia",
+    "name": "Ushuaia by UTMB",
     "series": "utmb-world-series",
     "organizer": null,
-    "country": "United States",
-    "raceDate": "2027-04-23T05:30:00-07:00",
-    "registrationOpens": null,
-    "registrationCloses": null,
-    "registrationType": "lottery",
-    "lotteryDrawDate": null,
-    "entryRequirement": "UTMB Index 50K+",
-    "distances": [
-      "20K",
-      "50K",
-      "100K",
-      "100M"
-    ],
-    "officialUrl": "https://canyons.utmb.world/"
-  },
-  {
-    "id": "lavaredo-ultra-trail",
-    "name": "Lavaredo Ultra Trail by UTMB",
-    "series": "utmb-world-series",
-    "organizer": null,
-    "country": "Italy",
-    "raceDate": "2027-06-25T06:00:00+02:00",
+    "country": "Argentina",
+    "raceDate": "2026-03-20",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": null,
     "distances": [
       "20K",
       "50K",
       "100K",
       "100M"
     ],
-    "officialUrl": "https://lavaredo.utmb.world/"
+    "officialUrl": "https://ushuaia.utmb.world"
+  },
+  {
+    "id": "ultra-trail-mogan",
+    "name": "Ultra-Trail Mogan by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "China",
+    "raceDate": "2026-04-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mogan.utmb.world"
+  },
+  {
+    "id": "grand-raid-ventoux",
+    "name": "Grand Raid Ventoux by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "France",
+    "raceDate": "2026-04-24",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://ventoux.utmb.world"
+  },
+  {
+    "id": "amazean-jungle-thailand",
+    "name": "Amazean Jungle Thailand by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Thailand",
+    "raceDate": "2026-04-30",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://amazean.utmb.world"
+  },
+  {
+    "id": "ultra-trail-snowdonia",
+    "name": "Ultra-Trail Snowdonia by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United Kingdom",
+    "raceDate": "2026-05-15",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://snowdonia.utmb.world"
+  },
+  {
+    "id": "trail-du-saint-jacques",
+    "name": "Trail du Saint Jacques by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "France",
+    "raceDate": "2026-06-12",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://saint-jacques.utmb.world"
+  },
+  {
+    "id": "trail-of-the-kings-lake-toba",
+    "name": "Trail of the Kings - Lake Toba by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Indonesia",
+    "raceDate": "2026-06-12",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://laketoba.utmb.world"
+  },
+  {
+    "id": "kagaspa-trail-endurance-100",
+    "name": "Kagaspa Trail Endurance 100 by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Japan",
+    "raceDate": "2026-06-18",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://kagaspa.utmb.world"
+  },
+  {
+    "id": "zugspitz-ultra-trail",
+    "name": "Zugspitz Ultra Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Germany",
+    "raceDate": "2026-06-18",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://zugspitz.utmb.world"
+  },
+  {
+    "id": "torrencial-chile",
+    "name": "Torrencial Chile by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Chile",
+    "raceDate": "2026-06-26",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://torrencial.utmb.world"
   },
   {
     "id": "val-daran-by-utmb",
@@ -93,6 +221,64 @@
       "100M"
     ],
     "officialUrl": "https://valdaran.utmb.world"
+  },
+  {
+    "id": "restonica-trail",
+    "name": "Restonica Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "France",
+    "raceDate": "2026-07-09",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://restonica.utmb.world",
+    "soldOut": true
+  },
+  {
+    "id": "trail-verbier-st-bernard",
+    "name": "Trail Verbier St Bernard by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Switzerland",
+    "raceDate": "2026-07-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://verbier.utmb.world"
+  },
+  {
+    "id": "monte-rosa-walserwaeg",
+    "name": "Monte Rosa Walserwaeg by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Italy",
+    "raceDate": "2026-07-17",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mrww.utmb.world"
   },
   {
     "id": "eiger-ultra-trail",
@@ -115,6 +301,25 @@
     "officialUrl": "https://eiger.utmb.world"
   },
   {
+    "id": "bucovina-ultra-rocks",
+    "name": "Bucovina Ultra Rocks by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Romania",
+    "raceDate": "2026-07-24",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://bucovina.utmb.world"
+  },
+  {
     "id": "speedgoat-mountain-races",
     "name": "Speedgoat Mountain Races by UTMB",
     "series": "utmb-world-series",
@@ -130,6 +335,97 @@
       "50K"
     ],
     "officialUrl": "https://speedgoat.utmb.world/"
+  },
+  {
+    "id": "quito-trail-ecuador",
+    "name": "Quito Trail Ecuador by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Ecuador",
+    "raceDate": "2026-07-31",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://quito.utmb.world"
+  },
+  {
+    "id": "gauja-trail",
+    "name": "Gauja Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Latvia",
+    "raceDate": "2026-08-01",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://gauja.utmb.world"
+  },
+  {
+    "id": "kat100",
+    "name": "KAT100 by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Austria",
+    "raceDate": "2026-08-06",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://kat.utmb.world"
+  },
+  {
+    "id": "borealys-mont-tremblant",
+    "name": "Boréalys Mont-Tremblant by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Canada",
+    "raceDate": "2026-08-14",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://borealys.utmb.world"
+  },
+  {
+    "id": "ultra-trail-whistler",
+    "name": "Ultra Trail Whistler by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Canada",
+    "raceDate": "2026-08-21",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://whistler.utmb.world"
   },
   {
     "id": "utmb-mont-blanc",
@@ -152,6 +448,285 @@
     "officialUrl": "https://montblanc.utmb.world/"
   },
   {
+    "id": "wildstrubel",
+    "name": "Wildstrubel by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Switzerland",
+    "raceDate": "2026-09-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://wildstrubel.utmb.world"
+  },
+  {
+    "id": "snowbasin",
+    "name": "Snowbasin by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2026-09-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K"
+    ],
+    "officialUrl": "https://snowbasin.utmb.world"
+  },
+  {
+    "id": "malaysia-ultra-trail",
+    "name": "Malaysia Ultra-Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Malaysia",
+    "raceDate": "2026-09-11",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://malaysia.utmb.world"
+  },
+  {
+    "id": "kackar",
+    "name": "Kaçkar by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Türkiye",
+    "raceDate": "2026-09-11",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://kackar.utmb.world"
+  },
+  {
+    "id": "ultra-trail-great-wall",
+    "name": "Ultra-Trail Great Wall by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "China",
+    "raceDate": "2026-09-11",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://dajingmen.utmb.world"
+  },
+  {
+    "id": "paraty-brazil",
+    "name": "Paraty Brazil by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Brazil",
+    "raceDate": "2026-09-17",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://paraty.utmb.world"
+  },
+  {
+    "id": "grindstone-trail-running-festival",
+    "name": "Grindstone Trail Running Festival",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2026-09-17",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://grindstone.utmb.world"
+  },
+  {
+    "id": "julian-alps-trail-run",
+    "name": "Julian Alps Trail Run by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Slovenia",
+    "raceDate": "2026-09-18",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://julianalps.utmb.world"
+  },
+  {
+    "id": "nice-cote-d-azur",
+    "name": "Nice Côte d'Azur by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "France",
+    "raceDate": "2026-09-24",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://nice.utmb.world"
+  },
+  {
+    "id": "chihuahua",
+    "name": "Chihuahua by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Mexico",
+    "raceDate": "2026-10-01",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://chihuahua.utmb.world"
+  },
+  {
+    "id": "transjeju",
+    "name": "TransJeju by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "South Korea",
+    "raceDate": "2026-10-02",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://transjeju.utmb.world"
+  },
+  {
+    "id": "kodiak-ultra-marathons",
+    "name": "Kodiak Ultra Marathons by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2026-10-08",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://kodiak.utmb.world"
+  },
+  {
+    "id": "ultra-trail-mount-yun",
+    "name": "Ultra-Trail Mount Yun by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "China",
+    "raceDate": "2026-10-16",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mount-yun.utmb.world"
+  },
+  {
+    "id": "puglia",
+    "name": "Puglia by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Italy",
+    "raceDate": "2026-10-23",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://puglia.utmb.world"
+  },
+  {
+    "id": "mallorca",
+    "name": "Mallorca by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Spain",
+    "raceDate": "2026-10-30",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mallorca.utmb.world"
+  },
+  {
     "id": "kullamannen-by-utmb",
     "name": "Kullamannen by UTMB",
     "series": "utmb-world-series",
@@ -169,6 +744,41 @@
       "100M"
     ],
     "officialUrl": "https://kullamannen.utmb.world/"
+  },
+  {
+    "id": "ultra-trail-shudao",
+    "name": "Ultra-Trail Shudao by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "China",
+    "raceDate": "2026-11-06",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://shudao.utmb.world"
+  },
+  {
+    "id": "pacific-trails-california",
+    "name": "Pacific Trails California by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2026-11-13",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K"
+    ],
+    "officialUrl": "https://pacifictrails.utmb.world"
   },
   {
     "id": "trans-lantau-by-utmb",
@@ -189,6 +799,44 @@
     "officialUrl": "https://translantau.utmb.world/"
   },
   {
+    "id": "patagonia-bariloche",
+    "name": "Patagonia Bariloche by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Argentina",
+    "raceDate": "2026-11-18",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://bariloche.utmb.world"
+  },
+  {
+    "id": "chiang-mai-thailand",
+    "name": "Chiang Mai Thailand by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Thailand",
+    "raceDate": "2026-11-27",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://chiangmai.utmb.world"
+  },
+  {
     "id": "ultra-trail-kosciuszko",
     "name": "Ultra-Trail Kosciuszko by UTMB",
     "series": "utmb-world-series",
@@ -206,6 +854,344 @@
       "100M"
     ],
     "officialUrl": "https://kosciuszko.utmb.world/"
+  },
+  {
+    "id": "oman",
+    "name": "Oman by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Oman",
+    "raceDate": "2026-12-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://oman.utmb.world"
+  },
+  {
+    "id": "vietnam-highlands-trail",
+    "name": "Vietnam Highlands Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Vietnam",
+    "raceDate": "2027-01-08",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://vietnamhighlands.utmb.world"
+  },
+  {
+    "id": "arc-of-attrition",
+    "name": "Arc of Attrition by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United Kingdom",
+    "raceDate": "2027-01-22",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://arcofattrition.utmb.world"
+  },
+  {
+    "id": "tarawera-ultra-trail",
+    "name": "Tarawera Ultra-Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "New Zealand",
+    "raceDate": "2027-02-13T06:00:00+13:00",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": "UTMB Index 50K+",
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://tarawera.utmb.world/"
+  },
+  {
+    "id": "puerto-vallarta",
+    "name": "Puerto Vallarta by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Mexico",
+    "raceDate": "2027-03-04",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://puerto-vallarta.utmb.world"
+  },
+  {
+    "id": "xtrail",
+    "name": "Xtrail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Chinese Taipei",
+    "raceDate": "2027-03-05",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [],
+    "officialUrl": "https://xtrail.utmb.world"
+  },
+  {
+    "id": "chianti-ultra-trail",
+    "name": "Chianti Ultra Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Italy",
+    "raceDate": "2027-03-20T06:00:00+01:00",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": "UTMB Index 50K+",
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://chianti.utmb.world/"
+  },
+  {
+    "id": "istria-100",
+    "name": "Istria 100 by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Croatia",
+    "raceDate": "2027-04-01",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://istria.utmb.world"
+  },
+  {
+    "id": "desert-rats-trail-running-festival",
+    "name": "Desert RATS Trail Running Festival by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2027-04-08",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://desertrats.utmb.world"
+  },
+  {
+    "id": "tenerife-bluetrail",
+    "name": "Tenerife Bluetrail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Spain",
+    "raceDate": "2027-04-08",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://tenerife.utmb.world"
+  },
+  {
+    "id": "canyons-endurance-runs",
+    "name": "Canyons Endurance Runs by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2027-04-23T05:30:00-07:00",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "lottery",
+    "lotteryDrawDate": null,
+    "entryRequirement": "UTMB Index 50K+",
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://canyons.utmb.world/"
+  },
+  {
+    "id": "oh-meu-deus",
+    "name": "Oh Meu Deus by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Portugal",
+    "raceDate": "2027-04-30",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://ohmeudeus.utmb.world"
+  },
+  {
+    "id": "trail-alsace",
+    "name": "Trail Alsace by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "France",
+    "raceDate": "2027-05-13",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://alsace.utmb.world"
+  },
+  {
+    "id": "ultra-trail-australia",
+    "name": "Ultra-Trail Australia by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Australia",
+    "raceDate": "2027-05-13",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [],
+    "officialUrl": "https://uta.utmb.world"
+  },
+  {
+    "id": "rothrock",
+    "name": "Rothrock by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "United States",
+    "raceDate": "2027-05-14",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [],
+    "officialUrl": "https://rothrock.utmb.world"
+  },
+  {
+    "id": "mountain-ultra-trail",
+    "name": "Mountain Ultra Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "South Africa",
+    "raceDate": "2027-05-27",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mut.utmb.world"
+  },
+  {
+    "id": "mozart-100",
+    "name": "mozart 100 by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Austria",
+    "raceDate": "2027-06-05",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [],
+    "officialUrl": "https://mozart.utmb.world"
+  },
+  {
+    "id": "trail-100-andorra",
+    "name": "Trail 100 Andorra by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Andorra",
+    "raceDate": "2027-06-10",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": null,
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://andorra.utmb.world"
+  },
+  {
+    "id": "lavaredo-ultra-trail",
+    "name": "Lavaredo Ultra Trail by UTMB",
+    "series": "utmb-world-series",
+    "organizer": null,
+    "country": "Italy",
+    "raceDate": "2027-06-25T06:00:00+02:00",
+    "registrationOpens": null,
+    "registrationCloses": null,
+    "registrationType": "fcfs",
+    "entryRequirement": "UTMB Index 50K+",
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://lavaredo.utmb.world/"
   },
   {
     "id": "hk100",
