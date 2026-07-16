@@ -52,7 +52,7 @@ function findSubRaces(node: unknown): SubRace[] | null {
 
 async function checkRace(race: RaceRecord) {
   const response = await fetch(race.officialUrl, {
-    headers: { "user-agent": "race-radar/1.0 (+https://github.com/Corresita/race-radar)" },
+    headers: { "user-agent": "race-reminder/1.0 (+https://github.com/Corresita/race-reminder)" },
   });
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText}`);

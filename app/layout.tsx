@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Race Radar — Trail Ultra Registration Dates, Deadlines & Lotteries",
+  title: "Race Reminder — Trail Ultra Registration Dates, Deadlines & Lotteries",
   description:
     "A living calendar of trail ultra registrations. Track opening dates, closing deadlines, and lottery draws for UTMB, Western States, Hardrock, and more — sorted by what needs action next.",
 };

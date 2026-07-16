@@ -13,14 +13,14 @@ export default function Home() {
     <main className="mx-auto flex min-h-screen w-full max-w-4xl flex-col px-6 py-16 sm:px-10">
       <header className="mb-12 border-b border-zinc-200 pb-8">
         <p className="text-xs font-medium tracking-[0.2em] text-zinc-500 uppercase">
-          Race Radar
+          Race Reminder
         </p>
         <h1 className="mt-3 text-3xl font-light tracking-tight text-zinc-900 sm:text-4xl">
-          Registration reminder for ultra trails
+          Never miss a trail ultra registration.
         </h1>
         <p className="mt-3 max-w-2xl text-sm text-zinc-600 sm:text-base">
-          Tracks opening dates, deadlines, and lotteries across major races,
-          and surfaces what needs your action next.
+          Opening dates, deadlines, and lottery draws — sorted by what needs
+          action next.
         </p>
       </header>
 

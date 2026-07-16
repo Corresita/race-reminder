@@ -1,5 +1,5 @@
 /**
- * subscriptions.ts — Race Radar
+ * subscriptions.ts — Race Reminder
  *
  * Subscriber + notification-log storage, shared by the subscribe API route
  * and the notify script. Two backends behind one interface:

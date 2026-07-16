@@ -1,5 +1,5 @@
 /**
- * deriveStatus.ts — Race Radar
+ * deriveStatus.ts — Race Reminder
  *
  * Design principle: the JSON data source stores only FACTS (dates, registration
  * mechanism). STATUS is a CONCLUSION, derived at runtime from facts + current time.

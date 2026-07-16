@@ -1,10 +1,10 @@
-# Race Radar 🏔️
+# Race Reminder 🏔️
 
 **Never miss a registration window again.**
 
-Trail race registrations don't fail politely. Miss the closing date of a first-come-first-served race, or a lottery entry window, and the answer is: *wait a year.* Race Radar tracks the registration windows of major trail ultras in one place, and tells you what needs your attention — before it's too late.
+Trail race registrations don't fail politely. Miss the closing date of a first-come-first-served race, or a lottery entry window, and the answer is: *wait a year.* Race Reminder tracks the registration windows of major trail ultras in one place, and tells you what needs your attention — before it's too late.
 
-**Live at:** [race-radar.vercel.app](#) <!-- replace with your URL -->
+**Live at:** [race-reminder.vercel.app](#) <!-- replace with your URL -->
 
 ---
 
@@ -12,13 +12,13 @@ Trail race registrations don't fail politely. Miss the closing date of a first-c
 
 Every trail runner solves this the same broken way: bookmarked race websites, phone reminders set months in advance, group chats where someone hopefully remembers to post "registration closes Friday!!". Each race has its own mechanism — first-come-first-served, lottery, qualification points, running stones — and its own calendar. The information exists; it's just scattered across thirty websites that you have to remember to check.
 
-## What Race Radar does
+## What Race Reminder does
 
 One page. Every tracked race, sorted by **what needs action next**:
 
 - ⏰ **Closing soon** — registration windows about to shut (the core alert)
 - 🎟️ **Lottery windows** — entry periods and draw dates for UTMB Mont-Blanc, HK100, MIUT, and friends
-- 🔄 **Next edition watch** — a completed race isn't dead, it's a signal: the next edition's registration is coming. Race Radar keeps watching so you don't have to.
+- 🔄 **Next edition watch** — a completed race isn't dead, it's a signal: the next edition's registration is coming. Race Reminder keeps watching so you don't have to.
 
 ## Design principles
 
@@ -58,7 +58,7 @@ The research, repositioning, and design decisions behind this project are docume
 
 ## Disclaimer
 
-Race Radar is an independent tool built by a trail runner, for trail runners. It is not affiliated with UTMB Group, WTM, or any race organizer. Dates are curated in good faith; the official race website is always the source of truth.
+Race Reminder is an independent tool built by a trail runner, for trail runners. It is not affiliated with UTMB Group, WTM, or any race organizer. Dates are curated in good faith; the official race website is always the source of truth.
 
 ## License
 

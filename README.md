@@ -1,12 +1,12 @@
-# Race Radar
+# Race Reminder
 
 Never miss a trail race registration window again.
 
-Race Radar tracks **77 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States and Hardrock — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
+Race Reminder tracks **77 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States and Hardrock — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
 
 ## Why
 
-Popular ultra-trail races sell out within days (sometimes hours) of registration opening, and every race has its own rules: UTMB Mont-Blanc runs a Running Stones lottery, Hong Kong 100 uses a ballot, Eiger Ultra-Trail is first come, first served. Keeping track of all these windows by hand means missed races. Race Radar puts every window in one place — and emails you when the ones you care about open.
+Popular ultra-trail races sell out within days (sometimes hours) of registration opening, and every race has its own rules: UTMB Mont-Blanc runs a Running Stones lottery, Hong Kong 100 uses a ballot, Eiger Ultra-Trail is first come, first served. Keeping track of all these windows by hand means missed races. Race Reminder puts every window in one place — and emails you when the ones you care about open.
 
 ## Features
 
@@ -47,13 +47,13 @@ Only needed to actually send reminder emails — everything else works without c
 
 ```env
 RESEND_API_KEY=re_...                        # from https://resend.com; without it, notify runs dry
-EMAIL_FROM="Race Radar <you@yourdomain.com>" # a sender verified in Resend (optional)
+EMAIL_FROM="Race Reminder <you@yourdomain.com>" # a sender verified in Resend (optional)
 ```
 
 ## Project structure
 
 ```
-race-radar/
+race-reminder/
 ├── app/
 │   ├── page.tsx                 # Server component: loads races, renders the page
 │   ├── components/

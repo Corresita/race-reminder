@@ -36,7 +36,7 @@ async function sendEmail(to: string, subject: string, text: string) {
     },
     body: JSON.stringify({
       // || not ??: CI passes unset secrets through as empty strings
-      from: process.env.EMAIL_FROM || "Race Radar <onboarding@resend.dev>",
+      from: process.env.EMAIL_FROM || "Race Reminder <onboarding@resend.dev>",
       to,
       subject,
       text,
@@ -60,7 +60,7 @@ function buildEmail(race: RaceRecord, statusLabel: string) {
       `Registration closes: ${closes}`,
       `Register here: ${race.officialUrl}`,
       ``,
-      `You subscribed to this race on Race Radar.`,
+      `You subscribed to this race on Race Reminder.`,
     ].join("\n"),
   };
 }

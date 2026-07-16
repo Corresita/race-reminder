@@ -1,6 +1,6 @@
 # Project Journey
 
-A log of how Race Radar went from an idea to a working project.
+A log of how Race Reminder went from an idea to a working project.
 
 ## The starting point: a runner's pain point (July 2026)
 
@@ -25,7 +25,7 @@ The commercial product [RaceNotify](https://racenotify.com/en) does exactly this
 
 ### The original vision
 
-Race Radar started with a simple promise: *"Get notified before registration opens."* As a runner, that's the moment that feels most valuable — the starting gun of a registration race. I wrote it into the README before writing a line of feature code.
+Race Reminder started with a simple promise: *"Get notified before registration opens."* As a runner, that's the moment that feels most valuable — the starting gun of a registration race. I wrote it into the README before writing a line of feature code.
 
 ### The data audit that broke it
 

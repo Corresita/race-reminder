@@ -46,8 +46,8 @@ const registrationTypeLabels: Record<string, string> = {
   qualification: "Qualification",
 };
 
-const EMAIL_STORAGE_KEY = "race-radar-email";
-const SUBSCRIPTIONS_STORAGE_KEY = "race-radar-subscriptions";
+const EMAIL_STORAGE_KEY = "race-reminder-email";
+const SUBSCRIPTIONS_STORAGE_KEY = "race-reminder-subscriptions";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function formatDate(iso: string | null | undefined) {
