@@ -1,6 +1,8 @@
 # Race Reminder
 
-Never miss a trail race registration window again.
+Never miss a trail ultra registration.
+
+**Live Site**: [race-reminder.vercel.app](https://race-reminder.vercel.app)
 
 Race Reminder tracks **77 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States and Hardrock — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
 
