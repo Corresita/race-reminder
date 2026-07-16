@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  compareStatus,
   deriveStatus,
+  type DerivedStatus,
   type Race as RaceFacts,
   type Urgency,
 } from "@/lib/deriveStatus";
@@ -21,6 +23,9 @@ export type Race = RaceFacts & {
 
 type RaceBrowserProps = {
   races: Race[];
+  /** Server render time (ms). Reused as the client's initial clock so the
+   *  hydrated DOM matches the server HTML exactly. */
+  initialNow: number;
 };
 
 const seriesTabs: { slug: Series; label: string }[] = [
@@ -62,11 +67,10 @@ function formatDate(iso: string | null | undefined) {
   });
 }
 
-export function RaceBrowser({ races }: RaceBrowserProps) {
+export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   const [activeSeries, setActiveSeries] = useState<Series>("utmb-world-series");
   const [activeDistance, setActiveDistance] = useState<string | null>(null);
-  // Frozen at first render so server and client agree during hydration.
-  const [now] = useState(() => new Date());
+  const [now] = useState(() => new Date(initialNow));
   const trailDistanceFilters = ["20K", "50K", "100K", "100M"];
 
   // Subscription state lives in localStorage; loaded after mount so the
@@ -152,67 +156,33 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
     void updateSubscription(raceId, candidate, true);
   }
 
-  const visibleRaces = useMemo(() => {
-    return races
-      .filter((race) => {
-        if (race.series !== activeSeries) return false;
-        if (activeDistance && !race.distances.includes(activeDistance)) return false;
-        return true;
-      })
-      .map((race) => ({ race, status: deriveStatus(race, now) }))
-      .sort((a, b) => a.status.sortKey - b.status.sortKey);
+  const { mainRaces, tbaRaces } = useMemo(() => {
+    const mainRaces: { race: Race; status: DerivedStatus }[] = [];
+    const tbaRaces: { race: Race; status: DerivedStatus }[] = [];
+
+    for (const race of races) {
+      if (race.series !== activeSeries) continue;
+      if (activeDistance && !race.distances.includes(activeDistance)) continue;
+      const status = deriveStatus(race, now);
+      (status.code === "DATES_TBA" ? tbaRaces : mainRaces).push({ race, status });
+    }
+    mainRaces.sort((a, b) => compareStatus(a.status, b.status));
+
+    return { mainRaces, tbaRaces };
   }, [races, activeSeries, activeDistance, now]);
 
-  return (
-    <>
-      <section className="mb-4 flex flex-wrap gap-2">
-        {seriesTabs.map((tab) => (
-          <button
-            key={tab.slug}
-            type="button"
-            onClick={() => {
-              setActiveSeries(tab.slug);
-              setActiveDistance(null);
-            }}
-            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
-              activeSeries === tab.slug
-                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </section>
+  function renderRace({ race, status }: { race: Race; status: DerivedStatus }) {
+    // Only a live window's dates are worth showing; completed editions and
+    // closed/drawn/sold-out races would display stale ones.
+    const showWindow = status.actionable && !status.completed;
+    const opensLabel = showWindow ? formatDate(race.registrationOpens) : null;
+    const closesLabel = showWindow ? formatDate(race.registrationCloses) : null;
 
-      <section className="mb-8 flex flex-wrap gap-2">
-        {trailDistanceFilters.map((distance) => (
-          <button
-            key={distance}
-            type="button"
-            onClick={() =>
-              setActiveDistance((currentDistance) =>
-                currentDistance === distance ? null : distance,
-              )
-            }
-            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
-              activeDistance === distance
-                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-            }`}
-          >
-            {distance}
-          </button>
-        ))}
-      </section>
-
-      <section className="rounded-2xl border border-zinc-200 bg-white">
-        <ul className="divide-y divide-zinc-200">
-          {visibleRaces.map(({ race, status }) => (
-            <li
-              key={race.id}
-              className="grid gap-3 px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7"
-            >
+    return (
+      <li
+        key={race.id}
+        className="grid gap-3 px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7"
+      >
               <div>
                 <p className="text-lg font-medium tracking-tight text-zinc-900">
                   {race.name}
@@ -266,15 +236,11 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
                 >
                   {status.label}
                 </span>
-                {formatDate(race.registrationOpens) ? (
-                  <p className="mt-1 text-xs text-zinc-500">
-                    Opens {formatDate(race.registrationOpens)}
-                  </p>
+                {opensLabel ? (
+                  <p className="mt-1 text-xs text-zinc-500">Opens {opensLabel}</p>
                 ) : null}
-                {formatDate(race.registrationCloses) ? (
-                  <p className="mt-1 text-xs text-zinc-500">
-                    Closes {formatDate(race.registrationCloses)}
-                  </p>
+                {closesLabel ? (
+                  <p className="mt-1 text-xs text-zinc-500">Closes {closesLabel}</p>
                 ) : null}
 
                 <div className="mt-3">
@@ -327,15 +293,78 @@ export function RaceBrowser({ races }: RaceBrowserProps) {
                 </div>
               </div>
             </li>
-          ))}
-        </ul>
+    );
+  }
 
-        {visibleRaces.length === 0 ? (
+  return (
+    <>
+      <section className="mb-4 flex flex-wrap gap-2">
+        {seriesTabs.map((tab) => (
+          <button
+            key={tab.slug}
+            type="button"
+            onClick={() => {
+              setActiveSeries(tab.slug);
+              setActiveDistance(null);
+            }}
+            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+              activeSeries === tab.slug
+                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </section>
+
+      <section className="mb-8 flex flex-wrap gap-2">
+        {trailDistanceFilters.map((distance) => (
+          <button
+            key={distance}
+            type="button"
+            onClick={() =>
+              setActiveDistance((currentDistance) =>
+                currentDistance === distance ? null : distance,
+              )
+            }
+            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+              activeDistance === distance
+                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+            }`}
+          >
+            {distance}
+          </button>
+        ))}
+      </section>
+
+      {mainRaces.length > 0 ? (
+        <section className="rounded-2xl border border-zinc-200 bg-white">
+          <ul className="divide-y divide-zinc-200">{mainRaces.map(renderRace)}</ul>
+        </section>
+      ) : null}
+
+      {mainRaces.length === 0 && tbaRaces.length === 0 ? (
+        <section className="rounded-2xl border border-zinc-200 bg-white">
           <p className="px-5 py-8 text-sm text-zinc-500 sm:px-7">
             No races match the current filters.
           </p>
-        ) : null}
-      </section>
+        </section>
+      ) : null}
+
+      {tbaRaces.length > 0 ? (
+        <details className="mt-4 rounded-2xl border border-zinc-200 bg-white">
+          <summary className="cursor-pointer px-5 py-4 text-sm text-zinc-600 select-none hover:text-zinc-900 sm:px-7">
+            Awaiting dates ({tbaRaces.length}) — announced races without a
+            registration window yet
+          </summary>
+          <ul className="divide-y divide-zinc-200 border-t border-zinc-200">
+            {tbaRaces.map(renderRace)}
+          </ul>
+        </details>
+      ) : null}
     </>
   );
+
 }

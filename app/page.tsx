@@ -24,10 +24,13 @@ export default function Home() {
         </p>
       </header>
 
-      <RaceBrowser races={raceData} />
+      {/* Server components run once per request, so this is a stable
+          per-request timestamp; the client reuses it during hydration. */}
+      {/* eslint-disable-next-line react-hooks/purity */}
+      <RaceBrowser races={raceData} initialNow={Date.now()} />
 
       <footer className="mt-6 text-xs text-zinc-500">
-        Race data is community-maintained. Always confirm dates on the official
+        Race data is manually curated. Always confirm dates on the official
         race website before planning.
       </footer>
     </main>

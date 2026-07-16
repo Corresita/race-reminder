@@ -63,6 +63,12 @@ export interface DerivedStatus {
   daysUntil: number | null;
   /** Timestamp to sort the race list by. Unknown dates sort last. */
   sortKey: number;
+  /** True when the runner can still do something (register now or mark a
+   *  known upcoming open date). False for terminal/waiting states —
+   *  sold out, closed, drawn, awaiting draw, completed, dates unknown. */
+  actionable: boolean;
+  /** True when this edition's race has already been run. */
+  completed: boolean;
 }
 
 const DAY_MS = 86_400_000;
@@ -105,6 +111,8 @@ export function deriveStatus(
         urgency: d <= urgencyDays ? "warning" : "normal",
         daysUntil: d,
         sortKey: nextOpens.getTime(),
+        actionable: true,
+        completed: true,
       };
     }
     return {
@@ -113,6 +121,8 @@ export function deriveStatus(
       urgency: "none",
       daysUntil: null,
       sortKey: FAR_FUTURE,
+      actionable: false,
+      completed: true,
     };
   }
 
@@ -124,6 +134,8 @@ export function deriveStatus(
       urgency: "none",
       daysUntil: raceDate ? daysBetween(now, raceDate) : null,
       sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: false,
+      completed: false,
     };
   }
 
@@ -140,6 +152,8 @@ export function deriveStatus(
       urgency: d <= urgencyDays ? "warning" : "normal",
       daysUntil: d,
       sortKey: opens.getTime(),
+      actionable: true,
+      completed: false,
     };
   }
 
@@ -156,6 +170,8 @@ export function deriveStatus(
         urgency: d <= urgencyDays ? "critical" : "normal",
         daysUntil: d,
         sortKey: closes.getTime(),
+        actionable: true,
+        completed: false,
       };
     }
     if (d <= urgencyDays) {
@@ -166,6 +182,8 @@ export function deriveStatus(
         urgency: "critical",
         daysUntil: d,
         sortKey: closes.getTime(),
+        actionable: true,
+        completed: false,
       };
     }
     return {
@@ -174,6 +192,24 @@ export function deriveStatus(
       urgency: "normal",
       daysUntil: d,
       sortKey: closes.getTime(),
+      actionable: true,
+      completed: false,
+    };
+  }
+
+  // ---- 4b. Open with no announced close ----
+  // `opens` is in the past and no closing date is known. Without this branch
+  // such a race would fall through to DATES_TBA and hide in the "awaiting
+  // dates" fold while its registration is actually open.
+  if (opens && now >= opens && !closes) {
+    return {
+      code: isLottery ? "LOTTERY_OPEN" : "REG_OPEN",
+      label: isLottery ? "Lottery entry open" : "Registration open",
+      urgency: "normal",
+      daysUntil: null,
+      sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: true,
+      completed: false,
     };
   }
 
@@ -187,6 +223,8 @@ export function deriveStatus(
         urgency: "normal",
         daysUntil: d,
         sortKey: draw.getTime(),
+        actionable: false,
+        completed: false,
       };
     }
     if (isLottery && draw && now >= draw) {
@@ -196,6 +234,8 @@ export function deriveStatus(
         urgency: "none",
         daysUntil: raceDate ? daysBetween(now, raceDate) : null,
         sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+        actionable: false,
+        completed: false,
       };
     }
     return {
@@ -204,6 +244,8 @@ export function deriveStatus(
       urgency: "none",
       daysUntil: raceDate ? daysBetween(now, raceDate) : null,
       sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: false,
+      completed: false,
     };
   }
 
@@ -214,12 +256,20 @@ export function deriveStatus(
     urgency: "none",
     daysUntil: null,
     sortKey: FAR_FUTURE,
+    actionable: false,
+    completed: false,
   };
 }
 
-/** List sorting: most urgent / nearest actionable date first, TBA last. */
+/** Canonical list order: actionable races first (nearest actionable date
+ *  wins), then everything the runner can only look at, TBA last. */
+export function compareStatus(a: DerivedStatus, b: DerivedStatus): number {
+  return Number(b.actionable) - Number(a.actionable) || a.sortKey - b.sortKey;
+}
+
 export function sortRaces(races: Race[], now: Date = new Date()): Race[] {
-  return [...races].sort(
-    (a, b) => deriveStatus(a, now).sortKey - deriveStatus(b, now).sortKey
-  );
+  return races
+    .map((race) => ({ race, status: deriveStatus(race, now) }))
+    .sort((a, b) => compareStatus(a.status, b.status))
+    .map(({ race }) => race);
 }

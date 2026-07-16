@@ -124,7 +124,7 @@ Race data lives in [`data/races.json`](data/races.json). The file stores **facts
 | Official race sites (via `npm run scrape`)                                | UTMB subdomains             | Event dates, per-distance registration status        |
 | Manual curation                                                            | World Trail Majors + WSER/Hardrock + registration windows | Registration windows, entry requirements, lottery details |
 
-> **Note:** Dates are community-maintained and may lag official announcements. Always confirm on the official race website before booking flights.
+> **Note:** Dates are manually curated and may lag official announcements. Always confirm on the official race website before booking flights.
 
 ## Tech stack
 
