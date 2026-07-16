@@ -35,7 +35,8 @@ async function sendEmail(to: string, subject: string, text: string) {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      from: process.env.EMAIL_FROM ?? "Race Radar <onboarding@resend.dev>",
+      // || not ??: CI passes unset secrets through as empty strings
+      from: process.env.EMAIL_FROM || "Race Radar <onboarding@resend.dev>",
       to,
       subject,
       text,
