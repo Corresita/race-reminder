@@ -14,10 +14,11 @@ countdowns.
 ## 1. Brand bar
 
 **Shows:** `RACE REMINDER™` wordmark, one-line tagline, and live counts:
-`{total} races · {open} open · {closed} closed`.
+`{total} races · {open} open · {closed} closed`. **The counts are
+buttons**: open/closed toggle a status filter on the list; the races count
+clears it. The numbers stay global (never affected by any filter).
 
-**Data:** counts computed per request in the server component from
-`deriveStatus` over all races:
+**Data:** counts from `deriveStatus` over all races via `STATUS_GROUPS`:
 
 - `open` = codes `REG_OPEN`, `REG_CLOSING_SOON`, `LOTTERY_OPEN`
 - `closed` = codes `REG_CLOSED`, `SOLD_OUT`, `LOTTERY_DRAWN`,
@@ -25,21 +26,24 @@ countdowns.
 - races that are neither (opens-announced or dates-TBA) are counted in
   neither bucket — the numbers deliberately don't sum to the total
 
-**Code:** `app/page.tsx` (`OPEN_CODES` / `CLOSED_CODES` + header markup).
+**Code:** `STATUS_GROUPS`, `counts`, `activeStatusGroup` in
+`app/components/race-browser.tsx` (header lives in the client component so
+the counts can drive filter state).
 
 ---
 
 ## 2. Hero
 
-**Shows:** three-line uppercase display headline
-(`NEVER MISS / A TRAIL ULTRA / REGISTRATION.`) plus a one-sentence
-subtitle stating the product promise.
+**Shows:** one-line headline (`NEVER MISS A TRAIL ULTRA REGISTRATION.`)
+plus a one-sentence subtitle stating the product promise.
 
-**Rules:** headline is static copy; subtitle mirrors the meta description in
+**Rules:** headline and subtitle use the **same small-caps type scale as
+the wordmark** (headline = wordmark style, subtitle = tagline style) so the
+whole header reads as one system. Subtitle mirrors the meta description in
 `app/layout.tsx` (keep the two in sync when repositioning).
 
-**Code:** `app/page.tsx` header block; `<title>`/description in
-`app/layout.tsx`.
+**Code:** header block in `app/components/race-browser.tsx`;
+`<title>`/description in `app/layout.tsx`.
 
 ---
 
