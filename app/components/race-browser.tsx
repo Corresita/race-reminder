@@ -280,7 +280,9 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     return (
       <li
         key={race.id}
-        className="grid gap-3 px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7"
+        className={`grid gap-3 rounded-2xl bg-white px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7 ${
+          status.actionable || status.code === "DATES_TBA" ? "" : "opacity-60"
+        }`}
       >
               <div>
                 <p className="font-mono text-[11px] tracking-wide text-zinc-400">
@@ -522,32 +524,28 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         ))}
       </section>
 
-      {actionableRaces.length > 0 || sunkRaces.length > 0 ? (
-        <section className="rounded-2xl border border-zinc-200 bg-white">
-          <ul className="divide-y divide-zinc-200">
-            {actionableRaces.map(renderRace)}
+      {actionableRaces.length > 0 ? (
+        <ul className="flex flex-col gap-3">
+          {actionableRaces.map(renderRace)}
+        </ul>
+      ) : null}
+
+      {sunkRaces.length > 0 ? (
+        <section className={actionableRaces.length > 0 ? "mt-8" : undefined}>
+          <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+            Nothing to act on — closed, sold out, or completed (
+            {sunkRaces.length})
+          </p>
+          <ul className="flex flex-col gap-3">
+            {sunkRaces.map((entry, i) =>
+              renderRace(entry, actionableRaces.length + i),
+            )}
           </ul>
-          {sunkRaces.length > 0 ? (
-            <>
-              <p
-                className={`bg-zinc-50 px-5 py-2.5 text-[11px] tracking-[0.12em] text-zinc-500 uppercase sm:px-7 ${
-                  actionableRaces.length > 0 ? "border-t border-zinc-200" : "rounded-t-2xl"
-                }`}
-              >
-                Nothing to act on — closed, sold out, or completed ({sunkRaces.length})
-              </p>
-              <ul className="divide-y divide-zinc-200 border-t border-zinc-200">
-                {sunkRaces.map((entry, i) =>
-                  renderRace(entry, actionableRaces.length + i),
-                )}
-              </ul>
-            </>
-          ) : null}
         </section>
       ) : null}
 
       {actionableRaces.length === 0 && sunkRaces.length === 0 && tbaRaces.length === 0 ? (
-        <section className="rounded-2xl border border-zinc-200 bg-white">
+        <section className="rounded-2xl bg-white">
           <p className="px-5 py-8 text-sm text-zinc-500 sm:px-7">
             No races match the current filters.
           </p>
@@ -555,12 +553,12 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       ) : null}
 
       {tbaRaces.length > 0 ? (
-        <details className="mt-4 rounded-2xl border border-zinc-200 bg-white">
-          <summary className="cursor-pointer px-5 py-4 text-sm text-zinc-600 select-none hover:text-zinc-900 sm:px-7">
+        <details className="mt-8">
+          <summary className="cursor-pointer text-[11px] tracking-[0.12em] text-zinc-500 uppercase select-none hover:text-zinc-900">
             Awaiting dates ({tbaRaces.length}) — announced races without a
             registration window yet
           </summary>
-          <ul className="divide-y divide-zinc-200 border-t border-zinc-200">
+          <ul className="mt-3 flex flex-col gap-3">
             {tbaRaces.map((entry, i) =>
               renderRace(entry, actionableRaces.length + sunkRaces.length + i),
             )}
