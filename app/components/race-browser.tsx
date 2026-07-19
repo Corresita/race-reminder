@@ -280,139 +280,132 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     return (
       <li
         key={race.id}
-        className="flex flex-col rounded-2xl border border-zinc-200 bg-white p-5"
+        className="grid gap-3 px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7"
       >
-        <div className="flex items-start justify-between gap-2">
-          <p className="font-mono text-[11px] tracking-wide text-zinc-400">
-            {String(index + 1).padStart(2, "0")}
-          </p>
-          <span
-            className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${urgencyStyles[status.urgency]}`}
-          >
-            {shortStatusLabels[status.code]}
-          </span>
-        </div>
+              <div>
+                <p className="font-mono text-[11px] tracking-wide text-zinc-400">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <p className="text-lg font-medium tracking-tight text-zinc-900">
+                  {race.name}
+                </p>
+                <a
+                  className="mt-1 inline-flex text-sm text-zinc-600 transition-colors hover:text-zinc-900"
+                  href={race.officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Official site
+                </a>
+                <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+                  {race.organizer ?? seriesLabels[race.series]}
+                  {race.country ? ` · ${race.country}` : null}
+                  {year ? ` · ${year}` : null}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {race.distancesKm.map((km) => (
+                    <span
+                      key={`${race.id}-${km}`}
+                      className="rounded-full border border-zinc-300 px-2 py-0.5 text-[10px] tracking-wide text-zinc-700 uppercase"
+                    >
+                      {km}K
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-        <p className="mt-3 text-lg leading-snug font-semibold tracking-tight text-zinc-900">
-          {race.name}
-        </p>
-        <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-          {race.organizer ?? seriesLabels[race.series]}
-          {race.country ? ` · ${race.country}` : null}
-          {year ? ` · ${year}` : null}
-        </p>
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {race.distancesKm.map((km) => (
-            <span
-              key={`${race.id}-${km}`}
-              className="rounded-full border border-zinc-300 px-2 py-0.5 text-[10px] tracking-wide text-zinc-700 uppercase"
-            >
-              {km}K
-            </span>
-          ))}
-        </div>
+              <div>
+                <p className="text-xs tracking-wide text-zinc-500 uppercase">Race Date</p>
+                <p className="mt-1 text-sm font-medium text-zinc-800">
+                  {formatDate(race.raceDate) ?? "TBA"}
+                </p>
+                <p className="mt-1 text-xs text-zinc-500">
+                  Entry: {registrationTypeLabels[race.registrationType]}
+                </p>
+                {race.entryRequirement ? (
+                  <p className="mt-1 text-xs text-zinc-500">
+                    Requires: {race.entryRequirement}
+                  </p>
+                ) : null}
+                {race.entryNotes ? (
+                  <p className="mt-1 text-xs text-zinc-400">{race.entryNotes}</p>
+                ) : null}
+              </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-2 border-t border-zinc-200 pt-3">
-          <div>
-            <p className="text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-              Date
-            </p>
-            <p className="mt-0.5 text-sm font-medium text-zinc-800">
-              {formatDate(race.raceDate) ?? "TBA"}
-            </p>
-          </div>
-          <div className="text-right">
-            <p className="text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-              Entry
-            </p>
-            <p className="mt-0.5 text-sm font-medium text-zinc-800">
-              {registrationTypeLabels[race.registrationType]}
-            </p>
-          </div>
-        </div>
-        {race.entryRequirement ? (
-          <p className="mt-2 text-xs text-zinc-500">
-            Requires: {race.entryRequirement}
-          </p>
-        ) : null}
-        {race.entryNotes ? (
-          <p className="mt-1 line-clamp-2 text-xs text-zinc-400">
-            {race.entryNotes}
-          </p>
-        ) : null}
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-xs tracking-wide text-zinc-500 uppercase">
+                    Registration
+                  </p>
+                  <span
+                    className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${urgencyStyles[status.urgency]}`}
+                  >
+                    {shortStatusLabels[status.code]}
+                  </span>
+                </div>
+                <p className="mt-2 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+                  {countdown.label}
+                </p>
+                <p className="font-mono text-2xl leading-tight font-semibold tracking-tight text-zinc-900">
+                  {countdown.value}
+                </p>
+                {opensLabel ? (
+                  <p className="mt-1 text-xs text-zinc-500">Opens {opensLabel}</p>
+                ) : null}
+                {closesLabel ? (
+                  <p className="mt-1 text-xs text-zinc-500">Closes {closesLabel}</p>
+                ) : null}
 
-        <div className="mt-4">
-          <p className="text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-            {countdown.label}
-          </p>
-          <p className="font-mono text-3xl leading-tight font-semibold tracking-tight text-zinc-900">
-            {countdown.value}
-          </p>
-          {opensLabel ? (
-            <p className="mt-1 text-xs text-zinc-500">Opens {opensLabel}</p>
-          ) : null}
-          {closesLabel ? (
-            <p className="mt-1 text-xs text-zinc-500">Closes {closesLabel}</p>
-          ) : null}
-        </div>
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => onSubscribeClick(race.id)}
+                    disabled={busyRaceId === race.id}
+                    title="Email me when registration opens"
+                    className={`rounded-full border px-3 py-1 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
+                      subscribedIds.has(race.id)
+                        ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-emerald-600"
+                        : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+                    }`}
+                  >
+                    {subscribedIds.has(race.id) ? "Reminder set ✓" : "Set reminder"}
+                  </button>
 
-        <div className="mt-auto pt-4">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => onSubscribeClick(race.id)}
-              disabled={busyRaceId === race.id}
-              title="Email me when registration opens"
-              className={`flex-1 rounded-full border px-3 py-1.5 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
-                subscribedIds.has(race.id)
-                  ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-emerald-600"
-                  : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-              }`}
-            >
-              {subscribedIds.has(race.id) ? "Reminder set ✓" : "Set reminder"}
-            </button>
-            <a
-              className="rounded-full border border-zinc-300 px-3 py-1.5 text-[11px] tracking-wide text-zinc-600 uppercase transition-colors hover:border-zinc-500 hover:text-zinc-900"
-              href={race.officialUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Site ↗
-            </a>
-          </div>
+                  {emailFormRaceId === race.id ? (
+                    <form
+                      className="mt-2 flex flex-wrap gap-1.5"
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        onEmailSubmit(race.id);
+                      }}
+                    >
+                      <input
+                        type="email"
+                        autoFocus
+                        required
+                        value={emailDraft}
+                        onChange={(event) => setEmailDraft(event.target.value)}
+                        placeholder="you@example.com"
+                        className="w-40 rounded-full border border-zinc-300 px-3 py-1 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none"
+                      />
+                      <button
+                        type="submit"
+                        disabled={busyRaceId === race.id}
+                        className="rounded-full border border-zinc-900 bg-zinc-900 px-3 py-1 text-[11px] tracking-wide text-zinc-50 uppercase disabled:opacity-50"
+                      >
+                        OK
+                      </button>
+                    </form>
+                  ) : null}
 
-          {emailFormRaceId === race.id ? (
-            <form
-              className="mt-2 flex flex-wrap gap-1.5"
-              onSubmit={(event) => {
-                event.preventDefault();
-                onEmailSubmit(race.id);
-              }}
-            >
-              <input
-                type="email"
-                autoFocus
-                required
-                value={emailDraft}
-                onChange={(event) => setEmailDraft(event.target.value)}
-                placeholder="you@example.com"
-                className="w-full rounded-full border border-zinc-300 px-3 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none"
-              />
-              <button
-                type="submit"
-                disabled={busyRaceId === race.id}
-                className="w-full rounded-full border border-zinc-900 bg-zinc-900 px-3 py-1.5 text-[11px] tracking-wide text-zinc-50 uppercase disabled:opacity-50"
-              >
-                OK
-              </button>
-            </form>
-          ) : null}
-
-          {subscribeError?.raceId === race.id ? (
-            <p className="mt-1 text-xs text-red-600">{subscribeError.message}</p>
-          ) : null}
-        </div>
-      </li>
+                  {subscribeError?.raceId === race.id ? (
+                    <p className="mt-1 text-xs text-red-600">
+                      {subscribeError.message}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            </li>
     );
   }
 
@@ -529,23 +522,27 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         ))}
       </section>
 
-      {actionableRaces.length > 0 ? (
-        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {actionableRaces.map(renderRace)}
-        </ul>
-      ) : null}
-
-      {sunkRaces.length > 0 ? (
-        <section className={actionableRaces.length > 0 ? "mt-8" : undefined}>
-          <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-            Nothing to act on — closed, sold out, or completed (
-            {sunkRaces.length})
-          </p>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {sunkRaces.map((entry, i) =>
-              renderRace(entry, actionableRaces.length + i),
-            )}
+      {actionableRaces.length > 0 || sunkRaces.length > 0 ? (
+        <section className="rounded-2xl border border-zinc-200 bg-white">
+          <ul className="divide-y divide-zinc-200">
+            {actionableRaces.map(renderRace)}
           </ul>
+          {sunkRaces.length > 0 ? (
+            <>
+              <p
+                className={`bg-zinc-50 px-5 py-2.5 text-[11px] tracking-[0.12em] text-zinc-500 uppercase sm:px-7 ${
+                  actionableRaces.length > 0 ? "border-t border-zinc-200" : "rounded-t-2xl"
+                }`}
+              >
+                Nothing to act on — closed, sold out, or completed ({sunkRaces.length})
+              </p>
+              <ul className="divide-y divide-zinc-200 border-t border-zinc-200">
+                {sunkRaces.map((entry, i) =>
+                  renderRace(entry, actionableRaces.length + i),
+                )}
+              </ul>
+            </>
+          ) : null}
         </section>
       ) : null}
 
@@ -558,12 +555,12 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       ) : null}
 
       {tbaRaces.length > 0 ? (
-        <details className="mt-8">
-          <summary className="cursor-pointer text-[11px] tracking-[0.12em] text-zinc-500 uppercase select-none hover:text-zinc-900">
+        <details className="mt-4 rounded-2xl border border-zinc-200 bg-white">
+          <summary className="cursor-pointer px-5 py-4 text-sm text-zinc-600 select-none hover:text-zinc-900 sm:px-7">
             Awaiting dates ({tbaRaces.length}) — announced races without a
             registration window yet
           </summary>
-          <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <ul className="divide-y divide-zinc-200 border-t border-zinc-200">
             {tbaRaces.map((entry, i) =>
               renderRace(entry, actionableRaces.length + sunkRaces.length + i),
             )}

@@ -110,26 +110,25 @@ continuously across all three groups.
 
 ## 6. Race card
 
-Cards in a responsive full-width grid (4 columns wide / 3 desktop /
-2 tablet / 1 mobile; the page has no max-width),
-each stacking top to bottom:
+Full-width rows in a single bordered list (three columns per row, stacking
+on mobile):
 
-### 6a. Identity (top)
+### 6a. Identity (left)
 
-- index number (top-left) + short status badge (top-right)
-- race name
+- index number + race name
 - `organizer-or-series · country · year` (year from `raceDate`)
+- official site link
 - real-distance chips (`40K 70K 161K`), from `distancesKm`
 
-### 6b. Facts row
+### 6b. Facts (middle)
 
-- **Date** — formatted `raceDate`, `TBA` when null; **Entry** —
-  `registrationType` (Lottery / First come, first served / Qualification)
-  side by side above a divider
+- **Race Date** — formatted `raceDate`, `TBA` when null
+- **Entry** — `registrationType` (Lottery / First come, first served /
+  Qualification)
 - **Requires** — `entryRequirement` (only when present)
-- small print — `entryNotes` (clamped to 2 lines, only when present)
+- small print — `entryNotes` (only when present)
 
-### 6c. Registration (bottom)
+### 6c. Registration (right)
 
 - **short status badge**, colored by `status.urgency`
   (red = critical, amber = warning, green = normal, gray = none).
@@ -154,10 +153,9 @@ each stacking top to bottom:
 - **Opens / Closes dates** — only while the window is live
   (`status.actionable && !status.completed`); stale past-edition dates are
   hidden
-- **action row (bottom-pinned)** — `Set reminder` / `Reminder set ✓`
-  (emerald when set; first click expands an inline email form, the email is
-  remembered in `localStorage`; POST/DELETE `/api/subscribe`) plus a
-  `Site ↗` link to the official race page.
+- **Set reminder button** — `Set reminder` / `Reminder set ✓` (emerald
+  when set; first click expands an inline email form, the email is
+  remembered in `localStorage`; POST/DELETE `/api/subscribe`).
 
 **Code:** `renderRace`, `shortStatusLabels`, `countdownRow` in
 `app/components/race-browser.tsx`.
