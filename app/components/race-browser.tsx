@@ -345,7 +345,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           <p className="text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
             {countdown.label}
           </p>
-          <p className="text-3xl leading-tight font-semibold tracking-tight text-zinc-900">
+          <p className="font-mono text-3xl leading-tight font-semibold tracking-tight text-zinc-900">
             {countdown.value}
           </p>
           {opensLabel ? (
@@ -421,7 +421,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       <header className="mb-10">
         <div className="flex flex-wrap items-start justify-between gap-4 border-b border-zinc-300 pb-5">
           <div>
-            <p className="text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase">
+            <p className="font-display text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase">
               Race Reminder™
             </p>
             <p className="mt-2 max-w-xs text-[11px] leading-relaxed tracking-[0.08em] text-zinc-500 uppercase">
@@ -479,7 +479,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           </div>
         </div>
 
-        <h1 className="mt-8 text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase">
+        <h1 className="font-display mt-8 text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase">
           Never miss a trail ultra registration.
         </h1>
         <p className="mt-2 max-w-md text-[11px] leading-relaxed tracking-[0.08em] text-zinc-500 uppercase">

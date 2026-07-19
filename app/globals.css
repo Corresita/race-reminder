@@ -8,12 +8,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* font-sans (default) = Jost, the free Futura equivalent */
+  --font-sans: var(--font-jost);
+  /* font-display = Space Grotesk, for the wordmark + hero */
+  --font-display: var(--font-space-grotesk);
+  /* font-mono = Geist Mono, for index numbers + countdown figures */
   --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jost), Futura, Arial, Helvetica, sans-serif;
 }
