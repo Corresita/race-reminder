@@ -166,8 +166,9 @@ render dimmed (three columns per row, stacking on mobile):
 ## 7. Footer
 
 **Shows:** data-honesty note (manually curated, confirm on official
-sites) plus a giant right-aligned `RACE_REMINDER ©` wordmark in the
-display face, light gray, as a closing brand stamp.
+sites) plus a `RACE_REMINDER ©` wordmark styled identically to the top
+brand mark (Space Grotesk, small, semibold, 0.25em tracking, zinc-900),
+bookending the page.
 
 **Code:** `app/page.tsx`.
 
@@ -180,7 +181,7 @@ Tailwind utilities in `app/globals.css`:
 
 | Face              | Utility        | Used for                                        |
 | ----------------- | -------------- | ----------------------------------------------- |
-| **Space Grotesk** | `font-display` | wordmark, hero headline, giant footer wordmark  |
+| **Space Grotesk** | `font-display` | wordmark, hero headline, footer wordmark        |
 | **Inter**         | default        | everything else — labels, names, badges, body   |
 | **Geist Mono**    | `font-mono`    | card index numbers, countdown figures           |
 
