@@ -34,6 +34,13 @@ export interface Race {
     raceDate?: string | null;
     registrationOpens?: string | null;
   };
+  /** Latest registration status observed on the official site by the
+   *  scraper. An observation is a fact; it is only consulted when the
+   *  date facts above cannot reach a conclusion. */
+  observed?: {
+    status?: string | null;
+    checkedAt?: string | null;
+  } | null;
 }
 
 // ---------- Derived status ----------
@@ -249,7 +256,33 @@ export function deriveStatus(
     };
   }
 
-  // ---- 6. Not enough facts ----
+  // ---- 6. No usable dates — fall back to the scraper's observation ----
+  // Date facts always win (they never reach here when conclusive); an
+  // observation only rescues races whose windows were never announced.
+  if (race.observed?.status === "registration_open") {
+    return {
+      code: isLottery ? "LOTTERY_OPEN" : "REG_OPEN",
+      label: isLottery ? "Lottery entry open" : "Registration open",
+      urgency: "normal",
+      daysUntil: null,
+      sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: true,
+      completed: false,
+    };
+  }
+  if (race.observed?.status === "registration_closed") {
+    return {
+      code: "REG_CLOSED",
+      label: "Registration closed",
+      urgency: "none",
+      daysUntil: raceDate ? daysBetween(now, raceDate) : null,
+      sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: false,
+      completed: false,
+    };
+  }
+
+  // ---- 7. Not enough facts ----
   return {
     code: "DATES_TBA",
     label: "Dates TBA",

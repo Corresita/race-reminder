@@ -17,14 +17,14 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 - **Registration countdowns** — time until registration opens, or time left to register, sorted by what needs action next
 - **Derived race status** — announced → registration open → closing soon → closed / sold out → completed → next edition; computed at runtime from stored facts, never stored by hand
 - **Email reminders** — subscribe to a race with your email and get notified when its registration window opens
-- **Scraper** — checks every UTMB race against its official site (dates and per-distance registration status)
+- **Auto-updating data** — a scraper syncs every UTMB race against its official site (event dates, distances, sold-out and registration status) every 6 hours via GitHub Actions
 
 ## Roadmap
 
 - [ ] iCal feed (`.ics`) so you can subscribe from Apple/Google Calendar
-- [x] Email notifications when a subscribed race opens registration (`scripts/notify.ts`; needs a scheduled runner + `RESEND_API_KEY` to go live)
-- [ ] Automated data updates via GitHub Actions (scraper groundwork in `scripts/scrape.ts`)
-- [ ] Registration window dates for the full UTMB calendar (currently only hand-curated races have them)
+- [x] Email notifications when a subscribed race opens registration (`scripts/notify.ts`, daily via GitHub Actions)
+- [x] Automated data updates via GitHub Actions (`scripts/scrape.ts` syncs official UTMB sites every 6 hours)
+- [ ] Exact registration open/close dates for the full UTMB calendar (sites expose live status, not dates — those stay hand-curated)
 - [ ] 2027 season data as races are announced
 - [ ] Mobile app
 
@@ -81,8 +81,9 @@ race-reminder/
 npm run dev      # Start the dev server
 npm run build    # Production build
 npm run lint     # ESLint
-npm run scrape   # Check every UTMB race against its official site
-npm run notify   # Email subscribers whose races just opened (dry run without RESEND_API_KEY)
+npm run scrape             # Diff every UTMB race against its official site (dry run)
+npm run scrape -- --write  # Apply the changes to data/races.json
+npm run notify             # Email subscribers whose races just opened (dry run without RESEND_API_KEY)
 ```
 
 ## API endpoints

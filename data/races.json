@@ -15,7 +15,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://xiamen.utmb.world"
+    "officialUrl": "https://xiamen.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ushuaia",
@@ -31,10 +35,14 @@
     "distances": [
       "20K",
       "50K",
-      "100K",
-      "100M"
+      "100K"
     ],
-    "officialUrl": "https://ushuaia.utmb.world"
+    "officialUrl": "https://ushuaia.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-mogan",
@@ -53,7 +61,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://mogan.utmb.world"
+    "officialUrl": "https://mogan.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "grand-raid-ventoux",
@@ -72,7 +84,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://ventoux.utmb.world"
+    "officialUrl": "https://ventoux.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "amazean-jungle-thailand",
@@ -91,7 +107,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://amazean.utmb.world"
+    "officialUrl": "https://amazean.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-snowdonia",
@@ -110,7 +130,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://snowdonia.utmb.world"
+    "officialUrl": "https://snowdonia.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trail-du-saint-jacques",
@@ -129,7 +153,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://saint-jacques.utmb.world"
+    "officialUrl": "https://saint-jacques.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trail-of-the-kings-lake-toba",
@@ -147,7 +175,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://laketoba.utmb.world"
+    "officialUrl": "https://laketoba.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "kagaspa-trail-endurance-100",
@@ -165,7 +197,12 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://kagaspa.utmb.world"
+    "officialUrl": "https://kagaspa.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "zugspitz-ultra-trail",
@@ -183,7 +220,12 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://zugspitz.utmb.world"
+    "officialUrl": "https://zugspitz.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "torrencial-chile",
@@ -201,7 +243,12 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://torrencial.utmb.world"
+    "officialUrl": "https://torrencial.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "val-daran-by-utmb",
@@ -220,7 +267,12 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://valdaran.utmb.world"
+    "officialUrl": "https://valdaran.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "restonica-trail",
@@ -240,7 +292,10 @@
       "100M"
     ],
     "officialUrl": "https://restonica.utmb.world",
-    "soldOut": true
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trail-verbier-st-bernard",
@@ -248,7 +303,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Switzerland",
-    "raceDate": "2026-07-10",
+    "raceDate": "2027-07-09",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
@@ -259,7 +314,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://verbier.utmb.world"
+    "officialUrl": "https://verbier.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "monte-rosa-walserwaeg",
@@ -278,7 +337,12 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://mrww.utmb.world"
+    "officialUrl": "https://mrww.utmb.world",
+    "soldOut": true,
+    "observed": {
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "eiger-ultra-trail",
@@ -290,7 +354,6 @@
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "soldOut": true,
     "entryRequirement": "ITRA 600 / UTMB 50K",
     "distances": [
       "20K",
@@ -298,7 +361,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://eiger.utmb.world"
+    "officialUrl": "https://eiger.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "bucovina-ultra-rocks",
@@ -317,7 +384,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://bucovina.utmb.world"
+    "officialUrl": "https://bucovina.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "speedgoat-mountain-races",
@@ -331,10 +402,13 @@
     "registrationType": "fcfs",
     "entryRequirement": "Experience on technical terrain",
     "distances": [
-      "20K",
       "50K"
     ],
-    "officialUrl": "https://speedgoat.utmb.world/"
+    "officialUrl": "https://speedgoat.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "quito-trail-ecuador",
@@ -352,7 +426,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://quito.utmb.world"
+    "officialUrl": "https://quito.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "gauja-trail",
@@ -370,7 +448,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://gauja.utmb.world"
+    "officialUrl": "https://gauja.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "kat100",
@@ -389,7 +471,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://kat.utmb.world"
+    "officialUrl": "https://kat.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "borealys-mont-tremblant",
@@ -407,7 +493,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://borealys.utmb.world"
+    "officialUrl": "https://borealys.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-whistler",
@@ -425,7 +515,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://whistler.utmb.world"
+    "officialUrl": "https://whistler.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "utmb-mont-blanc",
@@ -445,7 +539,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://montblanc.utmb.world/"
+    "officialUrl": "https://montblanc.utmb.world/",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "wildstrubel",
@@ -464,7 +562,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://wildstrubel.utmb.world"
+    "officialUrl": "https://wildstrubel.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "snowbasin",
@@ -481,7 +583,11 @@
       "20K",
       "50K"
     ],
-    "officialUrl": "https://snowbasin.utmb.world"
+    "officialUrl": "https://snowbasin.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "malaysia-ultra-trail",
@@ -499,7 +605,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://malaysia.utmb.world"
+    "officialUrl": "https://malaysia.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "kackar",
@@ -517,7 +627,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://kackar.utmb.world"
+    "officialUrl": "https://kackar.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-great-wall",
@@ -535,7 +649,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://dajingmen.utmb.world"
+    "officialUrl": "https://dajingmen.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "paraty-brazil",
@@ -553,7 +671,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://paraty.utmb.world"
+    "officialUrl": "https://paraty.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "grindstone-trail-running-festival",
@@ -572,7 +694,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://grindstone.utmb.world"
+    "officialUrl": "https://grindstone.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "julian-alps-trail-run",
@@ -591,7 +717,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://julianalps.utmb.world"
+    "officialUrl": "https://julianalps.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "nice-cote-d-azur",
@@ -610,7 +740,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://nice.utmb.world"
+    "officialUrl": "https://nice.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "chihuahua",
@@ -629,7 +763,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://chihuahua.utmb.world"
+    "officialUrl": "https://chihuahua.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "transjeju",
@@ -648,7 +786,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://transjeju.utmb.world"
+    "officialUrl": "https://transjeju.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "kodiak-ultra-marathons",
@@ -667,7 +809,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://kodiak.utmb.world"
+    "officialUrl": "https://kodiak.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-mount-yun",
@@ -686,7 +832,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://mount-yun.utmb.world"
+    "officialUrl": "https://mount-yun.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "puglia",
@@ -705,7 +855,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://puglia.utmb.world"
+    "officialUrl": "https://puglia.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "mallorca",
@@ -724,7 +878,8 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://mallorca.utmb.world"
+    "officialUrl": "https://mallorca.utmb.world",
+    "observed": null
   },
   {
     "id": "kullamannen-by-utmb",
@@ -743,7 +898,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://kullamannen.utmb.world/"
+    "officialUrl": "https://kullamannen.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-shudao",
@@ -761,7 +920,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://shudao.utmb.world"
+    "officialUrl": "https://shudao.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "pacific-trails-california",
@@ -778,7 +941,11 @@
       "20K",
       "50K"
     ],
-    "officialUrl": "https://pacifictrails.utmb.world"
+    "officialUrl": "https://pacifictrails.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trans-lantau-by-utmb",
@@ -796,7 +963,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://translantau.utmb.world/"
+    "officialUrl": "https://translantau.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "patagonia-bariloche",
@@ -815,7 +986,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://bariloche.utmb.world"
+    "officialUrl": "https://bariloche.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "chiang-mai-thailand",
@@ -834,7 +1009,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://chiangmai.utmb.world"
+    "officialUrl": "https://chiangmai.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-kosciuszko",
@@ -853,7 +1032,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://kosciuszko.utmb.world/"
+    "officialUrl": "https://kosciuszko.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "oman",
@@ -872,7 +1055,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://oman.utmb.world"
+    "officialUrl": "https://oman.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "vietnam-highlands-trail",
@@ -890,7 +1077,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://vietnamhighlands.utmb.world"
+    "officialUrl": "https://vietnamhighlands.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "arc-of-attrition",
@@ -909,7 +1100,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://arcofattrition.utmb.world"
+    "officialUrl": "https://arcofattrition.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "tarawera-ultra-trail",
@@ -928,7 +1123,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://tarawera.utmb.world/"
+    "officialUrl": "https://tarawera.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "puerto-vallarta",
@@ -946,7 +1145,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://puerto-vallarta.utmb.world"
+    "officialUrl": "https://puerto-vallarta.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "xtrail",
@@ -959,8 +1162,16 @@
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "distances": [],
-    "officialUrl": "https://xtrail.utmb.world"
+    "distances": [
+      "20K",
+      "50K",
+      "100K"
+    ],
+    "officialUrl": "https://xtrail.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "chianti-ultra-trail",
@@ -976,9 +1187,14 @@
     "distances": [
       "20K",
       "50K",
-      "100K"
+      "100K",
+      "100M"
     ],
-    "officialUrl": "https://chianti.utmb.world/"
+    "officialUrl": "https://chianti.utmb.world/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "istria-100",
@@ -997,7 +1213,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://istria.utmb.world"
+    "officialUrl": "https://istria.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "desert-rats-trail-running-festival",
@@ -1015,7 +1235,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://desertrats.utmb.world"
+    "officialUrl": "https://desertrats.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "tenerife-bluetrail",
@@ -1034,7 +1258,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://tenerife.utmb.world"
+    "officialUrl": "https://tenerife.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "canyons-endurance-runs",
@@ -1054,7 +1282,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://canyons.utmb.world/"
+    "officialUrl": "https://canyons.utmb.world/",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "oh-meu-deus",
@@ -1073,7 +1305,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://ohmeudeus.utmb.world"
+    "officialUrl": "https://ohmeudeus.utmb.world",
+    "observed": {
+      "status": "registration_closed",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trail-alsace",
@@ -1092,7 +1328,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://alsace.utmb.world"
+    "officialUrl": "https://alsace.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "ultra-trail-australia",
@@ -1105,8 +1345,17 @@
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "distances": [],
-    "officialUrl": "https://uta.utmb.world"
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://uta.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "rothrock",
@@ -1119,8 +1368,15 @@
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "distances": [],
-    "officialUrl": "https://rothrock.utmb.world"
+    "distances": [
+      "20K",
+      "50K"
+    ],
+    "officialUrl": "https://rothrock.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "mountain-ultra-trail",
@@ -1139,7 +1395,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://mut.utmb.world"
+    "officialUrl": "https://mut.utmb.world",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "mozart-100",
@@ -1152,8 +1412,17 @@
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "distances": [],
-    "officialUrl": "https://mozart.utmb.world"
+    "distances": [
+      "20K",
+      "50K",
+      "100K",
+      "100M"
+    ],
+    "officialUrl": "https://mozart.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "trail-100-andorra",
@@ -1172,7 +1441,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://andorra.utmb.world"
+    "officialUrl": "https://andorra.utmb.world",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "lavaredo-ultra-trail",
@@ -1191,7 +1464,11 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://lavaredo.utmb.world/"
+    "officialUrl": "https://lavaredo.utmb.world/",
+    "observed": {
+      "status": "available_soon",
+      "checkedAt": "2026-07-19T00:52:53.836Z"
+    }
   },
   {
     "id": "hk100",

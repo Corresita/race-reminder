@@ -1,26 +1,46 @@
 /**
- * Checks every UTMB World Series race in data/races.json against its
+ * Syncs every UTMB World Series race in data/races.json against its
  * official site. UTMB subdomains are Next.js apps that embed event dates
  * and per-distance registration status in the __NEXT_DATA__ JSON blob,
  * so no HTML parsing or headless browser is needed.
  *
- * Usage: npm run scrape
+ * What gets written back (facts only, curated data wins):
+ *  - raceDate     when the stored date falls outside the event window
+ *                 (i.e. a new edition was announced), or was null
+ *  - distances    from the World Series categories, when the site has them
+ *  - soldOut      true when every sub-race is sold out, cleared otherwise
+ *  - observed     the aggregated registration status + timestamp, used by
+ *                 deriveStatus only when no registration dates are known
+ *
+ * Usage: npm run scrape             dry run — print the would-be changes
+ *        npm run scrape -- --write  apply changes to data/races.json
  */
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 type RaceRecord = {
   id: string;
   name: string;
   raceDate: string | null;
+  distances: string[];
+  soldOut?: boolean;
+  observed?: { status?: string | null; checkedAt?: string | null } | null;
   officialUrl: string;
 };
 
 type SubRace = {
   name?: string;
-  startDate?: string;
   raceStatus?: { status?: string };
+  details?: { statsUp?: { name?: string; value?: unknown }[] };
 };
+
+const DISTANCE_BY_CATEGORY: Record<string, string> = {
+  ws20KM: "20K",
+  ws50KM: "50K",
+  ws100KM: "100K",
+  ws100M: "100M",
+};
+const DISTANCE_ORDER = ["20K", "50K", "100K", "100M"];
 
 function findSubRaces(node: unknown): SubRace[] | null {
   if (Array.isArray(node)) {
@@ -50,49 +70,126 @@ function findSubRaces(node: unknown): SubRace[] | null {
   return null;
 }
 
-async function checkRace(race: RaceRecord) {
-  const response = await fetch(race.officialUrl, {
+/** One status for the whole event: open if anything is open, sold out only
+ *  if everything is, otherwise whatever the sub-races agree on. */
+function aggregateStatus(statuses: string[]): string | null {
+  if (statuses.length === 0) return null;
+  if (statuses.some((s) => s === "registration_open")) return "registration_open";
+  if (statuses.every((s) => s.includes("sold_out"))) return "registration_sold_out";
+  if (statuses.every((s) => s === "registration_closed")) return "registration_closed";
+  if (statuses.some((s) => s === "available_soon")) return "available_soon";
+  return statuses[0];
+}
+
+async function fetchSite(url: string) {
+  const response = await fetch(url, {
     headers: { "user-agent": "race-reminder/1.0 (+https://github.com/Corresita/race-reminder)" },
   });
-  if (!response.ok) {
-    throw new Error(`${response.status} ${response.statusText}`);
-  }
+  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
 
   const html = await response.text();
   const match = html.match(/__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/);
-  if (!match) {
-    throw new Error("no __NEXT_DATA__ found (not a utmb.world-style site?)");
-  }
+  if (!match) throw new Error("no __NEXT_DATA__ found (not a utmb.world-style site?)");
 
   const data = JSON.parse(match[1]) as {
-    props?: { pageProps?: { event?: { name?: string; eventDate?: string; begin?: string } } };
+    props?: { pageProps?: { event?: { begin?: string; end?: string } } };
   };
-  const event = data.props?.pageProps?.event;
+  return {
+    begin: data.props?.pageProps?.event?.begin ?? null,
+    end: data.props?.pageProps?.event?.end ?? null,
+    subRaces: findSubRaces(data) ?? [],
+  };
+}
 
-  console.log(`\n${race.name} (${race.id})`);
-  console.log(`  local:  raceDate=${race.raceDate?.slice(0, 10) ?? "TBA"}`);
-  console.log(`  remote: ${event?.eventDate ?? "?"} (begin=${event?.begin?.slice(0, 10) ?? "?"})`);
+/** Update one record in place; returns human-readable change descriptions. */
+function applySite(
+  race: RaceRecord,
+  site: { begin: string | null; end: string | null; subRaces: SubRace[] },
+  checkedAt: string,
+): string[] {
+  const changes: string[] = [];
 
-  for (const sub of findSubRaces(data) ?? []) {
-    console.log(`    - ${sub.name}: ${sub.raceStatus?.status ?? "?"} (${sub.startDate ?? "?"})`);
+  // raceDate: keep the curated value while it falls inside the event window;
+  // replace it when the site announces a different edition.
+  const beginDate = site.begin?.slice(0, 10);
+  const endDate = site.end?.slice(0, 10) ?? beginDate;
+  const storedDate = race.raceDate?.slice(0, 10);
+  if (beginDate && (!storedDate || storedDate < beginDate || storedDate > endDate!)) {
+    changes.push(`raceDate ${storedDate ?? "null"} -> ${beginDate}`);
+    race.raceDate = beginDate;
   }
+
+  const distances = [
+    ...new Set(
+      site.subRaces.flatMap((sub) =>
+        (sub.details?.statsUp ?? [])
+          .filter((stat) => stat.name === "categoryWorldSeries")
+          .map((stat) => DISTANCE_BY_CATEGORY[String(stat.value)])
+          .filter(Boolean),
+      ),
+    ),
+  ].sort((a, b) => DISTANCE_ORDER.indexOf(a) - DISTANCE_ORDER.indexOf(b));
+  if (distances.length > 0 && distances.join() !== race.distances.join()) {
+    changes.push(`distances [${race.distances}] -> [${distances}]`);
+    race.distances = distances;
+  }
+
+  const statuses = site.subRaces
+    .map((sub) => sub.raceStatus?.status)
+    .filter((s): s is string => Boolean(s));
+  const status = aggregateStatus(statuses);
+
+  const soldOut = status === "registration_sold_out";
+  if (soldOut !== Boolean(race.soldOut)) {
+    changes.push(`soldOut ${Boolean(race.soldOut)} -> ${soldOut}`);
+    if (soldOut) race.soldOut = true;
+    else delete race.soldOut;
+  }
+
+  if (status && status !== race.observed?.status) {
+    changes.push(`observed ${race.observed?.status ?? "none"} -> ${status}`);
+  }
+  race.observed = status ? { status, checkedAt } : (race.observed ?? null);
+
+  return changes;
 }
 
 async function main() {
+  const write = process.argv.includes("--write");
   const racesPath = path.join(process.cwd(), "data", "races.json");
   const races = JSON.parse(await readFile(racesPath, "utf-8")) as RaceRecord[];
+  const checkedAt = new Date().toISOString();
 
   const utmbRaces = races.filter((race) => race.officialUrl.includes("utmb.world"));
   console.log(`Checking ${utmbRaces.length} UTMB races against official sites...`);
 
+  let changed = 0;
+  let failed = 0;
   for (const race of utmbRaces) {
     try {
-      await checkRace(race);
+      const site = await fetchSite(race.officialUrl);
+      const changes = applySite(race, site, checkedAt);
+      if (changes.length > 0) {
+        changed += 1;
+        console.log(`${race.name}:`);
+        for (const change of changes) console.log(`  ${change}`);
+      }
     } catch (error) {
-      console.log(`\n${race.name} (${race.id})`);
-      console.log(`  FAILED: ${error instanceof Error ? error.message : error}`);
+      failed += 1;
+      console.log(`${race.name}: FAILED — ${error instanceof Error ? error.message : error}`);
     }
   }
+
+  console.log(`\n${changed} race(s) changed, ${failed} failed.`);
+  if (write) {
+    await writeFile(racesPath, JSON.stringify(races, null, 2) + "\n");
+    console.log("data/races.json updated.");
+  } else if (changed > 0) {
+    console.log("Dry run — pass --write to apply.");
+  }
+
+  // Only fail CI when nothing could be checked at all.
+  if (failed === utmbRaces.length && utmbRaces.length > 0) process.exit(1);
 }
 
 main().catch((error) => {
