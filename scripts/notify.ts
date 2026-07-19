@@ -69,6 +69,7 @@ async function main() {
 
   const now = new Date();
   const sentKeys: string[] = [];
+  let failedSends = 0;
 
   for (const race of races) {
     const subscribers = subscriptions.filter((sub) => sub.raceId === race.id);
@@ -83,14 +84,24 @@ async function main() {
     for (const sub of subscribers) {
       const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}`;
       if (notified.has(key)) continue;
-      await notifySubscriber(sub.email, subject, text);
-      sentKeys.push(key);
+      // One undeliverable address (e.g. Resend's test sender can only reach
+      // the account owner until a domain is verified) must not block the
+      // other subscribers. Unmarked failures retry on the next run.
+      try {
+        await notifySubscriber(sub.email, subject, text);
+        sentKeys.push(key);
+      } catch (error) {
+        failedSends += 1;
+        console.log(
+          `  FAILED ${sub.email}: ${error instanceof Error ? error.message : error}`,
+        );
+      }
     }
   }
 
   await markNotified(sentKeys);
   console.log(
-    `\nDone — ${sentKeys.length} notification(s) ${process.env.RESEND_API_KEY ? "sent" : "in dry run"}.`,
+    `\nDone — ${sentKeys.length} notification(s) ${process.env.RESEND_API_KEY ? "sent" : "in dry run"}${failedSends > 0 ? `, ${failedSends} failed (will retry next run)` : ""}.`,
   );
 }
 
