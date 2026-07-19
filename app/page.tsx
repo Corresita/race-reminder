@@ -20,7 +20,7 @@ export default function Home() {
           Race data is manually curated. Always confirm dates on the official
           race website before planning.
         </p>
-        <p className="font-display mt-10 overflow-hidden text-right text-5xl leading-none font-bold tracking-tight text-zinc-300 uppercase select-none sm:text-7xl lg:text-8xl">
+        <p className="font-display mt-10 text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase select-none">
           Race_Reminder&nbsp;©
         </p>
       </footer>
