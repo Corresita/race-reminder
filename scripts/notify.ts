@@ -12,7 +12,11 @@
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { deriveStatus, type Race } from "../lib/deriveStatus";
+import {
+  deriveStatus,
+  type DerivedStatus,
+  type Race,
+} from "../lib/deriveStatus";
 import { listNotified, listSubscriptions, markNotified } from "../lib/subscriptions";
 
 type RaceRecord = Race & {
@@ -48,14 +52,17 @@ async function sendEmail(to: string, subject: string, text: string) {
   console.log(`  emailed ${to}: ${subject}`);
 }
 
-function buildEmail(race: RaceRecord, statusLabel: string) {
-  const closes = race.registrationCloses
-    ? new Date(race.registrationCloses).toDateString()
-    : "not announced";
+function buildEmail(race: RaceRecord, status: DerivedStatus) {
+  // A completed race's stored window belongs to the past edition — don't
+  // present its close date as the next edition's deadline.
+  const closes =
+    !status.completed && race.registrationCloses
+      ? new Date(race.registrationCloses).toDateString()
+      : "not announced";
   return {
     subject: `Registration is open: ${race.name}`,
     text: [
-      `${race.name} — ${statusLabel}`,
+      `${race.name} — ${status.label}`,
       ``,
       `Registration closes: ${closes}`,
       `Register here: ${race.officialUrl}`,
@@ -90,7 +97,7 @@ async function main() {
     if (!OPEN_CODES.has(status.code)) continue;
 
     console.log(`${race.name} — ${status.label}`);
-    const { subject, text } = buildEmail(race, status.label);
+    const { subject, text } = buildEmail(race, status);
 
     for (const sub of subscribers) {
       const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}`;

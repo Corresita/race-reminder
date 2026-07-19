@@ -122,6 +122,23 @@ export function deriveStatus(
         completed: true,
       };
     }
+    // Next edition's registration has opened (we know the open date but no
+    // close yet). Without this, the race would fall back to "next TBA" the
+    // moment the window opened — exactly when subscribers must be told.
+    if (nextOpens && now >= nextOpens) {
+      const isLottery = race.registrationType === "lottery";
+      return {
+        code: isLottery ? "LOTTERY_OPEN" : "REG_OPEN",
+        label: isLottery
+          ? "Next edition — lottery entry open"
+          : "Next edition — registration open",
+        urgency: "normal",
+        daysUntil: null,
+        sortKey: nextOpens.getTime(),
+        actionable: true,
+        completed: true,
+      };
+    }
     return {
       code: "COMPLETED_NEXT_TBA",
       label: "Completed — next edition TBA",
