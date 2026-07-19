@@ -146,10 +146,12 @@ function applySite(
     else delete race.soldOut;
   }
 
+  // Touch `observed` only when the status actually changed, so scheduled
+  // runs with nothing new produce no diff (and therefore no commit).
   if (status && status !== race.observed?.status) {
     changes.push(`observed ${race.observed?.status ?? "none"} -> ${status}`);
+    race.observed = { status, checkedAt };
   }
-  race.observed = status ? { status, checkedAt } : (race.observed ?? null);
 
   return changes;
 }
