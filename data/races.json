@@ -888,8 +888,8 @@
     "organizer": null,
     "country": "Sweden",
     "raceDate": "2026-10-30T06:00:00+01:00",
-    "registrationOpens": null,
-    "registrationCloses": "2026-08-31T23:59:59+02:00",
+    "registrationOpens": "2025-11-20T14:00:00+01:00",
+    "registrationCloses": "2026-10-10T23:59:59+02:00",
     "registrationType": "fcfs",
     "entryRequirement": "UTMB Index 50K+",
     "distances": [
@@ -954,8 +954,8 @@
     "organizer": null,
     "country": "Hong Kong",
     "raceDate": "2026-11-13T06:00:00+08:00",
-    "registrationOpens": null,
-    "registrationCloses": "2026-08-15T23:59:59+08:00",
+    "registrationOpens": "2026-04-14T18:00:00+08:00",
+    "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": "UTMB Index 20K+",
     "distances": [
@@ -967,7 +967,8 @@
     "observed": {
       "status": "registration_open",
       "checkedAt": "2026-07-19T00:52:53.836Z"
-    }
+    },
+    "entryNotes": "No announced closing date — open until race slots fill."
   },
   {
     "id": "patagonia-bariloche",
@@ -1022,8 +1023,8 @@
     "organizer": null,
     "country": "Australia",
     "raceDate": "2026-11-27T06:00:00+11:00",
-    "registrationOpens": null,
-    "registrationCloses": "2026-09-15T23:59:59+10:00",
+    "registrationOpens": "2026-03-12T11:00:00+11:00",
+    "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": "UTMB Index 20K+",
     "distances": [
@@ -1036,7 +1037,8 @@
     "observed": {
       "status": "registration_open",
       "checkedAt": "2026-07-19T00:52:53.836Z"
-    }
+    },
+    "entryNotes": "No announced closing date — open until each distance sells out."
   },
   {
     "id": "oman",
@@ -1476,21 +1478,18 @@
     "series": "world-trail-majors",
     "organizer": null,
     "country": "Hong Kong",
-    "raceDate": "2026-01-22T08:00:00+08:00",
-    "registrationOpens": null,
-    "registrationCloses": "2025-10-20T23:59:59+08:00",
+    "raceDate": "2027-01-23T08:00:00+08:00",
+    "registrationOpens": "2026-07-30T00:00:00+08:00",
+    "registrationCloses": "2026-08-04T23:59:59+08:00",
     "registrationType": "lottery",
-    "lotteryDrawDate": null,
+    "lotteryDrawDate": "2026-08-17T00:00:00+08:00",
     "entryRequirement": null,
     "distances": [
       "50K",
       "100K"
     ],
-    "officialUrl": "https://www.hk100-ultra.com/",
-    "nextEdition": {
-      "raceDate": null,
-      "registrationOpens": "2026-07-30T00:00:00+08:00"
-    }
+    "officialUrl": "https://hk100ultra.com/",
+    "entryNotes": "2027 edition. Public ballot Jul 30 - Aug 4 2026; results Aug 17; successful entrants confirm by Aug 23. Priority (invitation only) Jul 24-28; charity places FCFS from Aug 25 20:00 HKT; waitlist opens Aug 31."
   },
   {
     "id": "black-canyon-ultras",
@@ -1498,7 +1497,7 @@
     "series": "world-trail-majors",
     "organizer": "Aravaipa Running",
     "country": "United States",
-    "raceDate": "2026-02-14T07:00:00-07:00",
+    "raceDate": "2027-02-13T07:00:00-07:00",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
@@ -1507,7 +1506,11 @@
       "50K",
       "100K"
     ],
-    "officialUrl": "https://aravaiparunning.com/network/blackcanyon/"
+    "officialUrl": "https://aravaiparunning.com/network/blackcanyon/",
+    "observed": {
+      "status": "registration_open",
+      "checkedAt": "2026-07-19T01:06:39.005327+00:00"
+    }
   },
   {
     "id": "transgrancanaria",
@@ -1515,9 +1518,9 @@
     "series": "world-trail-majors",
     "organizer": null,
     "country": "Spain",
-    "raceDate": "2026-03-04T06:00:00+00:00",
-    "registrationOpens": null,
-    "registrationCloses": "2025-12-15T23:59:59+00:00",
+    "raceDate": "2027-02-26T00:00:00+00:00",
+    "registrationOpens": "2026-07-01T12:00:00+01:00",
+    "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "distances": [
@@ -1551,7 +1554,7 @@
     "series": "world-trail-majors",
     "organizer": null,
     "country": "Portugal",
-    "raceDate": "2026-04-25T07:00:00+01:00",
+    "raceDate": "2027-04-24T07:00:00+01:00",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "lottery",
@@ -1605,7 +1608,7 @@
     "series": "world-trail-majors",
     "organizer": null,
     "country": "Vietnam",
-    "raceDate": "2026-09-17T04:00:00+07:00",
+    "raceDate": "2026-09-18T04:00:00+07:00",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
@@ -1625,7 +1628,7 @@
     "country": "Australia",
     "raceDate": "2026-11-06T08:00:00+11:00",
     "registrationOpens": "2026-02-05T09:00:00+11:00",
-    "registrationCloses": "2026-10-29T23:59:59+11:00",
+    "registrationCloses": "2026-10-30T23:59:59+11:00",
     "registrationType": "fcfs",
     "entryRequirement": null,
     "distances": [
@@ -1633,7 +1636,8 @@
       "100K",
       "100M"
     ],
-    "officialUrl": "https://www.gpt100.com.au/"
+    "officialUrl": "https://www.gpt100.com.au/",
+    "entryNotes": "Standard entry to Oct 9, late entry to Oct 30."
   },
   {
     "id": "ultra-trail-cape-town",
@@ -1642,17 +1646,17 @@
     "organizer": null,
     "country": "South Africa",
     "raceDate": "2026-11-20T05:00:00+02:00",
-    "registrationOpens": null,
+    "registrationOpens": "2026-02-26T12:00:00+02:00",
     "registrationCloses": null,
-    "registrationType": "lottery",
-    "lotteryDrawDate": null,
+    "registrationType": "fcfs",
     "entryRequirement": null,
     "distances": [
       "20K",
       "50K",
       "100K"
     ],
-    "officialUrl": "https://www.ultratrailcapetown.com/"
+    "officialUrl": "https://www.ultratrailcapetown.com/",
+    "entryNotes": "Shorter distances sell out within hours to days of opening."
   },
   {
     "id": "western-states-100",
@@ -1678,13 +1682,13 @@
     "series": "independent",
     "organizer": "Hardrock Hundred Endurance Run",
     "country": "United States",
-    "raceDate": "2026-07-10T06:00:00-06:00",
-    "registrationOpens": "2025-10-01T00:00:00-06:00",
-    "registrationCloses": "2025-10-15T23:59:59-06:00",
+    "raceDate": "2027-07-09T06:00:00-06:00",
+    "registrationOpens": "2026-10-01T00:00:00-06:00",
+    "registrationCloses": "2026-10-14T23:59:59-06:00",
     "registrationType": "lottery",
-    "lotteryDrawDate": "2025-12-06T09:00:00-07:00",
+    "lotteryDrawDate": "2026-12-05T09:00:00-07:00",
     "entryRequirement": "Qualifying race required",
-    "entryNotes": "Applications accepted the first two weeks of October (exact dates announced in September); lottery drawn the first weekend of December. Finished/Never-Finished pools with accumulating tickets.",
+    "entryNotes": "2027 ballot: Oct 1-14 2026 on UltraSignup; lottery drawn Dec 5 2026. Finished/Never-Finished pools with accumulating tickets.",
     "distances": [
       "100M"
     ],
