@@ -15,12 +15,12 @@ export default function Home() {
       {/* eslint-disable-next-line react-hooks/purity */}
       <RaceBrowser races={raceData} initialNow={Date.now()} />
 
-      <footer className="mt-16">
-        <p className="text-xs text-zinc-500">
+      <footer className="mt-16 flex flex-wrap items-end justify-between gap-4">
+        <p className="max-w-md text-xs text-zinc-500">
           Race data is manually curated. Always confirm dates on the official
           race website before planning.
         </p>
-        <p className="font-display mt-10 text-right text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase select-none">
+        <p className="font-display text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase select-none">
           Race_Reminder&nbsp;©
         </p>
       </footer>
