@@ -110,8 +110,9 @@ continuously across all three groups.
 
 ## 6. Race card
 
-Full-width rows in a single bordered list (three columns per row, stacking
-on mobile):
+Full-width horizontal bars stacked vertically with gaps — each row is its
+own rounded white card on the light-gray page; rows with nothing to act on
+render dimmed (three columns per row, stacking on mobile):
 
 ### 6a. Identity (left)
 
