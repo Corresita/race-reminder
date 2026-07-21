@@ -19,6 +19,8 @@ interface RaceLike {
   officialUrl: string;
   registrationOpens: string | null;
   registrationCloses: string | null;
+  registrationType?: string;
+  nextEdition?: { registrationOpens?: string | null } | null;
 }
 
 /** Month + day + year in the race's authored timezone (no viewer-tz drift). */
@@ -108,6 +110,46 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
      <p>${whenHtml}</p>
      <p>Nothing to do now. Go run :)</p>
      <p style="margin:72px 0 24px;"><a href="${esc(race.officialUrl)}" style="color:#18181b;">View the race →</a></p>`,
+    unsubUrl,
+  );
+  return { subject, text, html };
+}
+
+// ── 1b. OPENS SOON — a known opening date is days away ─────────────────────
+export function opensSoonEmail(race: RaceLike, daysLeft: number, unsubUrl: string) {
+  const now = Date.now();
+  // The soonest future open date — this edition's, or the announced next one.
+  const opensIso = [race.registrationOpens, race.nextEdition?.registrationOpens].find(
+    (iso) => iso && new Date(iso).getTime() > now,
+  );
+  const opensOn = opensIso ? fmt(opensIso) : "in a few days";
+  const dayWord = daysLeft === 1 ? "day" : "days";
+  const mechanism =
+    race.registrationType === "lottery"
+      ? `It's a lottery — no need to race the clock, but don't forget to enter.`
+      : `It's first come, first served — popular races fill fast, so be ready.`;
+
+  const subject = `${race.name} registration opens in ${daysLeft} ${dayWord}`;
+  const text = [
+    `Heads up — ${race.name} opens for registration on ${opensOn}. That's ${daysLeft} ${dayWord} away.`,
+    ``,
+    mechanism,
+    ``,
+    ``,
+    ``,
+    `View the race: ${race.officialUrl}`,
+    ``,
+    `Set your alarm. We'll email you again the moment it's open.`,
+    ``,
+    `Don't want these? Unsubscribe: ${unsubUrl}`,
+    ``,
+    `— Race Reminder`,
+  ].join("\n");
+  const html = shell(
+    `<p>Heads up — <strong>${esc(race.name)}</strong> opens for registration on <strong>${esc(opensOn)}</strong>. That&rsquo;s ${daysLeft} ${dayWord} away.</p>
+     <p>${esc(mechanism)}</p>
+     <p style="margin:72px 0 24px;"><a href="${esc(race.officialUrl)}" style="color:#18181b;">View the race →</a></p>
+     <p style="color:#71717a;">Set your alarm. We&rsquo;ll email you again the moment it&rsquo;s open.</p>`,
     unsubUrl,
   );
   return { subject, text, html };

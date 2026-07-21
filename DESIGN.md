@@ -218,11 +218,14 @@ Tailwind utilities in `app/globals.css`:
   treats charity-bibs-only as sold out, and detects between-editions sites
   (announced next date but last edition's races still listed) as "not open
   yet" instead of carrying the old sold-out forward.
-- **Notifier** (`scripts/notify.ts`, daily) fires two dedup'd events per
-  race edition: **open** (entered an open state) and **closing** (an open
-  window within 3 days of its deadline) — each subscriber gets each once.
-  Three HTML emails (confirm/open/closing) in `lib/emails.ts`: subject is
-  the action signal, warmth in the last line, plain-text part included.
+- **Notifier** (`scripts/notify.ts`, daily) fires three dedup'd events per
+  race edition — **opens-soon** (a known opening date within 3 days),
+  **open** (entered an open state), **closing** (an open window within 3
+  days of its deadline) — each subscriber gets each once: heads-up → open →
+  closing nudge. Four HTML emails (confirm/opens-soon/open/closing) in
+  `lib/emails.ts`: subject is the action signal, warmth in the last line,
+  plain-text part included. `NOTIFY_NOW=<iso>` time-travels dry runs for
+  testing.
 - **Emails** — confirmation ("We're watching {race} for you.") and every
   reminder carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.

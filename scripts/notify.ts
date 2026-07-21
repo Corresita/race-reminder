@@ -1,16 +1,18 @@
 /**
- * Emails subscribers when their race hits a notifiable EVENT. Two events:
- *   - "open"    — registration is open (date window or scraped observed status)
- *   - "closing" — an open window closes within CLOSING_LEAD_DAYS
+ * Emails subscribers when their race hits a notifiable EVENT. Three events:
+ *   - "opens-soon" — a KNOWN opening date is within OPENS_LEAD_DAYS
+ *   - "open"       — registration is open (date window or scraped status)
+ *   - "closing"    — an open window closes within CLOSING_LEAD_DAYS
  * Each subscriber gets each (race edition, event) at most once, ever — the
- * dedupe marker keys on the event so a user gets both the open email and,
- * later, the closing nudge (never the same one twice).
+ * dedupe marker keys on the event, so the full arc is heads-up → open →
+ * closing nudge, one email per beat.
  *
  * Data flow: races.json (facts) + deriveStatus → lib/subscriptions (Upstash
  * in production, data/*.json locally) → Resend.
  *
  * Without RESEND_API_KEY this is a dry run that only prints what it would
  * send. Set EMAIL_FROM to use a verified sender instead of Resend's default.
+ * NOTIFY_NOW=<iso date> time-travels the run for testing (dry runs only).
  *
  * Usage: npm run notify   (scheduled via GitHub Actions)
  */
@@ -23,7 +25,7 @@ import {
   unsubscribeUrl,
   sendEmail,
 } from "../lib/email";
-import { closingEmail, openEmail } from "../lib/emails";
+import { closingEmail, openEmail, opensSoonEmail } from "../lib/emails";
 import { listNotified, listSubscriptions, markNotified } from "../lib/subscriptions";
 
 type RaceRecord = Race & {
@@ -31,10 +33,17 @@ type RaceRecord = Race & {
   officialUrl: string;
 };
 
-type EventType = "open" | "closing";
+type EventType = "opens-soon" | "open" | "closing";
 
 const OPEN_CODES = new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]);
+// States whose daysUntil counts down to a KNOWN opening date.
+const OPENS_SOON_CODES = new Set([
+  "REG_OPENS_SOON",
+  "LOTTERY_OPENS_SOON",
+  "COMPLETED_NEXT_KNOWN",
+]);
 const CLOSING_LEAD_DAYS = 3;
+const OPENS_LEAD_DAYS = 3;
 
 async function notifySubscriber(
   to: string,
@@ -47,12 +56,18 @@ async function notifySubscriber(
 }
 
 /**
- * Which events are due for this race right now. "open" whenever it's in an
- * open state; "closing" additionally when the deadline is within the lead
- * window. If both are due (it opened straight into the closing window), only
- * "closing" is sent — its email already says it's open.
+ * Which events are due for this race right now. "opens-soon" when a known
+ * opening date enters its lead window; "open" whenever it's in an open
+ * state; "closing" when the deadline is within its lead window. If open and
+ * closing are due together (it opened straight into the closing window),
+ * only "closing" is sent — its email already says it's open.
  */
 function dueEvents(race: RaceRecord, status: ReturnType<typeof deriveStatus>): EventType[] {
+  if (OPENS_SOON_CODES.has(status.code)) {
+    return status.daysUntil != null && status.daysUntil <= OPENS_LEAD_DAYS
+      ? ["opens-soon"]
+      : [];
+  }
   if (!OPEN_CODES.has(status.code)) return [];
   const closingSoon =
     !status.completed &&
@@ -76,7 +91,14 @@ async function main() {
     console.log("RESEND_API_KEY not set — dry run, no emails will be sent.\n");
   }
 
-  const now = new Date();
+  // NOTIFY_NOW time-travels dry runs for testing; never with a real API key.
+  const now =
+    process.env.NOTIFY_NOW && !process.env.RESEND_API_KEY
+      ? new Date(process.env.NOTIFY_NOW)
+      : new Date();
+  if (process.env.NOTIFY_NOW && !process.env.RESEND_API_KEY) {
+    console.log(`(time-traveled to ${now.toISOString()})\n`);
+  }
   const sentKeys: string[] = [];
   let failedSends = 0;
 
@@ -97,9 +119,11 @@ async function main() {
 
         const unsubscribe = unsubscribeUrl(sub.email, race.id);
         const content =
-          event === "open"
-            ? openEmail(race, unsubscribe)
-            : closingEmail(race, status.daysUntil ?? 0, unsubscribe);
+          event === "opens-soon"
+            ? opensSoonEmail(race, status.daysUntil ?? 0, unsubscribe)
+            : event === "open"
+              ? openEmail(race, unsubscribe)
+              : closingEmail(race, status.daysUntil ?? 0, unsubscribe);
 
         // One undeliverable address (e.g. Resend's test sender can only reach
         // the account owner until a domain is verified) must not block the
