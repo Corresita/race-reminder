@@ -1,5 +1,4 @@
 import races from "@/data/races.json";
-import { deriveStatus, type Race } from "@/lib/deriveStatus";
 import {
   sendEmail,
   unsubscribeHeaders,
@@ -44,12 +43,11 @@ export async function POST(request: Request) {
 
   if (created) {
     // Confirmation is best-effort: a failed email must not fail the subscribe.
-    const status = deriveStatus(race as unknown as Race);
     const unsubscribe = unsubscribeUrl(body.email, race.id);
     try {
       await sendEmail(
         body.email,
-        confirmEmail(race, status.label, unsubscribe),
+        confirmEmail(race, unsubscribe),
         unsubscribeHeaders(unsubscribe),
       );
     } catch (error) {
