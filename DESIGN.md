@@ -13,18 +13,21 @@ countdowns.
 
 ## 1. Brand bar
 
-**Shows:** `RACE REMINDER™` wordmark, one-line tagline, and live counts:
-`{total} races · {open} open · {closed} closed`. **The counts are
-buttons**: open/closed toggle a status filter on the list; the races count
-clears it. The numbers stay global (never affected by any filter).
+**Shows:** `RACE REMINDER™` wordmark, the description line, and live
+counts: `{total} races · {open} open · {upcoming} upcoming · {closed}
+closed`. **The counts are buttons**: open/upcoming/closed toggle a status
+filter on the list; the races count clears it. The numbers stay global
+(never affected by any filter).
 
-**Data:** counts from `deriveStatus` over all races via `STATUS_GROUPS`:
+**Data:** counts from `deriveStatus` over all races via `STATUS_GROUPS`.
+Every status code lands in exactly one group, so the three always sum to
+the total:
 
-- `open` = codes `REG_OPEN`, `REG_CLOSING_SOON`, `LOTTERY_OPEN`
-- `closed` = codes `REG_CLOSED`, `SOLD_OUT`, `LOTTERY_DRAWN`,
-  `AWAITING_DRAW`, `COMPLETED_NEXT_KNOWN`, `COMPLETED_NEXT_TBA`
-- races that are neither (opens-announced or dates-TBA) are counted in
-  neither bucket — the numbers deliberately don't sum to the total
+- `open` = `REG_OPEN`, `REG_CLOSING_SOON`, `LOTTERY_OPEN`
+- `closed` = `REG_CLOSED`, `SOLD_OUT`, `LOTTERY_DRAWN`, `AWAITING_DRAW`,
+  `COMPLETED_NEXT_KNOWN`, `COMPLETED_NEXT_TBA`
+- `upcoming` = `REG_OPENS_SOON`, `LOTTERY_OPENS_SOON`, `REG_NOT_OPEN`,
+  `DATES_TBA`
 
 **Code:** `STATUS_GROUPS`, `counts`, `activeStatusGroup` in
 `app/components/race-browser.tsx` (header lives in the client component so
