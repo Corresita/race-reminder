@@ -12,7 +12,21 @@ function escapeHtml(value: string): string {
   );
 }
 
-function page(heading: string, body: string, status = 200): Response {
+function page(
+  heading: string,
+  body: string,
+  status = 200,
+  clearRaceId?: string | "all",
+): Response {
+  // The site caches subscription state in localStorage; this page shares the
+  // origin, so it can drop the stale entry when someone unsubscribes via an
+  // email link (otherwise the button still reads "Reminder set ✓").
+  const sync =
+    clearRaceId === "all"
+      ? `<script>try{localStorage.removeItem("race-reminder-subscriptions")}catch(e){}</script>`
+      : clearRaceId
+        ? `<script>try{var k="race-reminder-subscriptions",a=JSON.parse(localStorage.getItem(k)||"[]");localStorage.setItem(k,JSON.stringify(a.filter(function(id){return id!==${JSON.stringify(clearRaceId)}})))}catch(e){}</script>`
+        : "";
   const html = `<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8" />
@@ -32,7 +46,7 @@ function page(heading: string, body: string, status = 200): Response {
 <p>${heading}</p>
 <p style="color:#71717a">${body}</p>
 <a href="${SITE_URL}">Back to Race Reminder</a>
-</main></body></html>`;
+</main>${sync}</body></html>`;
   return new Response(html, {
     status,
     headers: { "content-type": "text/html; charset=utf-8" },
@@ -56,6 +70,8 @@ async function handle(request: Request): Promise<Response> {
     return page(
       "You're unsubscribed.",
       `Removed ${removed} race reminder${removed === 1 ? "" : "s"} for ${safeEmail}. You won't get any more emails from us.`,
+      200,
+      "all",
     );
   }
 
@@ -65,6 +81,8 @@ async function handle(request: Request): Promise<Response> {
     "You're unsubscribed.",
     `We'll stop watching <strong>${escapeHtml(race?.name ?? "this race")}</strong> for ${safeEmail}.` +
       ` <a href="${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(email)}&all=1">Unsubscribe from all races</a>`,
+    200,
+    raceId,
   );
 }
 
