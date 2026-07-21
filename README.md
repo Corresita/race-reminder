@@ -2,7 +2,7 @@
 
 Never miss a trail ultra registration.
 
-**Live Site**: [racereminder.run](https://www.racereminder.run)
+**Live Site**: [racereminder.run](https://racereminder.run)
 
 Race Reminder tracks **77 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States and Hardrock — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
 
@@ -30,7 +30,7 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 
 ## Running locally
 
-Want to use the app? Just visit [racereminder.run](https://www.racereminder.run) — no setup needed. The steps below are for developing or contributing.
+Want to use the app? Just visit [racereminder.run](https://racereminder.run) — no setup needed. The steps below are for developing or contributing.
 
 ### Prerequisites
 
