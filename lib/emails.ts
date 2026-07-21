@@ -46,9 +46,9 @@ function shell(inner: string, unsubUrl: string): string {
   ${inner}
   <hr style="border:none;border-top:1px solid #eee;margin:32px 0 16px;">
   <p style="font-size:12px;color:#a1a1aa;">
-    You're getting this because you asked Race Reminder to watch this race for you.
-    <a href="${unsubUrl}" style="color:#a1a1aa;">Stop watching this one</a>.
+    Don't want these? <a href="${unsubUrl}" style="color:#a1a1aa;">Unsubscribe</a>.
   </p>
+  <p style="font-size:12px;color:#a1a1aa;">— Race Reminder</p>
 </div>`;
 }
 
@@ -59,33 +59,40 @@ function cta(url: string, label: string): string {
 }
 
 // ── 1. CONFIRM — sent the instant they set a reminder ──────────────────────
-export function confirmEmail(race: RaceLike, statusLabel: string, unsubUrl: string) {
-  const when = race.registrationOpens
-    ? `Registration is expected to open around ${fmt(race.registrationOpens)}.`
-    : race.registrationCloses
-      ? `Registration closes ${fmt(race.registrationCloses)}.`
-      : `We're tracking its official site for the moment it opens.`;
+export function confirmEmail(race: RaceLike, unsubUrl: string) {
+  const opensDate = race.registrationOpens ? fmt(race.registrationOpens) : null;
+  const closesDate = race.registrationCloses ? fmt(race.registrationCloses) : null;
+
+  const whenText = opensDate
+    ? `Registration is expected to open around ${opensDate}. We'll email you the day it does.`
+    : closesDate
+      ? `Registration closes ${closesDate}. We'll email you before it does.`
+      : `We're watching its official site — we'll email you the day registration opens.`;
+  const whenHtml = opensDate
+    ? `Registration is expected to open around <strong>${esc(opensDate)}</strong>. We&rsquo;ll email you the day it does.`
+    : closesDate
+      ? `Registration closes <strong>${esc(closesDate)}</strong>. We&rsquo;ll email you before it does.`
+      : `We&rsquo;re watching its official site — we&rsquo;ll email you the day registration opens.`;
 
   const subject = `We're watching ${race.name} for you.`;
   const text = [
-    `Consider it handled.`,
+    `Got it — you're subscribed to ${race.name}. We'll keep an eye on it for you!`,
     ``,
-    `You asked us to keep an eye on ${race.name}. We will. ${when}`,
-    `Current status: ${statusLabel}.`,
+    whenText,
     ``,
-    `You'll get one email the moment there's something to act on — and nothing in between.`,
+    `Nothing to do now. Go run :)`,
     ``,
-    `Until then, go run. We've got this one.`,
+    `View the race: ${race.officialUrl}`,
     ``,
-    `Race page: ${race.officialUrl}`,
-    `Unsubscribe: ${unsubUrl}`,
+    `Don't want these? Unsubscribe: ${unsubUrl}`,
+    ``,
+    `— Race Reminder`,
   ].join("\n");
   const html = shell(
-    `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">Consider it handled.</p>
-     <p>You asked us to keep an eye on <strong>${esc(race.name)}</strong>. We will. ${esc(when)}</p>
-     <p style="color:#71717a;">Current status: ${esc(statusLabel)}.</p>
-     <p>You'll get one email the moment there's something to act on — and nothing in between.</p>
-     <p style="color:#71717a;">Until then, go run. We've got this one.</p>`,
+    `<p>Got it — you&rsquo;re subscribed to <strong>${esc(race.name)}</strong>. We&rsquo;ll keep an eye on it for you!</p>
+     <p>${whenHtml}</p>
+     <p>Nothing to do now. Go run :)</p>
+     <p style="margin:24px 0;"><a href="${esc(race.officialUrl)}" style="color:#18181b;font-weight:600;">View the race →</a></p>`,
     unsubUrl,
   );
   return { subject, text, html };
