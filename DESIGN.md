@@ -95,9 +95,10 @@ Three groups, in order:
    sold out, drawn, awaiting draw, completed). Separated by a labeled
    divider row: `Nothing to act on — closed, sold out, or completed (N)`.
    Same sort.
-3. **Awaiting dates fold** — `DATES_TBA` races collapsed inside a
-   `<details>` labeled `Awaiting dates (N)`. Keeps announced-but-dateless
-   races from diluting the list while staying subscribable.
+3. **Awaiting dates fold** — `DATES_TBA` and `REG_NOT_OPEN` races collapsed
+   inside a `<details>` labeled `Awaiting dates (N)`: no registration window
+   yet (dates unknown, or a known race date whose registration hasn't
+   opened). Keeps them out of the main list while staying subscribable.
 
 **Rules:** classification lives in the status machine
 (`DerivedStatus.actionable`, `compareStatus`) — the UI never re-derives
@@ -136,7 +137,7 @@ render dimmed (three columns per row, stacking on mobile):
   (red = critical, amber = warning, green = normal, gray = none).
   Labels via `shortStatusLabels`: Open now / Closing soon / Ballot open /
   Not yet open / Awaiting draw / Ballot drawn / Closed / Sold out /
-  Completed / Dates TBA
+  Completed / Not open yet / Dates TBA
 - **contextual countdown** — small-caps label + big value, via
   `countdownRow(status)`:
 
@@ -196,7 +197,11 @@ Tailwind utilities in `app/globals.css`:
   (`initialNow`) to the client so both render the identical DOM. Any new
   time-dependent UI must use `now` from that prop, never `new Date()`.
 - **Scraper** (`scripts/scrape.ts`, 6-hourly via GitHub Actions) syncs
-  UTMB races: event dates, real distances, sold-out, observed status.
+  UTMB races: event dates, real distances, sold-out, observed status. It
+  aggregates only ranked World Series sub-races (ignores kids/fun runs),
+  treats charity-bibs-only as sold out, and detects between-editions sites
+  (announced next date but last edition's races still listed) as "not open
+  yet" instead of carrying the old sold-out forward.
 - **Notifier** (`scripts/notify.ts`, daily) fires two dedup'd events per
   race edition: **open** (entered an open state) and **closing** (an open
   window within 3 days of its deadline) — each subscriber gets each once.
