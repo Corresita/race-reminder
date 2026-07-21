@@ -24,11 +24,16 @@ export function unsubscribeHeaders(url: string): Record<string, string> {
   };
 }
 
+export interface EmailContent {
+  subject: string;
+  text: string;
+  html?: string;
+}
+
 /** Returns true when actually sent, false on dry run (no API key). */
 export async function sendEmail(
   to: string,
-  subject: string,
-  text: string,
+  content: EmailContent,
   headers?: Record<string, string>,
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -44,8 +49,9 @@ export async function sendEmail(
       // || not ??: CI passes unset secrets through as empty strings
       from: process.env.EMAIL_FROM || "Race Reminder <onboarding@resend.dev>",
       to,
-      subject,
-      text,
+      subject: content.subject,
+      text: content.text,
+      ...(content.html ? { html: content.html } : {}),
       ...(headers ? { headers } : {}),
     }),
   });

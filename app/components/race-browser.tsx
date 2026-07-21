@@ -8,6 +8,7 @@ import {
   type Race as RaceFacts,
   type Urgency,
 } from "@/lib/deriveStatus";
+import { reminderAffordance } from "@/lib/reminderAffordance";
 
 export type Series = "utmb-world-series" | "world-trail-majors" | "independent";
 
@@ -94,9 +95,10 @@ function countdownRow(status: DerivedStatus): { label: string; value: string } {
       return { label: "Next edition opens in", value: days ?? "TBA" };
     case "REG_OPEN":
     case "REG_CLOSING_SOON":
+      // Open with no announced deadline — a truthful mechanism, not a blank.
       return days
         ? { label: "Closes in", value: days }
-        : { label: "Closes", value: "TBA" };
+        : { label: "Status", value: "Open until full" };
     case "LOTTERY_OPEN":
       return days
         ? { label: "Ballot ends in", value: days }
@@ -281,6 +283,8 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     const closesLabel = showWindow ? formatDate(race.registrationCloses) : null;
     const countdown = countdownRow(status);
     const year = race.raceDate ? race.raceDate.slice(0, 4) : null;
+    const affordance = reminderAffordance(race, status);
+    const subscribed = subscribedIds.has(race.id);
 
     return (
       <li
@@ -364,19 +368,34 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 ) : null}
 
                 <div className="mt-3">
-                  <button
-                    type="button"
-                    onClick={() => onSubscribeClick(race.id)}
-                    disabled={busyRaceId === race.id}
-                    title="Email me when registration opens"
-                    className={`rounded-full border px-3 py-1 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
-                      subscribedIds.has(race.id)
-                        ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-emerald-600"
-                        : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-                    }`}
-                  >
-                    {subscribedIds.has(race.id) ? "Reminder set ✓" : "Set reminder"}
-                  </button>
+                  {subscribed || affordance.kind === "REMIND_OPEN" || affordance.kind === "REMIND_CLOSE" ? (
+                    <button
+                      type="button"
+                      onClick={() => onSubscribeClick(race.id)}
+                      disabled={busyRaceId === race.id}
+                      title="Email me when there's something to act on"
+                      className={`rounded-full border px-3 py-1 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
+                        subscribed
+                          ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-emerald-600"
+                          : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+                      }`}
+                    >
+                      {subscribed ? "Reminder set ✓" : affordance.label}
+                    </button>
+                  ) : affordance.kind === "REGISTER_NOW" ? (
+                    <a
+                      href={race.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex rounded-full border border-zinc-900 bg-zinc-900 px-3 py-1 text-[11px] tracking-wide text-zinc-50 uppercase transition-colors hover:bg-zinc-700"
+                    >
+                      {affordance.label} ↗
+                    </a>
+                  ) : (
+                    <p className="text-[11px] tracking-wide text-zinc-400 uppercase">
+                      {affordance.label}
+                    </p>
+                  )}
 
                   {emailFormRaceId === race.id ? (
                     <form

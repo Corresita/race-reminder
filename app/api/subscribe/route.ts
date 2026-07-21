@@ -5,6 +5,7 @@ import {
   unsubscribeHeaders,
   unsubscribeUrl,
 } from "@/lib/email";
+import { confirmEmail } from "@/lib/emails";
 import {
   EMAIL_PATTERN,
   addSubscription,
@@ -48,17 +49,7 @@ export async function POST(request: Request) {
     try {
       await sendEmail(
         body.email,
-        `We're watching ${race.name} for you.`,
-        [
-          `We're watching ${race.name} for you.`,
-          ``,
-          `Current status: ${status.label}`,
-          `We'll email you the moment its registration window opens.`,
-          ``,
-          `Race page: ${race.officialUrl}`,
-          ``,
-          `Unsubscribe from this race: ${unsubscribe}`,
-        ].join("\n"),
+        confirmEmail(race, status.label, unsubscribe),
         unsubscribeHeaders(unsubscribe),
       );
     } catch (error) {
