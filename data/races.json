@@ -107,8 +107,8 @@
     "entryRequirement": null,
     "officialUrl": "https://amazean.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-07-21T06:13:25.480Z"
     },
     "distancesKm": [
       4,
@@ -368,8 +368,8 @@
     "entryRequirement": "ITRA 600 / UTMB 50K",
     "officialUrl": "https://eiger.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-21T06:13:25.480Z"
     },
     "distancesKm": [
       15,
@@ -378,7 +378,8 @@
       51,
       101,
       200
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "bucovina-ultra-rocks",
@@ -442,8 +443,8 @@
     "entryRequirement": null,
     "officialUrl": "https://quito.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-21T06:13:25.480Z"
     },
     "distancesKm": [
       13,
@@ -451,7 +452,8 @@
       31,
       53,
       76
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "gauja-trail",
@@ -489,8 +491,8 @@
     "entryRequirement": null,
     "officialUrl": "https://kat.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-21T06:13:25.480Z"
     },
     "distancesKm": [
       8,
@@ -498,7 +500,8 @@
       51,
       75,
       169
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "borealys-mont-tremblant",
@@ -513,8 +516,8 @@
     "entryRequirement": null,
     "officialUrl": "https://borealys.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "charity_bibs_available",
+      "checkedAt": "2026-07-21T06:13:25.480Z"
     },
     "distancesKm": [
       6,
