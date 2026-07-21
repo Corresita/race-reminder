@@ -1,0 +1,36 @@
+name: Send test email
+
+on:
+  workflow_dispatch:
+    inputs:
+      template:
+        description: "Email template"
+        required: true
+        type: choice
+        options: [confirm, opens-soon, open, closing]
+      race_id:
+        description: "Race id from data/races.json"
+        required: true
+        default: hk100
+      to:
+        description: "Recipient email"
+        required: true
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/test-email.ts
+        env:
+          TEMPLATE: ${{ inputs.template }}
+          RACE_ID: ${{ inputs.race_id }}
+          TO: ${{ inputs.to }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          SITE_URL: https://racereminder.run
