@@ -297,16 +297,13 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 <p className="font-mono text-[11px] tracking-wide text-zinc-400">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <p className="text-lg font-medium tracking-tight text-zinc-900">
-                  {race.name}
-                </p>
                 <a
-                  className="mt-1 inline-flex text-sm text-zinc-600 transition-colors hover:text-zinc-900"
                   href={race.officialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="text-lg font-medium tracking-tight text-zinc-900 transition-colors hover:text-zinc-500"
                 >
-                  Official site
+                  {race.name}
                 </a>
                 <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
                   {race.organizer ?? seriesLabels[race.series]}
