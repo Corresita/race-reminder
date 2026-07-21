@@ -226,6 +226,18 @@ Tailwind utilities in `app/globals.css`:
 - **Emails** — confirmation ("We're watching {race} for you.") and every
   reminder carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
+- **Email template rules** (`shell()` in `lib/emails.ts`):
+  - left-aligned block (`margin:0`, never `auto` — that centers it), base
+    copy 16px, footers 14px
+  - race names and dates are **bold**; the when-line only uses **future**
+    dates (a past opens date routes to the deadline or watching line)
+  - the CTA link ("View the race →") is regular weight with ~72px of air
+    above it, separating action from copy
+  - signature is the brand wordmark (uppercase, 0.25em tracking, semibold,
+    zinc-900); email clients block webfonts, so the system stack carries
+    the look with 'Space Grotesk' first for clients that have it
+  - sender: `Race Reminder <hello@racereminder.run>` (Resend; SPF + DKIM +
+    DMARC live on racereminder.run)
 - **Dates** render on their authored calendar day (the ISO offset is the
   race's own timezone), never shifting with the viewer's timezone.
 
