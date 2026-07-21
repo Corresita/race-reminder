@@ -95,6 +95,8 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
     ``,
     `Nothing to do now. Go run :)`,
     ``,
+    ``,
+    ``,
     `View the race: ${race.officialUrl}`,
     ``,
     `Don't want these? Unsubscribe: ${unsubUrl}`,
@@ -105,7 +107,7 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
     `<p>Got it — you&rsquo;re subscribed to <strong>${esc(race.name)}</strong>.<br>We&rsquo;ll keep an eye on it for you!</p>
      <p>${whenHtml}</p>
      <p>Nothing to do now. Go run :)</p>
-     <p style="margin:24px 0;"><a href="${esc(race.officialUrl)}" style="color:#18181b;font-weight:600;">View the race →</a></p>`,
+     <p style="margin:72px 0 24px;"><a href="${esc(race.officialUrl)}" style="color:#18181b;">View the race →</a></p>`,
     unsubUrl,
   );
   return { subject, text, html };
