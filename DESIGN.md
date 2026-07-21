@@ -198,7 +198,13 @@ Tailwind utilities in `app/globals.css`:
 - **Scraper** (`scripts/scrape.ts`, 6-hourly via GitHub Actions) syncs
   UTMB races: event dates, real distances, sold-out, observed status.
 - **Notifier** (`scripts/notify.ts`, daily) emails subscribers whose race
-  entered an open state; once per race edition.
+  entered an open state; once per race edition. Reminder subjects are
+  action signals ("{race} registration is open — ballot closes Oct 15").
+- **Emails** — confirmation ("We're watching {race} for you.") and every
+  reminder carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
+  headers; `/api/unsubscribe` (GET + POST) removes one race or all.
+- **Dates** render on their authored calendar day (the ISO offset is the
+  race's own timezone), never shifting with the viewer's timezone.
 
 ## Adjusting a block
 
