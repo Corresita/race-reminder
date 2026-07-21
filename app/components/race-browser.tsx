@@ -56,8 +56,10 @@ const registrationTypeLabels: Record<string, string> = {
   qualification: "Qualification",
 };
 
-// Status groups behind the clickable header counts.
-const STATUS_GROUPS: Record<"open" | "closed", Set<DerivedStatus["code"]>> = {
+// Status groups behind the clickable header counts. Every StatusCode lands
+// in exactly one group, so open + closed + upcoming always sums to the total.
+type StatusGroup = "open" | "closed" | "upcoming";
+const STATUS_GROUPS: Record<StatusGroup, Set<DerivedStatus["code"]>> = {
   open: new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]),
   closed: new Set([
     "REG_CLOSED",
@@ -66,6 +68,13 @@ const STATUS_GROUPS: Record<"open" | "closed", Set<DerivedStatus["code"]>> = {
     "AWAITING_DRAW",
     "COMPLETED_NEXT_KNOWN",
     "COMPLETED_NEXT_TBA",
+  ]),
+  // Announced but not yet open — opening later, or dates still unknown.
+  upcoming: new Set([
+    "REG_OPENS_SOON",
+    "LOTTERY_OPENS_SOON",
+    "REG_NOT_OPEN",
+    "DATES_TBA",
   ]),
 };
 
@@ -153,9 +162,9 @@ function formatDate(iso: string | null | undefined) {
 export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   const [activeSeries, setActiveSeries] = useState<Series | null>(null);
   const [activeDistance, setActiveDistance] = useState<string | null>(null);
-  const [activeStatusGroup, setActiveStatusGroup] = useState<
-    "open" | "closed" | null
-  >(null);
+  const [activeStatusGroup, setActiveStatusGroup] = useState<StatusGroup | null>(
+    null,
+  );
   const [now] = useState(() => new Date(initialNow));
 
   // Subscription state lives in localStorage; loaded after mount so the
@@ -248,6 +257,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       total: races.length,
       open: statuses.filter((s) => STATUS_GROUPS.open.has(s.code)).length,
       closed: statuses.filter((s) => STATUS_GROUPS.closed.has(s.code)).length,
+      upcoming: statuses.filter((s) => STATUS_GROUPS.upcoming.has(s.code)).length,
     };
   }, [races, now]);
 
@@ -492,6 +502,24 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             <button
               type="button"
               onClick={() =>
+                setActiveStatusGroup((c) =>
+                  c === "upcoming" ? null : "upcoming",
+                )
+              }
+              className={`cursor-pointer transition-colors ${
+                activeStatusGroup === "upcoming"
+                  ? "text-zinc-900 underline underline-offset-4"
+                  : "text-zinc-500 hover:text-zinc-900"
+              }`}
+            >
+              <span className="mr-1.5 font-semibold text-zinc-900">
+                {counts.upcoming}
+              </span>
+              upcoming
+            </button>
+            <button
+              type="button"
+              onClick={() =>
                 setActiveStatusGroup((c) => (c === "closed" ? null : "closed"))
               }
               className={`cursor-pointer transition-colors ${
@@ -507,7 +535,6 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             </button>
           </div>
         </div>
-
       </header>
 
       <section className="mb-4 flex flex-wrap gap-2">
