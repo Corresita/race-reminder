@@ -48,7 +48,9 @@ function shell(inner: string, unsubUrl: string): string {
   <p style="font-size:12px;color:#a1a1aa;">
     Don't want these? <a href="${unsubUrl}" style="color:#a1a1aa;">Unsubscribe</a>.
   </p>
-  <p style="font-size:12px;color:#a1a1aa;">— Race Reminder</p>
+  <p style="font-family:'Space Grotesk',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:#18181b;margin-top:16px;">
+    Race Reminder&trade;
+  </p>
 </div>`;
 }
 
