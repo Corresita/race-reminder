@@ -28,11 +28,24 @@ type RaceRecord = {
   officialUrl: string;
 };
 
+type Stat = { name?: string; value?: unknown };
 type SubRace = {
   name?: string;
   raceStatus?: { status?: string };
-  details?: { statsDown?: { name?: string; value?: unknown }[] };
+  details?: { statsUp?: Stat[]; statsDown?: Stat[] };
 };
+
+/**
+ * True only for ranked World Series races. Kids races and fun runs carry no
+ * `categoryWorldSeries` stat, and their status (often "registration_open"
+ * year-round) must not skew the event's aggregate — that's what falsely
+ * reported Eiger "open" while its real races were sold out.
+ */
+function isRankedRace(sub: SubRace): boolean {
+  return (sub.details?.statsUp ?? []).some(
+    (stat) => stat.name === "categoryWorldSeries",
+  );
+}
 
 function findSubRaces(node: unknown): SubRace[] | null {
   if (Array.isArray(node)) {
@@ -127,7 +140,11 @@ function applySite(
     race.distancesKm = distancesKm;
   }
 
-  const statuses = site.subRaces
+  // Aggregate over ranked races only; fall back to all sub-races when a site
+  // exposes none (so we still get a status rather than nothing).
+  const ranked = site.subRaces.filter(isRankedRace);
+  const forStatus = ranked.length > 0 ? ranked : site.subRaces;
+  const statuses = forStatus
     .map((sub) => sub.raceStatus?.status)
     .filter((s): s is string => Boolean(s));
   const status = aggregateStatus(statuses);
