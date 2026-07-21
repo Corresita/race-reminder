@@ -42,13 +42,13 @@ function esc(value: string): string {
 }
 
 function shell(inner: string, unsubUrl: string): string {
-  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:520px;margin:0 auto;color:#18181b;line-height:1.55;padding:8px;">
+  return `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:520px;margin:0;font-size:16px;color:#18181b;line-height:1.55;padding:8px;">
   ${inner}
   <hr style="border:none;border-top:1px solid #eee;margin:32px 0 16px;">
-  <p style="font-size:12px;color:#a1a1aa;">
+  <p style="font-size:14px;color:#a1a1aa;">
     Don't want these? <a href="${unsubUrl}" style="color:#a1a1aa;">Unsubscribe</a>.
   </p>
-  <p style="font-family:'Space Grotesk',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:#18181b;margin-top:16px;">
+  <p style="font-family:'Space Grotesk',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:#18181b;margin-top:16px;">
     Race Reminder&trade;
   </p>
 </div>`;
@@ -78,7 +78,8 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
 
   const subject = `We're watching ${race.name} for you.`;
   const text = [
-    `Got it — you're subscribed to ${race.name}. We'll keep an eye on it for you!`,
+    `Got it — you're subscribed to ${race.name}.`,
+    `We'll keep an eye on it for you!`,
     ``,
     whenText,
     ``,
@@ -91,7 +92,7 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
     `— Race Reminder`,
   ].join("\n");
   const html = shell(
-    `<p>Got it — you&rsquo;re subscribed to <strong>${esc(race.name)}</strong>. We&rsquo;ll keep an eye on it for you!</p>
+    `<p>Got it — you&rsquo;re subscribed to <strong>${esc(race.name)}</strong>.<br>We&rsquo;ll keep an eye on it for you!</p>
      <p>${whenHtml}</p>
      <p>Nothing to do now. Go run :)</p>
      <p style="margin:24px 0;"><a href="${esc(race.officialUrl)}" style="color:#18181b;font-weight:600;">View the race →</a></p>`,
