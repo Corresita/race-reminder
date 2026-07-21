@@ -118,6 +118,26 @@ export async function removeSubscription(email: string, raceId: string): Promise
   }
 }
 
+/** Remove every subscription for an email. Returns how many were removed. */
+export async function removeAllSubscriptions(email: string): Promise<number> {
+  if (upstashConfig()) {
+    const flat = (await redis(["HGETALL", "subscriptions"])) as string[];
+    const fields: string[] = [];
+    for (let i = 0; i < flat.length; i += 2) {
+      const key = flat[i];
+      if (key.slice(key.indexOf("|") + 1) === email) fields.push(key);
+    }
+    if (fields.length > 0) await redis(["HDEL", "subscriptions", ...fields]);
+    return fields.length;
+  }
+  const subscriptions = await readJsonFile<Subscription[]>(subscriptionsPath, []);
+  const remaining = subscriptions.filter((sub) => sub.email !== email);
+  if (remaining.length !== subscriptions.length) {
+    await writeJsonFile(subscriptionsPath, remaining);
+  }
+  return subscriptions.length - remaining.length;
+}
+
 /** Keys of already-sent notifications ("raceId|raceDate|email"). */
 export async function listNotified(): Promise<Set<string>> {
   if (upstashConfig()) {

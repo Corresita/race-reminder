@@ -17,7 +17,11 @@ import {
   type DerivedStatus,
   type Race,
 } from "../lib/deriveStatus";
-import { sendEmail } from "../lib/email";
+import {
+  sendEmail,
+  unsubscribeHeaders,
+  unsubscribeUrl,
+} from "../lib/email";
 import { listNotified, listSubscriptions, markNotified } from "../lib/subscriptions";
 
 type RaceRecord = Race & {
@@ -27,30 +31,49 @@ type RaceRecord = Race & {
 
 const OPEN_CODES = new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]);
 
-async function notifySubscriber(to: string, subject: string, text: string) {
-  const sent = await sendEmail(to, subject, text);
+async function notifySubscriber(
+  to: string,
+  subject: string,
+  text: string,
+  headers: Record<string, string>,
+) {
+  const sent = await sendEmail(to, subject, text, headers);
   if (sent) console.log(`  emailed ${to}: ${subject}`);
   else console.log(`  [dry run] would email ${to}: ${subject}`);
 }
 
+/** Month + day in the race's authored timezone (no viewer-tz drift). */
+function shortDate(iso: string): string {
+  return new Date(`${iso.slice(0, 10)}T00:00:00Z`).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/** Action-signal subject + shared body lines (unsubscribe added per-recipient). */
 function buildEmail(race: RaceRecord, status: DerivedStatus) {
   // A completed race's stored window belongs to the past edition — don't
   // present its close date as the next edition's deadline.
-  const closes =
+  const closesDate =
     !status.completed && race.registrationCloses
-      ? new Date(race.registrationCloses).toDateString()
-      : "not announced";
-  return {
-    subject: `Registration is open: ${race.name}`,
-    text: [
-      `${race.name} — ${status.label}`,
-      ``,
-      `Registration closes: ${closes}`,
-      `Register here: ${race.officialUrl}`,
-      ``,
-      `You subscribed to this race on Race Reminder.`,
-    ].join("\n"),
-  };
+      ? shortDate(race.registrationCloses)
+      : null;
+  const closesClause = closesDate
+    ? race.registrationType === "lottery"
+      ? `ballot closes ${closesDate}`
+      : `closes ${closesDate}`
+    : null;
+
+  const subject = `${race.name} registration is open${closesClause ? ` — ${closesClause}` : ""}`;
+  const bodyLines = [
+    `${race.name} registration is open.`,
+    closesClause ? `${closesClause[0].toUpperCase()}${closesClause.slice(1)}.` : null,
+    ``,
+    `Register: ${race.officialUrl}`,
+  ].filter((line): line is string => line !== null);
+
+  return { subject, bodyLines };
 }
 
 async function main() {
@@ -79,7 +102,7 @@ async function main() {
     if (!OPEN_CODES.has(status.code)) continue;
 
     console.log(`${race.name} — ${status.label}`);
-    const { subject, text } = buildEmail(race, status);
+    const { subject, bodyLines } = buildEmail(race, status);
 
     for (const sub of subscribers) {
       const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}`;
@@ -87,8 +110,19 @@ async function main() {
       // One undeliverable address (e.g. Resend's test sender can only reach
       // the account owner until a domain is verified) must not block the
       // other subscribers. Unmarked failures retry on the next run.
+      const unsubscribe = unsubscribeUrl(sub.email, race.id);
+      const text = [
+        ...bodyLines,
+        ``,
+        `Unsubscribe from this race: ${unsubscribe}`,
+      ].join("\n");
       try {
-        await notifySubscriber(sub.email, subject, text);
+        await notifySubscriber(
+          sub.email,
+          subject,
+          text,
+          unsubscribeHeaders(unsubscribe),
+        );
         sentKeys.push(key);
       } catch (error) {
         failedSends += 1;
