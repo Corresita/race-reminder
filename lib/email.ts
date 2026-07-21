@@ -7,7 +7,7 @@
  */
 
 export const SITE_URL =
-  process.env.SITE_URL || "https://www.racereminder.run";
+  process.env.SITE_URL || "https://racereminder.run";
 
 /** One-click unsubscribe link for a given subscriber + race. */
 export function unsubscribeUrl(email: string, raceId?: string): string {
