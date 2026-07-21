@@ -25,7 +25,8 @@ function page(heading: string, body: string, status = 200): Response {
   main{max-width:26rem;padding:2.5rem;text-align:center}
   h1{font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:#71717a;margin:0 0 1.25rem}
   p{margin:0 0 1rem}
-  a{display:inline-block;margin-top:.5rem;color:#18181b;font-weight:600;text-decoration:underline}
+  strong{color:#18181b}
+  a{display:inline-block;margin-top:.5rem;color:#18181b;text-decoration:underline}
 </style></head><body><main>
 <h1>Race Reminder</h1>
 <p>${heading}</p>
@@ -62,7 +63,7 @@ async function handle(request: Request): Promise<Response> {
   const race = races.find((r) => r.id === raceId);
   return page(
     "You're unsubscribed.",
-    `We'll stop watching ${escapeHtml(race?.name ?? "this race")} for ${safeEmail}.` +
+    `We'll stop watching <strong>${escapeHtml(race?.name ?? "this race")}</strong> for ${safeEmail}.` +
       ` <a href="${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(email)}&all=1">Unsubscribe from all races</a>`,
   );
 }
