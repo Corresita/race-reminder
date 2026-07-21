@@ -130,13 +130,18 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function formatDate(iso: string | null | undefined) {
   if (!iso) return null;
-  const parsed = new Date(iso);
+  // The offset in the ISO string is the race's own timezone, so the
+  // authored calendar date (the part before "T") is the intended day.
+  // Render that fixed date in UTC so it never shifts with the viewer's
+  // timezone — e.g. "2026-07-30T00:00+08:00" always reads Jul 30.
+  const parsed = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
   if (Number.isNaN(parsed.getTime())) return null;
 
   return parsed.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -275,7 +280,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     const opensLabel = showWindow ? formatDate(race.registrationOpens) : null;
     const closesLabel = showWindow ? formatDate(race.registrationCloses) : null;
     const countdown = countdownRow(status);
-    const year = race.raceDate ? new Date(race.raceDate).getFullYear() : null;
+    const year = race.raceDate ? race.raceDate.slice(0, 4) : null;
 
     return (
       <li
@@ -420,8 +425,8 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               Race Reminder™
             </p>
             <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
-              Never miss a start line. Opening dates, deadlines, and lottery
-              draws — sorted by what needs action next.
+              Know the day registration opens. Every lottery draw, every
+              deadline that matters — for the trail ultras you&rsquo;re chasing.
             </h1>
           </div>
           <div className="flex gap-6 text-xs tracking-wide uppercase">

@@ -6,11 +6,30 @@
  * run, so local dev needs no account.
  */
 
+export const SITE_URL =
+  process.env.SITE_URL || "https://race-reminder.vercel.app";
+
+/** One-click unsubscribe link for a given subscriber + race. */
+export function unsubscribeUrl(email: string, raceId?: string): string {
+  const params = new URLSearchParams({ email });
+  if (raceId) params.set("race", raceId);
+  return `${SITE_URL}/api/unsubscribe?${params.toString()}`;
+}
+
+/** RFC 8058 headers so Gmail/Apple Mail show a native one-click unsubscribe. */
+export function unsubscribeHeaders(url: string): Record<string, string> {
+  return {
+    "List-Unsubscribe": `<${url}>`,
+    "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+  };
+}
+
 /** Returns true when actually sent, false on dry run (no API key). */
 export async function sendEmail(
   to: string,
   subject: string,
   text: string,
+  headers?: Record<string, string>,
 ): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
@@ -27,6 +46,7 @@ export async function sendEmail(
       to,
       subject,
       text,
+      ...(headers ? { headers } : {}),
     }),
   });
   if (!response.ok) {

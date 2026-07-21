@@ -1,6 +1,10 @@
 import races from "@/data/races.json";
 import { deriveStatus, type Race } from "@/lib/deriveStatus";
-import { sendEmail } from "@/lib/email";
+import {
+  sendEmail,
+  unsubscribeHeaders,
+  unsubscribeUrl,
+} from "@/lib/email";
 import {
   EMAIL_PATTERN,
   addSubscription,
@@ -40,19 +44,22 @@ export async function POST(request: Request) {
   if (created) {
     // Confirmation is best-effort: a failed email must not fail the subscribe.
     const status = deriveStatus(race as unknown as Race);
+    const unsubscribe = unsubscribeUrl(body.email, race.id);
     try {
       await sendEmail(
         body.email,
-        `Subscribed: ${race.name}`,
+        `We're watching ${race.name} for you.`,
         [
-          `You're subscribed to ${race.name}.`,
+          `We're watching ${race.name} for you.`,
           ``,
           `Current status: ${status.label}`,
-          `We'll email you when its registration window opens.`,
+          `We'll email you the moment its registration window opens.`,
           ``,
           `Race page: ${race.officialUrl}`,
-          `Manage subscriptions: https://race-reminder.vercel.app`,
+          ``,
+          `Unsubscribe from this race: ${unsubscribe}`,
         ].join("\n"),
+        unsubscribeHeaders(unsubscribe),
       );
     } catch (error) {
       console.error("confirmation email failed:", error);
