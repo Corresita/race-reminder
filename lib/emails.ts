@@ -62,8 +62,18 @@ function cta(url: string, label: string): string {
 
 // ── 1. CONFIRM — sent the instant they set a reminder ──────────────────────
 export function confirmEmail(race: RaceLike, unsubUrl: string) {
-  const opensDate = race.registrationOpens ? fmt(race.registrationOpens) : null;
-  const closesDate = race.registrationCloses ? fmt(race.registrationCloses) : null;
+  // Only a FUTURE open date supports "expected to open around X" — an open
+  // date in the past means registration is underway, so lead with the
+  // deadline instead (and never promise a "day it opens" that already went).
+  const now = Date.now();
+  const opensDate =
+    race.registrationOpens && new Date(race.registrationOpens).getTime() > now
+      ? fmt(race.registrationOpens)
+      : null;
+  const closesDate =
+    race.registrationCloses && new Date(race.registrationCloses).getTime() > now
+      ? fmt(race.registrationCloses)
+      : null;
 
   const whenText = opensDate
     ? `Registration is expected to open around ${opensDate}. We'll email you the day it does.`
