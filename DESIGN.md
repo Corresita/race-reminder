@@ -153,6 +153,22 @@ render dimmed (three columns per row, stacking on mobile):
   | closed / completed TBA  | Next cycle            | TBA          |
   | dates TBA               | Dates                 | TBA          |
 
+  The value is the card's one big figure: `font-mono`, `leading-none`
+  (so the box hugs the text and it reads vertically centered, not
+  top-biased — Geist Mono's metrics sit high with looser leading).
+
+  **Spacing rule — keep it balanced when the figure's size changes.**
+  The figure must sit with equal *visual* space above (to the STATUS
+  label) and below (to the action button). Two gotchas:
+  - Use `leading-none` on the figure; otherwise extra line-height pushes
+    the glyph to the top of its box and it looks top-biased.
+  - The action button is a filled pill with its own `py-1.5` (~6px) top
+    padding, so its **text** sits ~6px below its edge. Equal margins
+    therefore look unequal. Compensate: the button container's top margin
+    is ~6px *less* than the figure's top margin (currently figure
+    `mt-2.5` ≈ 10px, button `mt-1.5` ≈ 6px). If the figure's font size
+    changes, re-check both so the text-to-text gaps stay equal.
+
 - **Opens / Closes dates** — only while the window is live
   (`status.actionable && !status.completed`); stale past-edition dates are
   hidden
