@@ -197,9 +197,11 @@ Tailwind utilities in `app/globals.css`:
   time-dependent UI must use `now` from that prop, never `new Date()`.
 - **Scraper** (`scripts/scrape.ts`, 6-hourly via GitHub Actions) syncs
   UTMB races: event dates, real distances, sold-out, observed status.
-- **Notifier** (`scripts/notify.ts`, daily) emails subscribers whose race
-  entered an open state; once per race edition. Reminder subjects are
-  action signals ("{race} registration is open — ballot closes Oct 15").
+- **Notifier** (`scripts/notify.ts`, daily) fires two dedup'd events per
+  race edition: **open** (entered an open state) and **closing** (an open
+  window within 3 days of its deadline) — each subscriber gets each once.
+  Three HTML emails (confirm/open/closing) in `lib/emails.ts`: subject is
+  the action signal, warmth in the last line, plain-text part included.
 - **Emails** — confirmation ("We're watching {race} for you.") and every
   reminder carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
