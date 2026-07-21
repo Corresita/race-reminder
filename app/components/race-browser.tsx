@@ -377,7 +377,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 <p className="mt-2 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
                   {countdown.label}
                 </p>
-                <p className="font-mono text-[1.2rem] leading-tight font-semibold tracking-tight text-zinc-900">
+                <p className="mt-0.5 font-mono text-[1.2rem] leading-none font-semibold tracking-tight text-zinc-900">
                   {countdown.value}
                 </p>
                 {opensLabel ? (
