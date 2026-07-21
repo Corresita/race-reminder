@@ -81,6 +81,7 @@ const shortStatusLabels: Record<DerivedStatus["code"], string> = {
   SOLD_OUT: "Sold out",
   COMPLETED_NEXT_KNOWN: "Completed",
   COMPLETED_NEXT_TBA: "Completed",
+  REG_NOT_OPEN: "Not open yet",
   DATES_TBA: "Dates TBA",
 };
 
@@ -112,6 +113,8 @@ function countdownRow(status: DerivedStatus): { label: string; value: string } {
     case "REG_CLOSED":
     case "COMPLETED_NEXT_TBA":
       return { label: "Next cycle", value: "TBA" };
+    case "REG_NOT_OPEN":
+      return { label: "Registration", value: "Opens later" };
     default:
       return { label: "Dates", value: "TBA" };
   }
@@ -262,9 +265,15 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       if (activeFilter && !race.distancesKm.some(activeFilter.match)) continue;
       const status = deriveStatus(race, now);
       if (statusGroup && !statusGroup.has(status.code)) continue;
-      if (status.code === "DATES_TBA") tbaRaces.push({ race, status });
-      else if (status.actionable) actionableRaces.push({ race, status });
-      else sunkRaces.push({ race, status });
+      // "Awaiting dates" fold: no registration window yet — unknown dates, or
+      // a known date whose registration hasn't opened.
+      if (status.code === "DATES_TBA" || status.code === "REG_NOT_OPEN") {
+        tbaRaces.push({ race, status });
+      } else if (status.actionable) {
+        actionableRaces.push({ race, status });
+      } else {
+        sunkRaces.push({ race, status });
+      }
     }
     actionableRaces.sort((a, b) => compareStatus(a.status, b.status));
     sunkRaces.sort((a, b) => compareStatus(a.status, b.status));
@@ -290,7 +299,11 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       <li
         key={race.id}
         className={`grid gap-3 rounded-2xl bg-white px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7 ${
-          status.actionable || status.code === "DATES_TBA" ? "" : "opacity-60"
+          status.actionable ||
+          status.code === "DATES_TBA" ||
+          status.code === "REG_NOT_OPEN"
+            ? ""
+            : "opacity-60"
         }`}
       >
               <div>

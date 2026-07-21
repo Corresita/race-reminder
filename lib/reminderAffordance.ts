@@ -29,6 +29,7 @@ const FUTURE_OPEN = new Set<DerivedStatus["code"]>([
   "REG_OPENS_SOON",
   "LOTTERY_OPENS_SOON",
   "COMPLETED_NEXT_KNOWN",
+  "REG_NOT_OPEN",
 ]);
 
 export function reminderAffordance(

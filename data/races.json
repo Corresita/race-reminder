@@ -368,8 +368,8 @@
     "entryRequirement": "ITRA 600 / UTMB 50K",
     "officialUrl": "https://eiger.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-21T06:13:25.480Z"
+      "status": "available_soon",
+      "checkedAt": "2026-07-21T06:46:20.290Z"
     },
     "distancesKm": [
       15,
@@ -378,8 +378,7 @@
       51,
       101,
       200
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "bucovina-ultra-rocks",
@@ -516,8 +515,8 @@
     "entryRequirement": null,
     "officialUrl": "https://borealys.utmb.world",
     "observed": {
-      "status": "charity_bibs_available",
-      "checkedAt": "2026-07-21T06:13:25.480Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-21T06:50:12.623Z"
     },
     "distancesKm": [
       6,
@@ -525,7 +524,8 @@
       27,
       46,
       81
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ultra-trail-whistler",

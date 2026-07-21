@@ -31,6 +31,7 @@ type RaceRecord = {
 type Stat = { name?: string; value?: unknown };
 type SubRace = {
   name?: string;
+  startDate?: string;
   raceStatus?: { status?: string };
   details?: { statsUp?: Stat[]; statsDown?: Stat[] };
 };
@@ -80,7 +81,9 @@ function findSubRaces(node: unknown): SubRace[] | null {
 function aggregateStatus(statuses: string[]): string | null {
   if (statuses.length === 0) return null;
   if (statuses.some((s) => s === "registration_open")) return "registration_open";
-  if (statuses.every((s) => s.includes("sold_out"))) return "registration_sold_out";
+  // charity_bibs_available = general entry is full, only charity spots remain.
+  if (statuses.every((s) => s.includes("sold_out") || s === "charity_bibs_available"))
+    return "registration_sold_out";
   if (statuses.every((s) => s === "registration_closed")) return "registration_closed";
   if (statuses.some((s) => s === "available_soon")) return "available_soon";
   return statuses[0];
@@ -147,7 +150,24 @@ function applySite(
   const statuses = forStatus
     .map((sub) => sub.raceStatus?.status)
     .filter((s): s is string => Boolean(s));
-  const status = aggregateStatus(statuses);
+  let status = aggregateStatus(statuses);
+
+  // Between-editions guard: when the announced event date has rolled to a new
+  // edition but the listed races are still the finished one (their start year
+  // is older than the event year), their sold-out/closed status is last
+  // year's — not the upcoming edition's. Treat it as simply not open yet.
+  const eventYear = site.begin ? Number(site.begin.slice(0, 10).slice(0, 4)) : null;
+  const startYears = forStatus
+    .map((sub) => /\b(20\d{2})\b/.exec(sub.startDate ?? "")?.[1])
+    .filter((y): y is string => Boolean(y))
+    .map(Number);
+  const staleEdition =
+    eventYear != null &&
+    startYears.length > 0 &&
+    startYears.every((y) => y < eventYear);
+  if (staleEdition && status !== "registration_open") {
+    status = "available_soon";
+  }
 
   const soldOut = status === "registration_sold_out";
   if (soldOut !== Boolean(race.soldOut)) {

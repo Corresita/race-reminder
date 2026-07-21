@@ -57,6 +57,7 @@ export type StatusCode =
   | "LOTTERY_DRAWN"
   | "COMPLETED_NEXT_KNOWN"   // race ran; next edition's reg date is known
   | "COMPLETED_NEXT_TBA"     // race ran; watching for next edition announcement
+  | "REG_NOT_OPEN"           // race date known, registration not open yet
   | "DATES_TBA";             // not enough facts to conclude anything
 
 export type Urgency = "critical" | "warning" | "normal" | "none";
@@ -294,6 +295,20 @@ export function deriveStatus(
       urgency: "none",
       daysUntil: raceDate ? daysBetween(now, raceDate) : null,
       sortKey: raceDate?.getTime() ?? FAR_FUTURE,
+      actionable: false,
+      completed: false,
+    };
+  }
+  // Announced but not yet open — the race date is known, registration isn't.
+  // (available_soon, or the scraper's between-editions marker.) Honest signal:
+  // "not open yet", not "dates TBA".
+  if (race.observed?.status === "available_soon" && raceDate) {
+    return {
+      code: "REG_NOT_OPEN",
+      label: "Registration not open yet",
+      urgency: "none",
+      daysUntil: null,
+      sortKey: raceDate.getTime(),
       actionable: false,
       completed: false,
     };
