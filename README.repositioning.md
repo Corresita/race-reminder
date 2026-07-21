@@ -4,7 +4,7 @@
 
 Trail race registrations don't fail politely. Miss the closing date of a first-come-first-served race, or a lottery entry window, and the answer is: *wait a year.* Race Reminder tracks the registration windows of major trail ultras in one place, and tells you what needs your attention — before it's too late.
 
-**Live at:** [race-reminder.vercel.app](#) <!-- replace with your URL -->
+**Live at:** [racereminder.run](https://www.racereminder.run)
 
 ---
 
