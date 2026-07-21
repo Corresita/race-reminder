@@ -387,7 +387,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   <p className="mt-1 text-xs text-zinc-500">Closes {closesLabel}</p>
                 ) : null}
 
-                <div className="mt-2.5">
+                <div className="mt-1.5">
                   {subscribed || affordance.kind === "REMIND_OPEN" || affordance.kind === "REMIND_CLOSE" ? (
                     <button
                       type="button"
