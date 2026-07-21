@@ -377,7 +377,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 <p className="mt-2 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
                   {countdown.label}
                 </p>
-                <p className="mt-0.5 font-mono text-[1.2rem] leading-none font-semibold tracking-tight text-zinc-900">
+                <p className="mt-2.5 font-mono text-[1.2rem] leading-none font-semibold tracking-tight text-zinc-900">
                   {countdown.value}
                 </p>
                 {opensLabel ? (
@@ -387,7 +387,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   <p className="mt-1 text-xs text-zinc-500">Closes {closesLabel}</p>
                 ) : null}
 
-                <div className="mt-3">
+                <div className="mt-2.5">
                   {subscribed || affordance.kind === "REMIND_OPEN" || affordance.kind === "REMIND_CLOSE" ? (
                     <button
                       type="button"
