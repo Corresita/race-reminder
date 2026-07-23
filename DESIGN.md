@@ -42,8 +42,10 @@ the counts can drive filter state).
 (the h1): "Know the day registration opens. Every lottery draw, every
 deadline that matters — for the trail ultras you're chasing." No divider
 splits it; it sits inside the brand block, above the shared header rule
-(a 1px zinc-300 dashed line with a 6px round dot at each end —
-decorative, `aria-hidden`).
+(`DotRule`: a 1px zinc-400 dashed line with a 6px round dot at each end
+— decorative, `aria-hidden`). The same rule reappears above the footer
+and nowhere else: the pair reads as bookends framing the page, and a
+third use would demote it to ornament. Group dividers stay plain.
 
 **Rules:** one font (default Inter), sentence case, gray — descriptive
 supporting copy, not a wordmark. When the line wraps, it must break at
@@ -199,8 +201,10 @@ render dimmed (three columns per row, stacking on mobile):
 
 ## 7. Footer
 
-**Shows:** in one row — the data-honesty note (manually curated, confirm
-on official sites) on the left, and a `© 2026 Race Reminder` copyright
+**Shows:** the `DotRule` divider (the header rule's bookend twin, ~20px
+above the content), then one row — the data-honesty note (manually
+curated, confirm on official sites) on the left, and a `© 2026 Race
+Reminder` copyright
 line on the right — Space Grotesk 16px, 0.2em tracking, zinc-900, with
 mixed weight: "© 2026" regular, "Race Reminder" semibold (the wordmark
 keeps its brand weight; the legal prefix stays quiet). The header

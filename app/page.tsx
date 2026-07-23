@@ -1,3 +1,4 @@
+import { DotRule } from "@/app/components/dot-rule";
 import { RaceBrowser, type Race } from "@/app/components/race-browser";
 import races from "@/data/races.json";
 
@@ -15,15 +16,18 @@ export default function Home() {
       {/* eslint-disable-next-line react-hooks/purity */}
       <RaceBrowser races={raceData} initialNow={Date.now()} />
 
-      <footer className="mt-16 flex flex-wrap items-end justify-between gap-4">
-        <p className="max-w-md text-xs text-zinc-500">
-          Race data is manually curated. Always confirm dates on the official
-          race website before planning.
-        </p>
-        <p className="font-display text-base tracking-[0.2em] text-zinc-900 uppercase select-none">
-          &copy;&nbsp;2026&nbsp;
-          <span className="font-semibold">Race&nbsp;Reminder</span>
-        </p>
+      <footer className="mt-16">
+        <DotRule />
+        <div className="flex flex-wrap items-end justify-between gap-4 pt-5">
+          <p className="max-w-md text-xs text-zinc-500">
+            Race data is manually curated. Always confirm dates on the official
+            race website before planning.
+          </p>
+          <p className="font-display text-base tracking-[0.2em] text-zinc-900 uppercase select-none">
+            &copy;&nbsp;2026&nbsp;
+            <span className="font-semibold">Race&nbsp;Reminder</span>
+          </p>
+        </div>
       </footer>
     </main>
   );

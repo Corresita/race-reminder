@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { DotRule } from "@/app/components/dot-rule";
 import {
   compareStatus,
   deriveStatus,
@@ -569,12 +570,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             </button>
           </div>
         </div>
-        {/* Dashed rule with dot terminals — same zinc-300/1px as a border-b. */}
-        <div aria-hidden className="flex items-center">
-          <span className="size-1.5 shrink-0 rounded-full bg-zinc-300" />
-          <span className="flex-1 border-t border-dashed border-zinc-300" />
-          <span className="size-1.5 shrink-0 rounded-full bg-zinc-300" />
-        </div>
+        <DotRule />
       </header>
 
       <section className="mb-8 flex flex-wrap items-center gap-2">
