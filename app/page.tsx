@@ -21,7 +21,7 @@ export default function Home() {
           race website before planning.
         </p>
         <p className="font-display text-sm font-semibold tracking-[0.25em] text-zinc-900 uppercase select-none">
-          Race_Reminder&trade;
+          &copy;&nbsp;2026&nbsp;Race&nbsp;Reminder
         </p>
       </footer>
     </main>

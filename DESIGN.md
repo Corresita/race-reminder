@@ -193,11 +193,11 @@ render dimmed (three columns per row, stacking on mobile):
 ## 7. Footer
 
 **Shows:** in one row — the data-honesty note (manually curated, confirm
-on official sites) on the left, and a `RACE_REMINDER™` wordmark on the
-right, styled identically to the top brand mark (Space Grotesk, small,
-semibold, 0.25em tracking, zinc-900). ™ (unregistered trademark) is the
-correct mark for the brand name; © belongs to a copyright line, not a
-wordmark.
+on official sites) on the left, and a `© 2026 Race Reminder` copyright
+line on the right, set in the brand-mark style (Space Grotesk, small,
+semibold, 0.25em tracking, zinc-900). Convention: ™ marks the brand name
+(header wordmark, emails); © + year is the footer copyright line. Bump
+the year each January.
 
 **Code:** `app/page.tsx`.
 
