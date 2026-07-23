@@ -51,19 +51,27 @@ supporting copy, not a wordmark. The `<title>`/meta description in
 
 ---
 
-## 3. Series tabs
+## 3. Control row (series · distance · search)
+
+One wrapping row: series tabs, a thin divider, distance chips, and a
+live search field (right-aligned, grows on mobile). All filters AND
+together.
+
+### Series tabs
 
 **Shows:** `All Events` (default) / `UTMB` / `World Majors` / `Independent`.
 
 **Data:** `race.series` — one of `utmb-world-series`, `world-trail-majors`,
 `independent`. `All Events` = no series filter (`activeSeries === null`).
 
-**Code:** `seriesTabs` + `activeSeries` state in
-`app/components/race-browser.tsx`.
+### Search
 
----
+**Shows:** an input that filters as you type, matching race **name or
+country** (case-insensitive substring).
 
-## 4. Distance filters
+**Code:** `searchQuery` state in `app/components/race-browser.tsx`.
+
+### Distance filters
 
 **Shows:** `≤50K` / `50–100K` / `100K` / `100M` toggle chips.
 
@@ -92,8 +100,9 @@ changes are a one-file edit here.
 Three groups, in order:
 
 1. **Actionable** — `status.actionable === true` (open now, closing soon,
-   ballot open, opens-announced, next-edition-open-date-known). Sorted by
-   `compareStatus`: nearest actionable date first.
+   ballot open, opens-announced, next-edition-open-date-known). Titled
+   `Open & opening soon (N)` so the group reads at a glance, like the
+   other two. Sorted by `compareStatus`: nearest actionable date first.
 2. **No-action group** — everything with dates but nothing to do (closed,
    sold out, drawn, awaiting draw, completed). Separated by a labeled
    divider row: `Nothing to act on — closed, sold out, or completed (N)`.
