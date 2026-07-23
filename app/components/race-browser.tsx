@@ -571,9 +571,9 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         </div>
         {/* Dashed rule with dot terminals — same zinc-300/1px as a border-b. */}
         <div aria-hidden className="flex items-center">
-          <span className="size-1 shrink-0 rounded-full bg-zinc-300" />
+          <span className="size-1.5 shrink-0 rounded-full bg-zinc-300" />
           <span className="flex-1 border-t border-dashed border-zinc-300" />
-          <span className="size-1 shrink-0 rounded-full bg-zinc-300" />
+          <span className="size-1.5 shrink-0 rounded-full bg-zinc-300" />
         </div>
       </header>
 

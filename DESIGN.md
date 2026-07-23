@@ -42,7 +42,7 @@ the counts can drive filter state).
 (the h1): "Know the day registration opens. Every lottery draw, every
 deadline that matters — for the trail ultras you're chasing." No divider
 splits it; it sits inside the brand block, above the shared header rule
-(a 1px zinc-300 dashed line with a 4px round dot at each end —
+(a 1px zinc-300 dashed line with a 6px round dot at each end —
 decorative, `aria-hidden`).
 
 **Rules:** one font (default Inter), sentence case, gray — descriptive
