@@ -208,10 +208,11 @@ mobile):
 above the content), then one row — the data-honesty note (manually
 curated, confirm on official sites) on the left, and a `© 2026 Race
 Reminder` copyright
-line on the right — Space Grotesk 16px, 0.2em tracking, zinc-900, with
-mixed weight: "© 2026" regular, "Race Reminder" semibold (the wordmark
-keeps its brand weight; the legal prefix stays quiet). The header
-wordmark matches: 16px semibold, 0.2em tracking. No ™ here: in a copyright
+line on the right — Space Grotesk 16px, zinc-900, with mixed weight and
+tracking: "©2026" regular at normal tracking (snug), "Race Reminder"
+semibold at 0.2em (the wordmark keeps its brand spacing; the legal
+prefix stays quiet). The header wordmark: 16px semibold, 0.2em
+tracking. No ™ here: in a copyright
 line the name is the owner, not a brand mark ("© 2026 Apple Inc.", never
 "Apple™"). ™ lives in the header wordmark and emails. Bump the year each
 January.
@@ -227,7 +228,7 @@ Tailwind utilities in `app/globals.css`:
 
 | Face              | Utility        | Used for                                        |
 | ----------------- | -------------- | ----------------------------------------------- |
-| **Space Grotesk** | `font-display` | wordmark, hero headline, footer wordmark        |
+| **Space Grotesk** | `font-display` | the two brand wordmarks (header + footer)       |
 | **Inter**         | default        | everything else — labels, names, badges, body   |
 | **Geist Mono**    | `font-mono`    | card index numbers, countdown figures           |
 
