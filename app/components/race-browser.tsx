@@ -162,6 +162,7 @@ function formatDate(iso: string | null | undefined) {
 export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   const [activeSeries, setActiveSeries] = useState<Series | null>(null);
   const [activeDistance, setActiveDistance] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeStatusGroup, setActiveStatusGroup] = useState<StatusGroup | null>(
     null,
   );
@@ -267,12 +268,18 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     const tbaRaces: { race: Race; status: DerivedStatus }[] = [];
 
     const activeFilter = distanceFilters.find((f) => f.id === activeDistance);
+    const query = searchQuery.trim().toLowerCase();
     const statusGroup = activeStatusGroup
       ? STATUS_GROUPS[activeStatusGroup]
       : null;
     for (const race of races) {
       if (activeSeries && race.series !== activeSeries) continue;
       if (activeFilter && !race.distancesKm.some(activeFilter.match)) continue;
+      if (
+        query &&
+        !`${race.name} ${race.country ?? ""}`.toLowerCase().includes(query)
+      )
+        continue;
       const status = deriveStatus(race, now);
       if (statusGroup && !statusGroup.has(status.code)) continue;
       // "Awaiting dates" fold: no registration window yet — unknown dates, or
@@ -289,7 +296,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     sunkRaces.sort((a, b) => compareStatus(a.status, b.status));
 
     return { actionableRaces, sunkRaces, tbaRaces };
-  }, [races, activeSeries, activeDistance, activeStatusGroup, now]);
+  }, [races, activeSeries, activeDistance, activeStatusGroup, searchQuery, now]);
 
   function renderRace(
     { race, status }: { race: Race; status: DerivedStatus },
@@ -537,7 +544,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         </div>
       </header>
 
-      <section className="mb-4 flex flex-wrap gap-2">
+      <section className="mb-8 flex flex-wrap items-center gap-2">
         {seriesTabs.map((tab) => (
           <button
             key={tab.slug ?? "all"}
@@ -555,9 +562,9 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             {tab.label}
           </button>
         ))}
-      </section>
 
-      <section className="mb-8 flex flex-wrap gap-2">
+        <span aria-hidden className="mx-1 hidden h-5 w-px bg-zinc-300 sm:block" />
+
         {distanceFilters.map((filter) => (
           <button
             key={filter.id}
@@ -576,12 +583,26 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             {filter.label}
           </button>
         ))}
+
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Search races…"
+          aria-label="Search races by name or country"
+          className="ml-auto w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
+        />
       </section>
 
       {actionableRaces.length > 0 ? (
-        <ul className="flex flex-col gap-3">
-          {actionableRaces.map(renderRace)}
-        </ul>
+        <section>
+          <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+            Open &amp; opening soon ({actionableRaces.length})
+          </p>
+          <ul className="flex flex-col gap-3">
+            {actionableRaces.map(renderRace)}
+          </ul>
+        </section>
       ) : null}
 
       {sunkRaces.length > 0 ? (
