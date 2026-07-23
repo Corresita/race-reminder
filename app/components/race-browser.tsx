@@ -489,7 +489,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   return (
     <>
       <header className="mb-10">
-        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-zinc-300 pb-5">
+        <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
           <div>
             <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
               Race Reminder™
@@ -568,6 +568,12 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               closed
             </button>
           </div>
+        </div>
+        {/* Dashed rule with dot terminals — same zinc-300/1px as a border-b. */}
+        <div aria-hidden className="flex items-center">
+          <span className="size-1 shrink-0 rounded-full bg-zinc-300" />
+          <span className="flex-1 border-t border-dashed border-zinc-300" />
+          <span className="size-1 shrink-0 rounded-full bg-zinc-300" />
         </div>
       </header>
 
