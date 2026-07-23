@@ -172,7 +172,8 @@ mobile):
   | closed / completed TBA  | Next cycle            | TBA          |
   | dates TBA               | Dates                 | TBA          |
 
-  The value is the card's one big figure: `font-mono`, `leading-none`
+  The value is the card's one big figure: `font-mono` 18px semibold
+  zinc-800 (a step lighter than zinc-900 body black), `leading-none`
   (so the box hugs the text and it reads vertically centered, not
   top-biased — Geist Mono's metrics sit high with looser leading).
 
