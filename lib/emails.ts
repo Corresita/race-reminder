@@ -286,7 +286,7 @@ export function closingEmail(
   const html = shell(
     `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">Closing soon.</p>
      <p>Registration for <strong>${esc(race.name)}</strong> closes <strong>${esc(closesOn)}</strong> — that's ${daysLeft} ${dayWord} away.</p>
-     ${cta(race.officialUrl, "Register before it closes →")}
+     ${cta(race.officialUrl, "Lock in your place →")}
      <p style="color:#71717a;margin-bottom:0;">If you're still deciding — this is the nudge. Miss it and it's a year. No pressure. (Okay, a little pressure.)</p>`,
     unsubUrl,
     "A reminder from",

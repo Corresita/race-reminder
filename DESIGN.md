@@ -276,9 +276,9 @@ Tailwind utilities in `app/globals.css`:
   - race names and dates are **bold**; the when-line only uses **future**
     dates (a past opens date routes to the deadline or watching line)
   - quiet CTAs ("View the race →", "Set it again →") are regular-weight
-    links with ~56px of air above; the two act-now emails (open, closing)
-    use a black pill button with tracked uppercase label ("Secure your
-    place →" / "Register before it closes →")
+    links with ~56px of air above; the two act-now emails use a black
+    pill button with tracked uppercase label, a matched escalating pair:
+    open = "Secure your place →", closing = "Lock in your place →"
   - signature is the brand wordmark (uppercase, 0.2em tracking, bold,
     zinc-900); email clients block webfonts, so the system stack carries
     the look with 'Space Grotesk' first for clients that have it
