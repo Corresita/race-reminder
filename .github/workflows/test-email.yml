@@ -7,7 +7,7 @@ on:
         description: "Email template"
         required: true
         type: choice
-        options: [confirm, opens-soon, open, closing]
+        options: [confirm, cancel, opens-soon, open, closing]
       race_id:
         description: "Race id from data/races.json"
         required: true

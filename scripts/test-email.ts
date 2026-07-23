@@ -4,7 +4,7 @@
  * subscriptions or notification markers.
  *
  * Driven by env vars (set by the test-email GitHub Actions workflow):
- *   TEMPLATE = confirm | opens-soon | open | closing
+ *   TEMPLATE = confirm | cancel | opens-soon | open | closing
  *   RACE_ID  = a race id from data/races.json
  *   TO       = recipient address
  *
@@ -13,8 +13,14 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { deriveStatus, type Race } from "../lib/deriveStatus";
-import { sendEmail, unsubscribeHeaders, unsubscribeUrl } from "../lib/email";
 import {
+  SITE_URL,
+  sendEmail,
+  unsubscribeHeaders,
+  unsubscribeUrl,
+} from "../lib/email";
+import {
+  cancelEmail,
   closingEmail,
   confirmEmail,
   openEmail,
@@ -43,13 +49,15 @@ async function main() {
   const content =
     template === "confirm"
       ? confirmEmail(race, unsubscribe)
-      : template === "opens-soon"
-        ? opensSoonEmail(race, days, unsubscribe)
-        : template === "open"
-          ? openEmail(race, unsubscribe)
-          : template === "closing"
-            ? closingEmail(race, days, unsubscribe)
-            : null;
+      : template === "cancel"
+        ? cancelEmail(race, SITE_URL, unsubscribeUrl(to))
+        : template === "opens-soon"
+          ? opensSoonEmail(race, days, unsubscribe)
+          : template === "open"
+            ? openEmail(race, unsubscribe)
+            : template === "closing"
+              ? closingEmail(race, days, unsubscribe)
+              : null;
   if (!content) throw new Error(`Unknown template: ${template}`);
 
   const sent = await sendEmail(
