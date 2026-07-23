@@ -208,10 +208,11 @@ mobile):
 above the content), then one row — the data-honesty note (manually
 curated, confirm on official sites) on the left, and a `© 2026 Race
 Reminder` copyright
-line on the right — Space Grotesk 16px, 0.2em tracking, zinc-900, with
-mixed weight: "© 2026" regular, "Race Reminder" semibold (the wordmark
-keeps its brand weight; the legal prefix stays quiet). The header
-wordmark matches: 16px semibold, 0.2em tracking. No ™ here: in a copyright
+line on the right — M PLUS Rounded 1c 16px, zinc-900, with mixed weight
+and tracking: "©2026" regular at normal tracking (snug, per mockup),
+"Race Reminder" bold at 0.2em (the wordmark keeps its brand spacing; the
+legal prefix stays quiet). The header wordmark: 16px bold, 0.2em
+tracking. No ™ here: in a copyright
 line the name is the owner, not a brand mark ("© 2026 Apple Inc.", never
 "Apple™"). ™ lives in the header wordmark and emails. Bump the year each
 January.
@@ -225,11 +226,11 @@ January.
 Three faces, loaded via `next/font` in `app/layout.tsx`, mapped to
 Tailwind utilities in `app/globals.css`:
 
-| Face              | Utility        | Used for                                        |
-| ----------------- | -------------- | ----------------------------------------------- |
-| **Space Grotesk** | `font-display` | wordmark, hero headline, footer wordmark        |
-| **Inter**         | default        | everything else — labels, names, badges, body   |
-| **Geist Mono**    | `font-mono`    | card index numbers, countdown figures           |
+| Face                   | Utility        | Used for                                      |
+| ---------------------- | -------------- | --------------------------------------------- |
+| **M PLUS Rounded 1c**  | `font-display` | the two brand wordmarks (header + footer)     |
+| **Inter**              | default        | everything else — labels, names, badges, body |
+| **Geist Mono**         | `font-mono`    | card index numbers, countdown figures         |
 
 ## Data & status reference
 
@@ -284,7 +285,8 @@ Tailwind utilities in `app/globals.css`:
     open = "Secure your place →", closing = "Lock in your place →"
   - signature is the brand wordmark (uppercase, 0.2em tracking, bold,
     zinc-900); email clients block webfonts, so the system stack carries
-    the look with 'Space Grotesk' first for clients that have it
+    the look with 'M PLUS Rounded 1c' / 'Space Grotesk' first for the
+    rare clients that have them
   - Outlook's Word engine squares off round dots, pill corners, and card
     radius — accepted degradation, everything stays legible
   - sender: `Race Reminder <hello@racereminder.run>` (Resend; SPF + DKIM +

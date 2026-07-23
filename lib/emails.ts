@@ -51,7 +51,7 @@ function esc(value: string): string {
 }
 
 const FONT_STACK = "-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif";
-const DISPLAY_STACK = `'Space Grotesk',${FONT_STACK}`;
+const DISPLAY_STACK = `'M PLUS Rounded 1c','Space Grotesk',${FONT_STACK}`;
 
 function wordmark(px: number): string {
   return `<span style="font-family:${DISPLAY_STACK};font-size:${px}px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#18181b;">Race&nbsp;Reminder&trade;</span>`;

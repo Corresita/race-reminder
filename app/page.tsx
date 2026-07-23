@@ -23,9 +23,11 @@ export default function Home() {
             Race data is manually curated. Always confirm dates on the official
             race website before planning.
           </p>
-          <p className="font-display text-base tracking-[0.2em] text-zinc-900 uppercase select-none">
-            &copy;&nbsp;2026&nbsp;
-            <span className="font-semibold">Race&nbsp;Reminder</span>
+          <p className="font-display text-base text-zinc-900 uppercase select-none">
+            <span className="tracking-normal">&copy;2026</span>{" "}
+            <span className="font-bold tracking-[0.2em]">
+              Race&nbsp;Reminder
+            </span>
           </p>
         </div>
       </footer>

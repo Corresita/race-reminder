@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
+import { Geist_Mono, Inter, M_PLUS_Rounded_1c } from "next/font/google";
 import "./globals.css";
 
-// Display face: brand wordmark + hero.
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Display face: the brand wordmarks (header + footer). DIN-rounded look.
+const mPlusRounded = M_PLUS_Rounded_1c({
+  variable: "--font-m-plus-rounded",
+  weight: ["400", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${mPlusRounded.variable} ${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

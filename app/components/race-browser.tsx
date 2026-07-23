@@ -492,7 +492,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       <header className="mb-10">
         <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
           <div>
-            <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
+            <p className="font-display text-base font-bold tracking-[0.2em] text-zinc-900 uppercase">
               Race Reminder™
             </p>
             <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">

@@ -10,8 +10,8 @@
   --color-foreground: var(--foreground);
   /* font-sans (default) = Inter */
   --font-sans: var(--font-inter);
-  /* font-display = Space Grotesk, for the wordmark + hero */
-  --font-display: var(--font-space-grotesk);
+  /* font-display = M PLUS Rounded 1c, for the two brand wordmarks */
+  --font-display: var(--font-m-plus-rounded);
   /* font-mono = Geist Mono, for index numbers + countdown figures */
   --font-mono: var(--font-geist-mono);
 }
