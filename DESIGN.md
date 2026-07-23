@@ -196,9 +196,10 @@ render dimmed (three columns per row, stacking on mobile):
 
 **Shows:** in one row — the data-honesty note (manually curated, confirm
 on official sites) on the left, and a `© 2026 Race Reminder` copyright
-line on the right — Space Grotesk 18px, regular weight, 0.25em tracking,
-zinc-900 (the header wordmark is the same at semibold; the weight
-difference keeps brand vs legal distinct). No ™ here: in a copyright
+line on the right — Space Grotesk 16px, 0.2em tracking, zinc-900, with
+mixed weight: "© 2026" regular, "Race Reminder" semibold (the wordmark
+keeps its brand weight; the legal prefix stays quiet). The header
+wordmark matches: 16px semibold, 0.2em tracking. No ™ here: in a copyright
 line the name is the owner, not a brand mark ("© 2026 Apple Inc.", never
 "Apple™"). ™ lives in the header wordmark and emails. Bump the year each
 January.
