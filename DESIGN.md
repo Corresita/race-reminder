@@ -39,13 +39,16 @@ the counts can drive filter state).
 ## 2. Hero / description
 
 **Shows:** directly under the wordmark, one combined sentence-case line
-(the h1): "Never miss a start line. Opening dates, deadlines, and lottery
-draws — sorted by what needs action next." No divider splits it; it sits
-inside the brand block, above the shared border.
+(the h1): "Know the day registration opens. Every lottery draw, every
+deadline that matters — for the trail ultras you're chasing." No divider
+splits it; it sits inside the brand block, above the shared border.
 
 **Rules:** one font (default Inter), sentence case, gray — descriptive
-supporting copy, not a wordmark. The `<title>`/meta description in
-`app/layout.tsx` are separate and tuned for search.
+supporting copy, not a wordmark. When the line wraps, it must break at
+the em-dash, never mid-phrase: "— for the trail ultras you're chasing."
+is wrapped in an `inline-block` span so it moves to the next line as a
+unit (wide screens still render one line). The `<title>`/meta
+description in `app/layout.tsx` are separate and tuned for search.
 
 **Code:** header block in `app/components/race-browser.tsx`;
 `<title>`/description in `app/layout.tsx`.

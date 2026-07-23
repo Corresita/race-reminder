@@ -496,7 +496,10 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             </p>
             <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
               Know the day registration opens. Every lottery draw, every
-              deadline that matters — for the trail ultras you&rsquo;re chasing.
+              deadline that matters{" "}
+              <span className="inline-block">
+                — for the trail ultras you&rsquo;re chasing.
+              </span>
             </h1>
           </div>
           <div className="flex gap-6 text-xs tracking-wide uppercase">
