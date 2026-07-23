@@ -196,10 +196,12 @@ render dimmed (three columns per row, stacking on mobile):
 
 **Shows:** in one row — the data-honesty note (manually curated, confirm
 on official sites) on the left, and a `© 2026 Race Reminder` copyright
-line on the right, set in the brand-mark style (Space Grotesk, small,
-semibold, 0.25em tracking, zinc-900). Convention: ™ marks the brand name
-(header wordmark, emails); © + year is the footer copyright line. Bump
-the year each January.
+line on the right — Space Grotesk 18px, regular weight, 0.25em tracking,
+zinc-900 (the header wordmark is the same at semibold; the weight
+difference keeps brand vs legal distinct). No ™ here: in a copyright
+line the name is the owner, not a brand mark ("© 2026 Apple Inc.", never
+"Apple™"). ™ lives in the header wordmark and emails. Bump the year each
+January.
 
 **Code:** `app/page.tsx`.
 
