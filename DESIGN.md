@@ -209,7 +209,7 @@ above the content), then one row — the data-honesty note (manually
 curated, confirm on official sites) on the left, and a `© 2026 Race
 Reminder` copyright
 line on the right — Space Grotesk 16px, zinc-900, with mixed weight and
-tracking: "©2026" regular at normal tracking (snug), "Race Reminder"
+tracking: "©2026" regular at 0.1em tracking, "Race Reminder"
 semibold at 0.2em (the wordmark keeps its brand spacing; the legal
 prefix stays quiet). The header wordmark: 16px semibold, 0.2em
 tracking. No ™ here: in a copyright

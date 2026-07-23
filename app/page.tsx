@@ -24,7 +24,7 @@ export default function Home() {
             race website before planning.
           </p>
           <p className="font-display text-base text-zinc-900 uppercase select-none">
-            <span className="tracking-normal">&copy;2026</span>{" "}
+            <span className="tracking-[0.1em]">&copy;2026</span>{" "}
             <span className="font-semibold tracking-[0.2em]">
               Race&nbsp;Reminder
             </span>
