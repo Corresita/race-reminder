@@ -183,7 +183,9 @@ render dimmed (three columns per row, stacking on mobile):
   hidden
 - **Set reminder button** — `Set reminder` / `Reminder set ✓` (emerald
   when set; first click expands an inline email form, the email is
-  remembered in `localStorage`; POST/DELETE `/api/subscribe`).
+  remembered in `localStorage`; POST/DELETE `/api/subscribe`). Hovering a
+  set reminder turns it red and reads `Cancel reminder` (watch-style
+  toggle); clicking cancels and emails a receipt.
 
 **Code:** `renderRace`, `shortStatusLabels`, `countdownRow` in
 `app/components/race-browser.tsx`.
@@ -237,8 +239,10 @@ Tailwind utilities in `app/globals.css`:
   `lib/emails.ts`: subject is the action signal, warmth in the last line,
   plain-text part included. `NOTIFY_NOW=<iso>` time-travels dry runs for
   testing.
-- **Emails** — confirmation ("We're watching {race} for you.") and every
-  reminder carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
+- **Emails** — confirmation ("We're watching {race} for you."), a
+  cancellation receipt for site-side cancels (with a re-subscribe path;
+  email-link unsubscribes deliberately send nothing), and every reminder
+  carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
 - **Email template rules** (`shell()` in `lib/emails.ts`):
   - left-aligned block (`margin:0`, never `auto` — that centers it), base
