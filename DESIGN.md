@@ -257,9 +257,12 @@ Tailwind utilities in `app/globals.css`:
   carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
 - **Email template rules** (`shell()` in `lib/emails.ts`):
-  - card frame: white card (radius 4, padding 32/28) **centered** on a
-    zinc-100 canvas (`max-width:560px;margin:0 auto`) — the card centers,
-    the text inside stays left-aligned
+  - card frame: everything sits inside a rounded outer frame (1px
+    zinc-400 border, radius 24, background #f0f0f0, `max-width:600px;
+    margin:0 auto`) — outside the frame the email client's own
+    background shows through. The body copy lives on a white card
+    (radius 4, padding 32/28) inside it; the frame centers, the text
+    stays left-aligned
   - the card is bracketed by the site's dot-dash rule (email-safe 3-cell
     table; zinc-400 here for contrast on the gray canvas), mirroring the
     web page's bookends

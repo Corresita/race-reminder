@@ -75,8 +75,8 @@ function dotRule(): string {
  * inside stays left-aligned.
  */
 function shell(inner: string, unsubUrl: string, kicker: string): string {
-  return `<div style="background:#f4f4f5;padding:40px 16px;">
-  <div style="max-width:560px;margin:0 auto;font-family:${FONT_STACK};font-size:16px;color:#18181b;line-height:1.55;">
+  return `<div style="padding:24px 12px;">
+  <div style="max-width:600px;margin:0 auto;background:#f0f0f0;border:1px solid #a1a1aa;border-radius:24px;padding:36px 32px;font-family:${FONT_STACK};font-size:16px;color:#18181b;line-height:1.55;">
     <p style="margin:0 0 14px;font-family:${DISPLAY_STACK};font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:#3f3f46;">${kicker}&nbsp; ${wordmark(13)}</p>
     ${dotRule()}
     <div style="background:#ffffff;border-radius:4px;padding:32px 28px;margin:28px 0;">
