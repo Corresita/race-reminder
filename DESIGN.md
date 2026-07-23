@@ -257,15 +257,30 @@ Tailwind utilities in `app/globals.css`:
   carry a visible unsubscribe link plus RFC 8058 List-Unsubscribe
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
 - **Email template rules** (`shell()` in `lib/emails.ts`):
-  - left-aligned block (`margin:0`, never `auto` — that centers it), base
-    copy 16px, footers 14px
+  - card frame: white card (radius 4, padding 32/28) **centered** on a
+    zinc-100 canvas (`max-width:560px;margin:0 auto`) — the card centers,
+    the text inside stays left-aligned
+  - the card is bracketed by the site's dot-dash rule (email-safe 3-cell
+    table; zinc-400 here for contrast on the gray canvas), mirroring the
+    web page's bookends
+  - kicker above the top rule, per template: "Welcome to" (confirm), "A
+    message from" (cancel), "A heads-up from" (opens-soon), "A reminder
+    from" (open, closing) — always ending in the wordmark; understated
+    wording only, the tracked-caps frame turns cleverness into shouting
+  - footer below the bottom rule: unsubscribe line, wordmark (14px), then
+    the site tagline in gray
+  - base copy 16px, footers 13–14px
   - race names and dates are **bold**; the when-line only uses **future**
     dates (a past opens date routes to the deadline or watching line)
-  - the CTA link ("View the race →") is regular weight with ~72px of air
-    above it, separating action from copy
-  - signature is the brand wordmark (uppercase, 0.25em tracking, semibold,
+  - quiet CTAs ("View the race →", "Set it again →") are regular-weight
+    links with ~56px of air above; the two act-now emails (open, closing)
+    use a black pill button with tracked uppercase label ("Secure your
+    place →" / "Register before it closes →")
+  - signature is the brand wordmark (uppercase, 0.2em tracking, bold,
     zinc-900); email clients block webfonts, so the system stack carries
     the look with 'Space Grotesk' first for clients that have it
+  - Outlook's Word engine squares off round dots, pill corners, and card
+    radius — accepted degradation, everything stays legible
   - sender: `Race Reminder <hello@racereminder.run>` (Resend; SPF + DKIM +
     DMARC live on racereminder.run)
 - **Dates** render on their authored calendar day (the ISO offset is the
