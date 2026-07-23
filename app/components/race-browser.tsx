@@ -625,7 +625,18 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             </ul>
           ) : null}
           {tbaRaces.length > 0 ? (
-            <details className={upcomingRaces.length > 0 ? "mt-3" : undefined}>
+            <details
+              // Collapsed only on the unfiltered overview; once the user
+              // narrows (series, distance, search, status) they want the
+              // complete set, so the fold opens itself.
+              open={
+                activeSeries !== null ||
+                activeDistance !== null ||
+                activeStatusGroup !== null ||
+                searchQuery.trim() !== ""
+              }
+              className={upcomingRaces.length > 0 ? "mt-3" : undefined}
+            >
               <summary className="cursor-pointer text-[11px] tracking-[0.12em] text-zinc-500 uppercase select-none hover:text-zinc-900">
                 Awaiting dates ({tbaRaces.length}) — no registration window
                 announced yet
