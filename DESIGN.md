@@ -41,7 +41,9 @@ the counts can drive filter state).
 **Shows:** directly under the wordmark, one combined sentence-case line
 (the h1): "Know the day registration opens. Every lottery draw, every
 deadline that matters — for the trail ultras you're chasing." No divider
-splits it; it sits inside the brand block, above the shared border.
+splits it; it sits inside the brand block, above the shared header rule
+(a 1px zinc-300 dashed line with a 4px round dot at each end —
+decorative, `aria-hidden`).
 
 **Rules:** one font (default Inter), sentence case, gray — descriptive
 supporting copy, not a wordmark. When the line wraps, it must break at
