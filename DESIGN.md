@@ -260,9 +260,9 @@ Tailwind utilities in `app/globals.css`:
   - card frame: everything sits inside a rounded outer frame (1px
     zinc-400 border, radius 24, background #f0f0f0, `max-width:600px;
     margin:0 auto`) — outside the frame the email client's own
-    background shows through. The body copy lives on a white card
-    (radius 4, padding 32/28) inside it; the frame centers, the text
-    stays left-aligned
+    background shows through. The body copy sits directly on the frame
+    background (no white panel), flush-left with the kicker and footer;
+    the frame centers, the text stays left-aligned
   - the card is bracketed by the site's dot-dash rule (email-safe 3-cell
     table; zinc-400 here for contrast on the gray canvas), mirroring the
     web page's bookends
