@@ -115,6 +115,32 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
   return { subject, text, html };
 }
 
+// ── 1a. CANCELLED — sent when a reminder is cancelled on the site ──────────
+// (Not sent for email-link unsubscribes: after "stop emailing me", another
+// email would be exactly the wrong reply. The site cancel is an account
+// action, so it earns a receipt with an undo path.)
+export function cancelEmail(race: RaceLike, siteUrl: string, unsubAllUrl: string) {
+  const subject = `Reminder cancelled: ${race.name}`;
+  const text = [
+    `Done — we've stopped watching ${race.name} for you.`,
+    ``,
+    `No more emails about this race.`,
+    ``,
+    `Changed your mind? Set the reminder again anytime: ${siteUrl}`,
+    ``,
+    `Don't want any reminders? Unsubscribe from all races: ${unsubAllUrl}`,
+    ``,
+    `— Race Reminder`,
+  ].join("\n");
+  const html = shell(
+    `<p>Done — we&rsquo;ve stopped watching <strong>${esc(race.name)}</strong> for you.</p>
+     <p>No more emails about this race.</p>
+     <p style="margin:72px 0 24px;"><a href="${esc(siteUrl)}" style="color:#18181b;">Changed your mind? Set it again →</a></p>`,
+    unsubAllUrl,
+  );
+  return { subject, text, html };
+}
+
 // ── 1b. OPENS SOON — a known opening date is days away ─────────────────────
 export function opensSoonEmail(race: RaceLike, daysLeft: number, unsubUrl: string) {
   const now = Date.now();

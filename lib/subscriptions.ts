@@ -104,10 +104,11 @@ export async function addSubscription(email: string, raceId: string): Promise<bo
   return true;
 }
 
-export async function removeSubscription(email: string, raceId: string): Promise<void> {
+/** Returns true when a subscription actually existed and was removed. */
+export async function removeSubscription(email: string, raceId: string): Promise<boolean> {
   if (upstashConfig()) {
-    await redis(["HDEL", "subscriptions", `${raceId}|${email}`]);
-    return;
+    const removed = await redis(["HDEL", "subscriptions", `${raceId}|${email}`]);
+    return removed === 1;
   }
   const subscriptions = await readJsonFile<Subscription[]>(subscriptionsPath, []);
   const remaining = subscriptions.filter(
@@ -115,7 +116,9 @@ export async function removeSubscription(email: string, raceId: string): Promise
   );
   if (remaining.length !== subscriptions.length) {
     await writeJsonFile(subscriptionsPath, remaining);
+    return true;
   }
+  return false;
 }
 
 /** Remove every subscription for an email. Returns how many were removed. */

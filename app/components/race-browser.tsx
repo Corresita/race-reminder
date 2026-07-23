@@ -409,14 +409,29 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                       type="button"
                       onClick={() => onSubscribeClick(race.id)}
                       disabled={busyRaceId === race.id}
-                      title="Email me when there's something to act on"
-                      className={`rounded-full border px-3 py-1 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
+                      title={
                         subscribed
-                          ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-emerald-600"
+                          ? "Cancel this reminder"
+                          : "Email me when there's something to act on"
+                      }
+                      className={`group rounded-full border px-3 py-1 text-[11px] tracking-wide uppercase transition-colors disabled:opacity-50 ${
+                        subscribed
+                          ? "border-emerald-500/40 bg-emerald-50 text-emerald-700 hover:border-red-400 hover:bg-red-50 hover:text-red-700"
                           : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
                       }`}
                     >
-                      {subscribed ? "Reminder set ✓" : affordance.label}
+                      {subscribed ? (
+                        <>
+                          <span className="group-hover:hidden">
+                            Reminder set ✓
+                          </span>
+                          <span className="hidden group-hover:inline">
+                            Cancel reminder
+                          </span>
+                        </>
+                      ) : (
+                        affordance.label
+                      )}
                     </button>
                   ) : affordance.kind === "REGISTER_NOW" ? (
                     <a

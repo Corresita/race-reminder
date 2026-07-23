@@ -1,10 +1,11 @@
 import races from "@/data/races.json";
 import {
+  SITE_URL,
   sendEmail,
   unsubscribeHeaders,
   unsubscribeUrl,
 } from "@/lib/email";
-import { confirmEmail } from "@/lib/emails";
+import { cancelEmail, confirmEmail } from "@/lib/emails";
 import {
   EMAIL_PATTERN,
   addSubscription,
@@ -67,6 +68,23 @@ export async function DELETE(request: Request) {
     );
   }
 
-  await removeSubscription(body.email, body.raceId);
+  const removed = await removeSubscription(body.email, body.raceId);
+
+  // Receipt for a real site-side cancel. Email-link unsubscribes go through
+  // /api/unsubscribe and deliberately send nothing.
+  const race = races.find((r) => r.id === body.raceId);
+  if (removed && race) {
+    const unsubAll = unsubscribeUrl(body.email);
+    try {
+      await sendEmail(
+        body.email,
+        cancelEmail(race, SITE_URL, unsubAll),
+        unsubscribeHeaders(unsubAll),
+      );
+    } catch (error) {
+      console.error("cancellation email failed:", error);
+    }
+  }
+
   return Response.json({ subscribed: false });
 }
