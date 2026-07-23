@@ -66,13 +66,14 @@ const STATUS_GROUPS: Record<StatusGroup, Set<DerivedStatus["code"]>> = {
     "SOLD_OUT",
     "LOTTERY_DRAWN",
     "AWAITING_DRAW",
-    "COMPLETED_NEXT_KNOWN",
     "COMPLETED_NEXT_TBA",
   ]),
-  // Announced but not yet open — opening later, or dates still unknown.
+  // Not open yet — a known future open date (incl. an announced next
+  // edition), or no dates at all.
   upcoming: new Set([
     "REG_OPENS_SOON",
     "LOTTERY_OPENS_SOON",
+    "COMPLETED_NEXT_KNOWN",
     "REG_NOT_OPEN",
     "DATES_TBA",
   ]),
@@ -262,10 +263,14 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     };
   }, [races, now]);
 
-  const { actionableRaces, sunkRaces, tbaRaces } = useMemo(() => {
-    const actionableRaces: { race: Race; status: DerivedStatus }[] = [];
-    const sunkRaces: { race: Race; status: DerivedStatus }[] = [];
+  // One taxonomy everywhere: the page sections mirror the header counts
+  // (open / upcoming / closed) exactly. Within "upcoming", races with no
+  // window at all fold into the awaiting-dates <details>.
+  const { openRaces, upcomingRaces, tbaRaces, closedRaces } = useMemo(() => {
+    const openRaces: { race: Race; status: DerivedStatus }[] = [];
+    const upcomingRaces: { race: Race; status: DerivedStatus }[] = [];
     const tbaRaces: { race: Race; status: DerivedStatus }[] = [];
+    const closedRaces: { race: Race; status: DerivedStatus }[] = [];
 
     const activeFilter = distanceFilters.find((f) => f.id === activeDistance);
     const query = searchQuery.trim().toLowerCase();
@@ -282,20 +287,24 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         continue;
       const status = deriveStatus(race, now);
       if (statusGroup && !statusGroup.has(status.code)) continue;
-      // "Awaiting dates" fold: no registration window yet — unknown dates, or
-      // a known date whose registration hasn't opened.
-      if (status.code === "DATES_TBA" || status.code === "REG_NOT_OPEN") {
-        tbaRaces.push({ race, status });
-      } else if (status.actionable) {
-        actionableRaces.push({ race, status });
+      if (STATUS_GROUPS.open.has(status.code)) {
+        openRaces.push({ race, status });
+      } else if (STATUS_GROUPS.upcoming.has(status.code)) {
+        // No window at all → the awaiting-dates fold inside "upcoming".
+        if (status.code === "DATES_TBA" || status.code === "REG_NOT_OPEN") {
+          tbaRaces.push({ race, status });
+        } else {
+          upcomingRaces.push({ race, status });
+        }
       } else {
-        sunkRaces.push({ race, status });
+        closedRaces.push({ race, status });
       }
     }
-    actionableRaces.sort((a, b) => compareStatus(a.status, b.status));
-    sunkRaces.sort((a, b) => compareStatus(a.status, b.status));
+    openRaces.sort((a, b) => compareStatus(a.status, b.status));
+    upcomingRaces.sort((a, b) => compareStatus(a.status, b.status));
+    closedRaces.sort((a, b) => compareStatus(a.status, b.status));
 
-    return { actionableRaces, sunkRaces, tbaRaces };
+    return { openRaces, upcomingRaces, tbaRaces, closedRaces };
   }, [races, activeSeries, activeDistance, activeStatusGroup, searchQuery, now]);
 
   function renderRace(
@@ -594,51 +603,71 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         />
       </section>
 
-      {actionableRaces.length > 0 ? (
+      {openRaces.length > 0 ? (
         <section>
           <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-            Open &amp; opening soon ({actionableRaces.length})
+            Open now ({openRaces.length})
           </p>
-          <ul className="flex flex-col gap-3">
-            {actionableRaces.map(renderRace)}
-          </ul>
+          <ul className="flex flex-col gap-3">{openRaces.map(renderRace)}</ul>
         </section>
       ) : null}
 
-      {sunkRaces.length > 0 ? (
-        <section className={actionableRaces.length > 0 ? "mt-8" : undefined}>
+      {upcomingRaces.length + tbaRaces.length > 0 ? (
+        <section className={openRaces.length > 0 ? "mt-8" : undefined}>
           <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-            Nothing to act on — closed, sold out, or completed (
-            {sunkRaces.length})
+            Upcoming — not open yet ({upcomingRaces.length + tbaRaces.length})
+          </p>
+          {upcomingRaces.length > 0 ? (
+            <ul className="flex flex-col gap-3">
+              {upcomingRaces.map((entry, i) =>
+                renderRace(entry, openRaces.length + i),
+              )}
+            </ul>
+          ) : null}
+          {tbaRaces.length > 0 ? (
+            <details className={upcomingRaces.length > 0 ? "mt-3" : undefined}>
+              <summary className="cursor-pointer text-[11px] tracking-[0.12em] text-zinc-500 uppercase select-none hover:text-zinc-900">
+                Awaiting dates ({tbaRaces.length}) — no registration window
+                announced yet
+              </summary>
+              <ul className="mt-3 flex flex-col gap-3">
+                {tbaRaces.map((entry, i) =>
+                  renderRace(
+                    entry,
+                    openRaces.length + upcomingRaces.length + i,
+                  ),
+                )}
+              </ul>
+            </details>
+          ) : null}
+        </section>
+      ) : null}
+
+      {closedRaces.length > 0 ? (
+        <section className="mt-8">
+          <p className="mb-3 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+            Closed — nothing to act on ({closedRaces.length})
           </p>
           <ul className="flex flex-col gap-3">
-            {sunkRaces.map((entry, i) =>
-              renderRace(entry, actionableRaces.length + i),
+            {closedRaces.map((entry, i) =>
+              renderRace(
+                entry,
+                openRaces.length + upcomingRaces.length + tbaRaces.length + i,
+              ),
             )}
           </ul>
         </section>
       ) : null}
 
-      {actionableRaces.length === 0 && sunkRaces.length === 0 && tbaRaces.length === 0 ? (
+      {openRaces.length === 0 &&
+      upcomingRaces.length === 0 &&
+      tbaRaces.length === 0 &&
+      closedRaces.length === 0 ? (
         <section className="rounded-2xl bg-white">
           <p className="px-5 py-8 text-sm text-zinc-500 sm:px-7">
             No races match the current filters.
           </p>
         </section>
-      ) : null}
-
-      {tbaRaces.length > 0 ? (
-        <details className="mt-8">
-          <summary className="cursor-pointer text-[11px] tracking-[0.12em] text-zinc-500 uppercase select-none hover:text-zinc-900">
-            Awaiting dates ({tbaRaces.length}) — announced races without a
-            registration window yet
-          </summary>
-          <ul className="mt-3 flex flex-col gap-3">
-            {tbaRaces.map((entry, i) =>
-              renderRace(entry, actionableRaces.length + sunkRaces.length + i),
-            )}
-          </ul>
-        </details>
       ) : null}
     </>
   );

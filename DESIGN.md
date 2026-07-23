@@ -24,10 +24,11 @@ Every status code lands in exactly one group, so the three always sum to
 the total:
 
 - `open` = `REG_OPEN`, `REG_CLOSING_SOON`, `LOTTERY_OPEN`
+- `upcoming` = `REG_OPENS_SOON`, `LOTTERY_OPENS_SOON`,
+  `COMPLETED_NEXT_KNOWN` (an announced next edition is "opening later",
+  not "closed"), `REG_NOT_OPEN`, `DATES_TBA`
 - `closed` = `REG_CLOSED`, `SOLD_OUT`, `LOTTERY_DRAWN`, `AWAITING_DRAW`,
-  `COMPLETED_NEXT_KNOWN`, `COMPLETED_NEXT_TBA`
-- `upcoming` = `REG_OPENS_SOON`, `LOTTERY_OPENS_SOON`, `REG_NOT_OPEN`,
-  `DATES_TBA`
+  `COMPLETED_NEXT_TBA`
 
 **Code:** `STATUS_GROUPS`, `counts`, `activeStatusGroup` in
 `app/components/race-browser.tsx` (header lives in the client component so
@@ -97,25 +98,21 @@ changes are a one-file edit here.
 
 ## 5. Race list: grouping & order
 
-Three groups, in order:
+**One taxonomy everywhere:** the page sections mirror the header counts
+exactly — same words, same numbers. Clicking a header count filters to
+precisely one section.
 
-1. **Actionable** — `status.actionable === true` (open now, closing soon,
-   ballot open, opens-announced, next-edition-open-date-known). Titled
-   `Open & opening soon (N)` so the group reads at a glance, like the
-   other two. Sorted by `compareStatus`: nearest actionable date first.
-2. **No-action group** — everything with dates but nothing to do (closed,
-   sold out, drawn, awaiting draw, completed). Separated by a labeled
-   divider row: `Nothing to act on — closed, sold out, or completed (N)`.
-   Same sort.
-3. **Awaiting dates fold** — `DATES_TBA` and `REG_NOT_OPEN` races collapsed
-   inside a `<details>` labeled `Awaiting dates (N)`: no registration window
-   yet (dates unknown, or a known race date whose registration hasn't
-   opened). Keeps them out of the main list while staying subscribable.
+1. **Open now (N)** — the `open` group, sorted by `compareStatus`
+   (nearest deadline first).
+2. **Upcoming — not open yet (N)** — the `upcoming` group. Races with a
+   known future open date list directly (sorted by open date); races with
+   no window at all collapse inside the `Awaiting dates (M)` `<details>`
+   fold within this section. N counts both.
+3. **Closed — nothing to act on (N)** — the `closed` group, dimmed.
 
-**Rules:** classification lives in the status machine
-(`DerivedStatus.actionable`, `compareStatus`) — the UI never re-derives
-meaning from status codes for ordering. Card index numbers (01, 02, …) run
-continuously across all three groups.
+**Rules:** section membership comes from `STATUS_GROUPS` (the same sets
+behind the header counts); ordering from `compareStatus`. Card index
+numbers (01, 02, …) run continuously across all sections.
 
 **Code:** partition + sort in the `useMemo` of
 `app/components/race-browser.tsx`; classification in `lib/deriveStatus.ts`.
@@ -196,9 +193,11 @@ render dimmed (three columns per row, stacking on mobile):
 ## 7. Footer
 
 **Shows:** in one row — the data-honesty note (manually curated, confirm
-on official sites) on the left, and a `RACE_REMINDER ©` wordmark on the
+on official sites) on the left, and a `RACE_REMINDER™` wordmark on the
 right, styled identically to the top brand mark (Space Grotesk, small,
-semibold, 0.25em tracking, zinc-900).
+semibold, 0.25em tracking, zinc-900). ™ (unregistered trademark) is the
+correct mark for the brand name; © belongs to a copyright line, not a
+wordmark.
 
 **Code:** `app/page.tsx`.
 
