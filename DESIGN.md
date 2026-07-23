@@ -129,8 +129,11 @@ numbers (01, 02, …) run continuously across all sections.
 ## 6. Race card
 
 Full-width horizontal bars stacked vertically with gaps — each row is its
-own rounded white card on the light-gray page; rows with nothing to act on
-render dimmed (three columns per row, stacking on mobile):
+own rounded white card with a hairline zinc-200 border on the light-gray
+page (echoing the email frame's outline; one step lighter than the
+zinc-300 dividers so 77 outlined cards don't get heavy); rows with
+nothing to act on render dimmed (three columns per row, stacking on
+mobile):
 
 ### 6a. Identity (left)
 
