@@ -325,7 +325,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     return (
       <li
         key={race.id}
-        className={`grid gap-3 rounded-2xl bg-white px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7 ${
+        className={`grid gap-3 rounded-2xl border border-zinc-200 bg-white px-5 py-5 sm:grid-cols-[1.35fr_1fr_1fr] sm:gap-4 sm:px-7 ${
           status.actionable ||
           status.code === "DATES_TBA" ||
           status.code === "REG_NOT_OPEN"
@@ -694,7 +694,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       upcomingRaces.length === 0 &&
       tbaRaces.length === 0 &&
       closedRaces.length === 0 ? (
-        <section className="rounded-2xl bg-white">
+        <section className="rounded-2xl border border-zinc-200 bg-white">
           <p className="px-5 py-8 text-sm text-zinc-500 sm:px-7">
             No races match the current filters.
           </p>
