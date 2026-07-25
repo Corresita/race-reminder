@@ -330,10 +330,13 @@ export function GridBrowser({
 
       {/* The framed board holds ONLY the races. rounded-2xl + overflow-hidden
           rounds the outer corners of the first and last rows; every interior
-          hairline stays straight. */}
+          hairline stays straight. Hairlines are painted as per-cell borders
+          (not a bg showing through gaps) so the leftover space in a partial
+          last row shows the page background, never the line color; the -1px
+          margins tuck the outer edge borders under the frame's own border. */}
       <div className="overflow-hidden rounded-2xl border border-zinc-300 bg-white">
         {rows.length > 0 ? (
-          <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+          <ul className="bg-background -mr-px -mb-px grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {rows.map(({ race, status }, i) => {
               const p = pill(status);
               const act = action(status, race.officialUrl);
@@ -343,7 +346,10 @@ export function GridBrowser({
                 : "TBA";
               const year = race.raceDate?.slice(0, 4) ?? "TBA";
               return (
-                <li key={race.id} className="flex flex-col bg-white">
+                <li
+                  key={race.id}
+                  className="flex flex-col border-r border-b border-zinc-300 bg-white"
+                >
                   <div className="flex grow flex-col px-6 pt-5 pb-6">
                     <div className="flex items-start justify-between gap-3">
                       <span className="font-mono text-[11px] tracking-wide text-zinc-400">
