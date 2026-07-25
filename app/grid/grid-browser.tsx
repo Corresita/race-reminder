@@ -98,15 +98,13 @@ function dateRow(
 }
 
 function countdownValue(status: DerivedStatus): string {
-  if (status.daysUntil != null) {
-    return `${status.daysUntil} ${status.daysUntil === 1 ? "DAY" : "DAYS"}`;
-  }
+  if (status.daysUntil != null) return `${status.daysUntil}d`;
   switch (status.code) {
     case "REG_OPEN":
     case "REG_CLOSING_SOON":
-      return "UNTIL FULL";
+      return "Open until full";
     case "LOTTERY_OPEN":
-      return "OPEN";
+      return "Open";
     default:
       return "TBA";
   }
@@ -341,48 +339,47 @@ export function GridBrowser({
               const year = race.raceDate?.slice(0, 4) ?? "TBA";
               return (
                 <li key={race.id} className="flex flex-col bg-white">
-                  <div className="flex grow flex-col px-6 pt-6 pb-6">
+                  <div className="flex grow flex-col px-6 pt-5 pb-6">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="font-mono text-3xl leading-none font-bold text-zinc-300">
+                      <span className="font-mono text-[11px] tracking-wide text-zinc-400">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span
-                        className={`max-w-24 text-right text-[11px] leading-tight font-bold tracking-wide uppercase ${
+                        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${
                           p.kind === "open"
-                            ? "text-zinc-900"
+                            ? "border-emerald-300 bg-emerald-50 text-emerald-700"
                             : p.kind === "waiting"
-                              ? "text-zinc-500"
-                              : "text-zinc-400"
+                              ? "border-zinc-300 text-zinc-600"
+                              : "border-zinc-200 text-zinc-400"
                         }`}
                       >
                         {p.label}
                       </span>
                     </div>
 
-                    <h2 className="mt-8 text-[1.35rem] leading-[1.1] font-extrabold tracking-tight text-zinc-900 uppercase">
+                    <h2 className="mt-2 text-lg leading-snug font-medium tracking-tight text-zinc-900">
                       {race.name}
-                      <br />
-                      <span className="text-zinc-400">
-                        {code}_{year}
-                      </span>
                     </h2>
+                    <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
+                      {code}_{year}
+                    </p>
 
-                    <div className="mt-auto pt-8">
-                      <div className="border-t border-zinc-200 pt-4">
+                    <div className="mt-auto pt-6">
+                      <div className="border-t border-zinc-200 pt-3.5">
                         <div className="flex items-start justify-between gap-3">
                           <p>
-                            <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                            <span className="block text-xs tracking-wide text-zinc-500 uppercase">
                               {date.label}
                             </span>
-                            <span className="text-[1.0125rem] font-bold text-zinc-900">
+                            <span className="mt-1 block text-sm font-medium text-zinc-800">
                               {date.value}
                             </span>
                           </p>
                           <p className="text-right">
-                            <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                            <span className="block text-xs tracking-wide text-zinc-500 uppercase">
                               Type
                             </span>
-                            <span className="text-[1.0125rem] font-bold text-zinc-900 uppercase">
+                            <span className="mt-1 block text-sm font-medium text-zinc-800 uppercase">
                               {race.registrationType === "lottery"
                                 ? "Lottery"
                                 : "FCFS"}
@@ -390,10 +387,10 @@ export function GridBrowser({
                           </p>
                         </div>
                         <p className="mt-3">
-                          <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                          <span className="block text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
                             Countdown
                           </span>
-                          <span className="font-mono text-[1.6875rem] leading-none font-semibold tracking-tight text-zinc-900">
+                          <span className="mt-2 block font-mono text-lg leading-none font-semibold tracking-tight text-zinc-800">
                             {countdownValue(status)}
                           </span>
                         </p>
@@ -403,12 +400,12 @@ export function GridBrowser({
                           href={act.href}
                           target={act.href === "/" ? undefined : "_blank"}
                           rel={act.href === "/" ? undefined : "noopener"}
-                          className="mt-5 block border border-zinc-400 px-4 py-3 text-center text-[11px] font-bold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
+                          className="mt-5 block border border-zinc-400 px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
                         >
                           {act.label}
                         </a>
                       ) : (
-                        <p className="mt-5 border border-zinc-200 px-4 py-3 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
+                        <p className="mt-5 border border-zinc-200 px-4 py-2.5 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
                           {act.label}
                         </p>
                       )}
