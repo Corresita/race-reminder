@@ -110,42 +110,10 @@ function countdownValue(status: DerivedStatus): string {
   }
 }
 
-const COUNTRY_CODES: Record<string, string> = {
-  Andorra: "AND",
-  Argentina: "ARG",
-  Australia: "AUS",
-  Austria: "AUT",
-  Brazil: "BRA",
-  Canada: "CAN",
-  Chile: "CHI",
-  China: "CHN",
-  "Chinese Taipei": "TPE",
-  Croatia: "CRO",
-  Ecuador: "ECU",
-  France: "FRA",
-  Germany: "GER",
-  "Hong Kong": "HKG",
-  Indonesia: "INA",
-  Italy: "ITA",
-  Japan: "JPN",
-  Latvia: "LAT",
-  Malaysia: "MAS",
-  Mexico: "MEX",
-  "New Zealand": "NZL",
-  Oman: "OMA",
-  Portugal: "POR",
-  Romania: "ROU",
-  Slovenia: "SLO",
-  "South Africa": "RSA",
-  "South Korea": "KOR",
-  Spain: "ESP",
-  Sweden: "SWE",
-  Switzerland: "SUI",
-  Thailand: "THA",
-  Türkiye: "TUR",
-  "United Kingdom": "GBR",
-  "United States": "USA",
-  Vietnam: "VIE",
+const seriesLabels: Record<Series, string> = {
+  "utmb-world-series": "UTMB World Series",
+  "world-trail-majors": "World Trail Majors",
+  independent: "Independent",
 };
 
 function action(
@@ -341,10 +309,7 @@ export function GridBrowser({
               const p = pill(status);
               const act = action(status, race.officialUrl);
               const date = dateRow(race, status, now);
-              const code = race.country
-                ? (COUNTRY_CODES[race.country] ?? race.country.toUpperCase())
-                : "TBA";
-              const year = race.raceDate?.slice(0, 4) ?? "TBA";
+              const year = race.raceDate?.slice(0, 4) ?? null;
               return (
                 <li
                   key={race.id}
@@ -372,8 +337,20 @@ export function GridBrowser({
                       {race.name}
                     </h2>
                     <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-                      {code}_{year}
+                      {race.organizer ?? seriesLabels[race.series]}
+                      {race.country ? ` · ${race.country}` : null}
+                      {year ? ` · ${year}` : null}
                     </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {race.distancesKm.map((km) => (
+                        <span
+                          key={`${race.id}-${km}`}
+                          className="rounded-full border border-zinc-300 px-2 py-0.5 text-[10px] tracking-wide text-zinc-700 uppercase"
+                        >
+                          {km}K
+                        </span>
+                      ))}
+                    </div>
 
                     <div className="mt-auto pt-6">
                       <div className="border-t border-zinc-200 pt-3.5">
@@ -397,6 +374,11 @@ export function GridBrowser({
                             </span>
                           </p>
                         </div>
+                        {race.entryRequirement ? (
+                          <p className="mt-2 text-xs text-zinc-500">
+                            Requires: {race.entryRequirement}
+                          </p>
+                        ) : null}
                         <p className="mt-3">
                           <span className="block text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
                             Countdown
