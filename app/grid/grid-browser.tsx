@@ -229,12 +229,21 @@ export function GridBrowser({
         is unchanged.
       </p>
 
-      {/* One framed board, mockup-style: header bar + hero + controls + grid */}
-      <div className="border border-zinc-300 bg-white">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-300 px-6 py-4 sm:px-8">
-          <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
-            Race Reminder™
-          </p>
+      {/* Site header, as on the home page */}
+      <header className="mb-10">
+        <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
+          <div>
+            <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
+              Race Reminder™
+            </p>
+            <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
+              Know the day registration opens. Every lottery draw, every
+              deadline that matters{" "}
+              <span className="inline-block">
+                — for the trail ultras you&rsquo;re chasing.
+              </span>
+            </h1>
+          </div>
           <div className="flex gap-6 text-xs tracking-wide uppercase">
             <span className="text-zinc-500">
               <span className="mr-1.5 font-semibold text-zinc-900">
@@ -262,71 +271,67 @@ export function GridBrowser({
             </span>
           </div>
         </div>
-        <div className="border-b border-zinc-300 px-6 py-8 sm:px-8">
-          <h1 className="max-w-2xl text-sm leading-relaxed text-zinc-600">
-            Know the day registration opens. Every lottery draw, every deadline
-            that matters{" "}
-            <span className="inline-block">
-              — for the trail ultras you&rsquo;re chasing.
-            </span>
-          </h1>
-        </div>
+        <DotRule />
+      </header>
 
-        {/* Controls row: series tabs · distance buckets · search */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-zinc-300 px-6 py-4 sm:px-8">
-          {seriesTabs.map((tab) => (
-            <button
-              key={tab.slug ?? "all"}
-              type="button"
-              onClick={() => {
-                setActiveSeries(tab.slug);
-                setActiveDistance(null);
-              }}
-              className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
-                activeSeries === tab.slug
-                  ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                  : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+      {/* Controls row: series tabs · distance buckets · search */}
+      <section className="mb-8 flex flex-wrap items-center gap-2">
+        {seriesTabs.map((tab) => (
+          <button
+            key={tab.slug ?? "all"}
+            type="button"
+            onClick={() => {
+              setActiveSeries(tab.slug);
+              setActiveDistance(null);
+            }}
+            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+              activeSeries === tab.slug
+                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
 
-          <span
-            aria-hidden
-            className="mx-1 hidden h-5 w-px bg-zinc-300 sm:block"
-          />
+        <span
+          aria-hidden
+          className="mx-1 hidden h-5 w-px bg-zinc-300 sm:block"
+        />
 
-          {distanceFilters.map((filter) => (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() =>
-                setActiveDistance((current) =>
-                  current === filter.id ? null : filter.id,
-                )
-              }
-              className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
-                activeDistance === filter.id
-                  ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                  : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
+        {distanceFilters.map((filter) => (
+          <button
+            key={filter.id}
+            type="button"
+            onClick={() =>
+              setActiveDistance((current) =>
+                current === filter.id ? null : filter.id,
+              )
+            }
+            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+              activeDistance === filter.id
+                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+            }`}
+          >
+            {filter.label}
+          </button>
+        ))}
 
-          <input
-            type="search"
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-            placeholder="Search races…"
-            aria-label="Search races by name or country"
-            className="ml-auto w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
-          />
-        </div>
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="Search races…"
+          aria-label="Search races by name or country"
+          className="ml-auto w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
+        />
+      </section>
 
-        {/* The grid: hairlines between cells via gap-px over the frame color */}
+      {/* The framed board holds ONLY the races. rounded-2xl + overflow-hidden
+          rounds the outer corners of the first and last rows; every interior
+          hairline stays straight. */}
+      <div className="overflow-hidden rounded-2xl border border-zinc-300 bg-white">
         {rows.length > 0 ? (
           <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
             {rows.map(({ race, status }, i) => {
