@@ -181,20 +181,45 @@ export default function GridTest() {
       <div className="border border-zinc-300 bg-white">
         {/* The grid: hairlines between cells via gap-px over the frame color */}
         <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-          {rows.map(({ race, status }) => {
+          {rows.map(({ race, status }, i) => {
             const p = pill(status);
             const fact = factRow(status);
             const act = action(status, race.officialUrl);
+            const seriesTag =
+              race.series === "utmb-world-series"
+                ? "UTMB World Series"
+                : race.series === "world-trail-majors"
+                  ? "World Trail Majors"
+                  : "Independent";
+            const maxDistance =
+              race.distancesKm && race.distancesKm.length > 0
+                ? `${Math.max(...race.distancesKm)} km`
+                : null;
             return (
               <li key={race.id} className="flex flex-col bg-white">
                 <div className="flex grow flex-col px-5 pt-5 pb-5">
-                  <p className="flex justify-between text-[11px] tracking-wide text-zinc-500 uppercase">
-                    <span>{race.country ?? "—"}</span>
-                    <span>{race.raceDate?.slice(0, 4) ?? "TBA"}</span>
+                  <p className="text-[10px] font-semibold tracking-[0.15em] text-zinc-900 uppercase">
+                    Event_{String(i + 1).padStart(2, "0")}
                   </p>
-                  <h2 className="font-display mt-1.5 text-lg leading-snug font-semibold text-zinc-900 uppercase">
+                  <span
+                    aria-hidden
+                    className="mt-1 block h-[2px] w-4 bg-zinc-900"
+                  />
+                  <p className="mt-4">
+                    <span className="bg-zinc-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-zinc-50 uppercase">
+                      {seriesTag}
+                    </span>
+                  </p>
+                  <h2 className="mt-2.5 text-xl leading-snug font-medium text-zinc-900">
                     {race.name}
                   </h2>
+                  <div className="mt-6 text-xs leading-relaxed text-zinc-600">
+                    <p>
+                      Loc: {race.country ?? "TBA"} ·{" "}
+                      {race.raceDate?.slice(0, 4) ?? "TBA"}
+                    </p>
+                    {maxDistance ? <p>Dist: {maxDistance}</p> : null}
+                  </div>
 
                   <div className="mt-auto pt-4">
                     <div className="flex items-center justify-between border-t border-zinc-200 py-2.5">
