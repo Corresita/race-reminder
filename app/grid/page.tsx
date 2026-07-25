@@ -54,31 +54,93 @@ function pill(status: DerivedStatus): Pill {
   }
 }
 
-function factRow(status: DerivedStatus): { label: string; value: string } {
-  const d = status.daysUntil;
+/** "05 DEC"-style day + month, on the date's own calendar day. */
+function fmtShort(iso: string): string {
+  const d = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
+  return d
+    .toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      timeZone: "UTC",
+    })
+    .toUpperCase();
+}
+
+/** The card's key date row: the next date that matters, mockup-style. */
+function dateRow(
+  race: Race,
+  status: DerivedStatus,
+  now: Date,
+): { label: string; value: string } {
+  const future = (iso: string | null | undefined) =>
+    iso && new Date(iso).getTime() > now.getTime() ? iso : null;
+  const opens =
+    future(race.registrationOpens) ??
+    future(race.nextEdition?.registrationOpens);
+  const closes = future(race.registrationCloses);
+  if (status.code === "AWAITING_DRAW" || status.code === "LOTTERY_DRAWN") {
+    const draw = future(race.lotteryDrawDate);
+    if (draw) return { label: "Draw", value: fmtShort(draw) };
+  }
+  if (opens) return { label: "Opens", value: fmtShort(opens) };
+  if (closes) return { label: "Closes", value: fmtShort(closes) };
+  const raceDay = future(race.raceDate);
+  if (raceDay) return { label: "Race day", value: fmtShort(raceDay) };
+  return { label: "Dates", value: "TBA" };
+}
+
+function countdownValue(status: DerivedStatus): string {
+  if (status.daysUntil != null) {
+    return `${status.daysUntil} ${status.daysUntil === 1 ? "DAY" : "DAYS"}`;
+  }
   switch (status.code) {
     case "REG_OPEN":
     case "REG_CLOSING_SOON":
-      return d != null
-        ? { label: "Reg closes", value: `${d} days` }
-        : { label: "Reg closes", value: "Until full" };
+      return "UNTIL FULL";
     case "LOTTERY_OPEN":
-      return d != null
-        ? { label: "Ballot ends", value: `${d} days` }
-        : { label: "Ballot", value: "Open" };
-    case "REG_OPENS_SOON":
-    case "LOTTERY_OPENS_SOON":
-      return { label: "Opens in", value: d != null ? `${d} days` : "TBA" };
-    case "COMPLETED_NEXT_KNOWN":
-      return { label: "Next opens", value: d != null ? `${d} days` : "TBA" };
-    case "AWAITING_DRAW":
-      return { label: "Draw in", value: d != null ? `${d} days` : "TBA" };
-    case "SOLD_OUT":
-      return { label: "Result", value: "Sold out" };
+      return "OPEN";
     default:
-      return { label: "Next cycle", value: "TBA" };
+      return "TBA";
   }
 }
+
+const COUNTRY_CODES: Record<string, string> = {
+  Andorra: "AND",
+  Argentina: "ARG",
+  Australia: "AUS",
+  Austria: "AUT",
+  Brazil: "BRA",
+  Canada: "CAN",
+  Chile: "CHI",
+  China: "CHN",
+  "Chinese Taipei": "TPE",
+  Croatia: "CRO",
+  Ecuador: "ECU",
+  France: "FRA",
+  Germany: "GER",
+  "Hong Kong": "HKG",
+  Indonesia: "INA",
+  Italy: "ITA",
+  Japan: "JPN",
+  Latvia: "LAT",
+  Malaysia: "MAS",
+  Mexico: "MEX",
+  "New Zealand": "NZL",
+  Oman: "OMA",
+  Portugal: "POR",
+  Romania: "ROU",
+  Slovenia: "SLO",
+  "South Africa": "RSA",
+  "South Korea": "KOR",
+  Spain: "ESP",
+  Sweden: "SWE",
+  Switzerland: "SUI",
+  Thailand: "THA",
+  Türkiye: "TUR",
+  "United Kingdom": "GBR",
+  "United States": "USA",
+  Vietnam: "VIE",
+};
 
 function action(
   status: DerivedStatus,
@@ -94,7 +156,7 @@ function action(
     case "LOTTERY_OPENS_SOON":
     case "COMPLETED_NEXT_KNOWN":
     case "REG_NOT_OPEN":
-      return { label: "Set reminder on home", href: "/" };
+      return { label: "Set reminder", href: "/" };
     default:
       return { label: "Closed", href: null };
   }
@@ -183,80 +245,82 @@ export default function GridTest() {
         <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {rows.map(({ race, status }, i) => {
             const p = pill(status);
-            const fact = factRow(status);
             const act = action(status, race.officialUrl);
-            const seriesTag =
-              race.series === "utmb-world-series"
-                ? "UTMB World Series"
-                : race.series === "world-trail-majors"
-                  ? "World Trail Majors"
-                  : "Independent";
-            const maxDistance =
-              race.distancesKm && race.distancesKm.length > 0
-                ? `${Math.max(...race.distancesKm)} km`
-                : null;
+            const date = dateRow(race, status, now);
+            const code = race.country
+              ? (COUNTRY_CODES[race.country] ?? race.country.toUpperCase())
+              : "TBA";
+            const year = race.raceDate?.slice(0, 4) ?? "TBA";
             return (
               <li key={race.id} className="flex flex-col bg-white">
-                <div className="flex grow flex-col px-5 pt-5 pb-5">
-                  <p className="text-[10px] font-semibold tracking-[0.15em] text-zinc-900 uppercase">
-                    Event_{String(i + 1).padStart(2, "0")}
-                  </p>
-                  <span
-                    aria-hidden
-                    className="mt-1 block h-[2px] w-4 bg-zinc-900"
-                  />
-                  <p className="mt-4">
-                    <span className="bg-zinc-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-zinc-50 uppercase">
-                      {seriesTag}
+                <div className="flex grow flex-col px-6 pt-6 pb-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="text-3xl leading-none font-bold text-zinc-300">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                  </p>
-                  <h2 className="mt-2.5 text-xl leading-snug font-medium text-zinc-900">
-                    {race.name}
-                  </h2>
-                  <div className="mt-6 text-xs leading-relaxed text-zinc-600">
-                    <p>
-                      Loc: {race.country ?? "TBA"} ·{" "}
-                      {race.raceDate?.slice(0, 4) ?? "TBA"}
-                    </p>
-                    {maxDistance ? <p>Dist: {maxDistance}</p> : null}
+                    <span
+                      className={`max-w-24 text-right text-[11px] leading-tight font-bold tracking-wide uppercase ${
+                        p.kind === "open"
+                          ? "text-zinc-900"
+                          : p.kind === "waiting"
+                            ? "text-zinc-500"
+                            : "text-zinc-400"
+                      }`}
+                    >
+                      {p.label}
+                    </span>
                   </div>
 
-                  <div className="mt-auto pt-4">
-                    <div className="flex items-center justify-between border-t border-zinc-200 py-2.5">
-                      <span className="text-[11px] tracking-wide text-zinc-500 uppercase">
-                        Status
-                      </span>
-                      <span
-                        className={`rounded-full px-3 py-1 text-[11px] tracking-wide uppercase ${
-                          p.kind === "open"
-                            ? "bg-zinc-900 text-zinc-50"
-                            : p.kind === "waiting"
-                              ? "border border-zinc-300 text-zinc-700"
-                              : "border border-zinc-200 text-zinc-400"
-                        }`}
-                      >
-                        {p.label}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between border-t border-zinc-200 py-2.5">
-                      <span className="text-[11px] tracking-wide text-zinc-500 uppercase">
-                        {fact.label}
-                      </span>
-                      <span className="font-mono text-sm font-semibold text-zinc-800">
-                        {fact.value}
-                      </span>
+                  <h2 className="mt-8 text-2xl leading-[1.1] font-extrabold tracking-tight text-zinc-900 uppercase">
+                    {race.name}
+                    <br />
+                    <span className="text-zinc-400">
+                      {code}_{year}
+                    </span>
+                  </h2>
+
+                  <div className="mt-auto pt-8">
+                    <div className="border-t border-zinc-200 pt-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <p>
+                          <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                            {date.label}
+                          </span>
+                          <span className="text-lg font-bold text-zinc-900">
+                            {date.value}
+                          </span>
+                        </p>
+                        <p className="text-right">
+                          <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                            Type
+                          </span>
+                          <span className="text-lg font-bold text-zinc-900 uppercase">
+                            {race.registrationType === "lottery"
+                              ? "Lottery"
+                              : "FCFS"}
+                          </span>
+                        </p>
+                      </div>
+                      <p className="mt-3">
+                        <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
+                          Countdown
+                        </span>
+                        <span className="text-3xl leading-none font-extrabold tracking-tight text-zinc-900">
+                          {countdownValue(status)}
+                        </span>
+                      </p>
                     </div>
                     {act.href ? (
                       <a
                         href={act.href}
                         target={act.href === "/" ? undefined : "_blank"}
                         rel={act.href === "/" ? undefined : "noopener"}
-                        className="mt-2 block border border-zinc-400 px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
+                        className="mt-5 block border border-zinc-400 px-4 py-3 text-center text-[11px] font-bold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
                       >
                         {act.label}
                       </a>
                     ) : (
-                      <p className="mt-2 border border-zinc-200 px-4 py-2.5 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
+                      <p className="mt-5 border border-zinc-200 px-4 py-3 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
                         {act.label}
                       </p>
                     )}
