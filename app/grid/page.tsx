@@ -195,21 +195,12 @@ export default function GridTest() {
         is unchanged.
       </p>
 
-      {/* Site header, as on the home page */}
-      <header className="mb-10">
-        <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
-          <div>
-            <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
-              Race Reminder™
-            </p>
-            <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
-              Know the day registration opens. Every lottery draw, every
-              deadline that matters{" "}
-              <span className="inline-block">
-                — for the trail ultras you&rsquo;re chasing.
-              </span>
-            </h1>
-          </div>
+      {/* One framed board, mockup-style: header bar + hero + grid inside */}
+      <div className="border border-zinc-300 bg-white">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-300 px-6 py-4 sm:px-8">
+          <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
+            Race Reminder™
+          </p>
           <div className="flex gap-6 text-xs tracking-wide uppercase">
             <span className="text-zinc-500">
               <span className="mr-1.5 font-semibold text-zinc-900">
@@ -237,10 +228,16 @@ export default function GridTest() {
             </span>
           </div>
         </div>
-        <DotRule />
-      </header>
+        <div className="border-b border-zinc-300 px-6 py-8 sm:px-8">
+          <h1 className="max-w-2xl text-sm leading-relaxed text-zinc-600">
+            Know the day registration opens. Every lottery draw, every deadline
+            that matters{" "}
+            <span className="inline-block">
+              — for the trail ultras you&rsquo;re chasing.
+            </span>
+          </h1>
+        </div>
 
-      <div className="border border-zinc-300 bg-white">
         {/* The grid: hairlines between cells via gap-px over the frame color */}
         <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {rows.map(({ race, status }, i) => {
@@ -271,7 +268,7 @@ export default function GridTest() {
                     </span>
                   </div>
 
-                  <h2 className="mt-8 text-2xl leading-[1.1] font-extrabold tracking-tight text-zinc-900 uppercase">
+                  <h2 className="mt-8 text-[1.35rem] leading-[1.1] font-extrabold tracking-tight text-zinc-900 uppercase">
                     {race.name}
                     <br />
                     <span className="text-zinc-400">
@@ -286,7 +283,7 @@ export default function GridTest() {
                           <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
                             {date.label}
                           </span>
-                          <span className="text-lg font-bold text-zinc-900">
+                          <span className="text-[1.0125rem] font-bold text-zinc-900">
                             {date.value}
                           </span>
                         </p>
@@ -294,7 +291,7 @@ export default function GridTest() {
                           <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
                             Type
                           </span>
-                          <span className="text-lg font-bold text-zinc-900 uppercase">
+                          <span className="text-[1.0125rem] font-bold text-zinc-900 uppercase">
                             {race.registrationType === "lottery"
                               ? "Lottery"
                               : "FCFS"}
@@ -305,7 +302,7 @@ export default function GridTest() {
                         <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
                           Countdown
                         </span>
-                        <span className="text-3xl leading-none font-extrabold tracking-tight text-zinc-900">
+                        <span className="text-[1.6875rem] leading-none font-extrabold tracking-tight text-zinc-900">
                           {countdownValue(status)}
                         </span>
                       </p>
