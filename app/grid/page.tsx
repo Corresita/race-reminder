@@ -54,25 +54,6 @@ function pill(status: DerivedStatus): Pill {
   }
 }
 
-/** The big figure on the cell's media block, mockup-style ("04D", "22D+"). */
-function figure(status: DerivedStatus): string {
-  const d = status.daysUntil;
-  switch (status.code) {
-    case "REG_OPEN":
-    case "REG_CLOSING_SOON":
-    case "LOTTERY_OPEN":
-      return d != null ? `${d}D` : "OPEN";
-    case "REG_OPENS_SOON":
-    case "LOTTERY_OPENS_SOON":
-    case "COMPLETED_NEXT_KNOWN":
-      return d != null ? `${d}D+` : "SOON";
-    case "AWAITING_DRAW":
-      return "DRAW";
-    default:
-      return "—";
-  }
-}
-
 function factRow(status: DerivedStatus): { label: string; value: string } {
   const d = status.daysUntil;
   switch (status.code) {
@@ -204,23 +185,9 @@ export default function GridTest() {
             const p = pill(status);
             const fact = factRow(status);
             const act = action(status, race.officialUrl);
-            const dark = p.kind === "open";
             return (
               <li key={race.id} className="flex flex-col bg-white">
-                {/* Media block: typographic stand-in for the mockup photos */}
-                <div
-                  className={`relative h-36 ${dark ? "bg-zinc-900" : "bg-zinc-100"}`}
-                >
-                  <span
-                    className={`absolute right-4 bottom-3 font-mono text-2xl font-semibold tracking-tight ${
-                      dark ? "text-zinc-50" : "text-zinc-400"
-                    }`}
-                  >
-                    {figure(status)}
-                  </span>
-                </div>
-
-                <div className="flex grow flex-col px-5 pt-4 pb-5">
+                <div className="flex grow flex-col px-5 pt-5 pb-5">
                   <p className="flex justify-between text-[11px] tracking-wide text-zinc-500 uppercase">
                     <span>{race.country ?? "—"}</span>
                     <span>{race.raceDate?.slice(0, 4) ?? "TBA"}</span>
