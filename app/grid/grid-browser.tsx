@@ -343,7 +343,7 @@ export function GridBrowser({
                 <li key={race.id} className="flex flex-col bg-white">
                   <div className="flex grow flex-col px-6 pt-6 pb-6">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="text-3xl leading-none font-bold text-zinc-300">
+                      <span className="font-mono text-3xl leading-none font-bold text-zinc-300">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span
@@ -393,7 +393,7 @@ export function GridBrowser({
                           <span className="block text-[10px] font-semibold tracking-[0.12em] text-zinc-500 uppercase">
                             Countdown
                           </span>
-                          <span className="text-[1.6875rem] leading-none font-extrabold tracking-tight text-zinc-900">
+                          <span className="font-mono text-[1.6875rem] leading-none font-semibold tracking-tight text-zinc-900">
                             {countdownValue(status)}
                           </span>
                         </p>
