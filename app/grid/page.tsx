@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { DotRule } from "@/app/components/dot-rule";
 import { type Race } from "@/app/components/race-browser";
 import races from "@/data/races.json";
 import {
@@ -124,13 +125,26 @@ export default function GridTest() {
     .map((race) => ({ race, status: deriveStatus(race, now) }))
     .sort((a, b) => compareStatus(a.status, b.status));
 
-  const openCount = rows.filter(
-    (r) => r.status.actionable && !r.status.completed,
-  ).length;
+  // Same grouping as the home page's STATUS_GROUPS (kept local so the
+  // experiment touches no shared files).
+  const openGroup = new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]);
+  const upcomingGroup = new Set([
+    "REG_OPENS_SOON",
+    "LOTTERY_OPENS_SOON",
+    "COMPLETED_NEXT_KNOWN",
+    "REG_NOT_OPEN",
+    "DATES_TBA",
+  ]);
+  const counts = {
+    total: rows.length,
+    open: rows.filter((r) => openGroup.has(r.status.code)).length,
+    upcoming: rows.filter((r) => upcomingGroup.has(r.status.code)).length,
+  };
+  const closedCount = counts.total - counts.open - counts.upcoming;
 
   return (
-    <main className="min-h-screen w-full px-4 py-8 sm:px-8">
-      <p className="mx-auto mb-4 max-w-screen-2xl text-xs text-zinc-500">
+    <main className="flex min-h-screen w-full flex-col px-9 py-10 sm:px-15">
+      <p className="mb-4 text-xs text-zinc-500">
         Layout experiment — the{" "}
         <Link href="/" className="underline underline-offset-2">
           live site
@@ -138,23 +152,52 @@ export default function GridTest() {
         is unchanged.
       </p>
 
-      <div className="mx-auto max-w-screen-2xl border border-zinc-300 bg-white">
-        {/* Board header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-300 px-5 py-4 sm:px-7">
-          <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
-            Race Reminder™
-          </p>
-          <p className="text-xs tracking-wide text-zinc-500 uppercase">
-            <span className="font-semibold text-zinc-900">{rows.length}</span>{" "}
-            races
-            <span className="mx-3">·</span>
-            <span className="font-semibold text-zinc-900">
-              {openCount}
-            </span>{" "}
-            actionable
-          </p>
+      {/* Site header, as on the home page */}
+      <header className="mb-10">
+        <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
+          <div>
+            <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
+              Race Reminder™
+            </p>
+            <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
+              Know the day registration opens. Every lottery draw, every
+              deadline that matters{" "}
+              <span className="inline-block">
+                — for the trail ultras you&rsquo;re chasing.
+              </span>
+            </h1>
+          </div>
+          <div className="flex gap-6 text-xs tracking-wide uppercase">
+            <span className="text-zinc-500">
+              <span className="mr-1.5 font-semibold text-zinc-900">
+                {counts.total}
+              </span>
+              races
+            </span>
+            <span className="text-zinc-500">
+              <span className="mr-1.5 font-semibold text-zinc-900">
+                {counts.open}
+              </span>
+              open
+            </span>
+            <span className="text-zinc-500">
+              <span className="mr-1.5 font-semibold text-zinc-900">
+                {counts.upcoming}
+              </span>
+              upcoming
+            </span>
+            <span className="text-zinc-500">
+              <span className="mr-1.5 font-semibold text-zinc-900">
+                {closedCount}
+              </span>
+              closed
+            </span>
+          </div>
         </div>
+        <DotRule />
+      </header>
 
+      <div className="border border-zinc-300 bg-white">
         {/* The grid: hairlines between cells via gap-px over the frame color */}
         <ul className="grid grid-cols-1 gap-px bg-zinc-300 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {rows.map(({ race, status }) => {
@@ -232,6 +275,23 @@ export default function GridTest() {
           })}
         </ul>
       </div>
+
+      {/* Site footer, as on the home page */}
+      <footer className="mt-16">
+        <DotRule />
+        <div className="flex flex-wrap items-end justify-between gap-4 pt-5">
+          <p className="max-w-md text-xs text-zinc-500">
+            Race data is manually curated. Always confirm dates on the official
+            race website before planning.
+          </p>
+          <p className="font-display text-base text-zinc-900 uppercase select-none">
+            <span className="tracking-[0.1em]">&copy;2026</span>{" "}
+            <span className="font-semibold tracking-[0.2em]">
+              Race&nbsp;Reminder
+            </span>
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
