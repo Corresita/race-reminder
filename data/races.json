@@ -467,15 +467,16 @@
     "entryRequirement": null,
     "officialUrl": "https://gauja.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-25T08:24:07.782Z"
     },
     "distancesKm": [
       14,
       21,
       53,
       91
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "kat100",
