@@ -389,7 +389,11 @@ export function GridBrowser({
                           href={act.href}
                           target={act.href === "/" ? undefined : "_blank"}
                           rel={act.href === "/" ? undefined : "noopener"}
-                          className="mt-5 block rounded-full border border-zinc-400 px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
+                          className={`mt-5 block rounded-full border px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] uppercase transition-colors ${
+                            p.kind === "open"
+                              ? "border-zinc-900 bg-zinc-900 text-zinc-50 hover:border-zinc-700 hover:bg-zinc-700"
+                              : "border-zinc-400 text-zinc-900 hover:bg-zinc-900 hover:border-zinc-900 hover:text-zinc-50"
+                          }`}
                         >
                           {act.label}
                         </a>
