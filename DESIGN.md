@@ -119,7 +119,9 @@ precisely one section.
 
 **Rules:** section membership comes from `STATUS_GROUPS` (the same sets
 behind the header counts); ordering from `compareStatus`. Card index
-numbers (01, 02, …) run continuously across all sections.
+numbers (01, 02, …) run continuously across all sections. Each section
+lays its cards out in the shared responsive matrix (1 / 2 / 3 / 4
+columns at base / sm / lg / 2xl).
 
 **Code:** partition + sort in the `useMemo` of
 `app/components/race-browser.tsx`; classification in `lib/deriveStatus.ts`.
@@ -128,37 +130,35 @@ numbers (01, 02, …) run continuously across all sections.
 
 ## 6. Race card
 
-Full-width horizontal bars stacked vertically with gaps — each row is its
-own rounded white card with a hairline zinc-200 border on the light-gray
-page (echoing the email frame's outline; one step lighter than the
-zinc-300 dividers so 77 outlined cards don't get heavy); rows with
-nothing to act on render dimmed (three columns per row, stacking on
-mobile):
+Vertical index cards in a responsive matrix — 1 column on phones, 2 / 3 /
+4 at sm / lg / 2xl. Each race is its own card: rounded-2xl, hairline
+zinc-200 border, white on the light-gray page (echoing the email frame's
+outline; one step lighter than the zinc-300 dividers so 77 outlined cards
+don't get heavy). `items-stretch` keeps every card in a row equal-height;
+the bottom block is pinned with `mt-auto` so buttons align across a row.
+Cards with nothing to act on render dimmed. Top to bottom:
 
-### 6a. Identity (left)
+### 6a. Identity (top)
 
-- index number + race name
-- `organizer-or-series · country · year` (year from `raceDate`)
-- official site link
+- index number (mono, 11px, zinc-400) left · **short status pill** right,
+  colored by `status.urgency` (red = critical, amber = warning, green =
+  normal, gray = none). Labels via `shortStatusLabels`: Open now /
+  Closing soon / Ballot open / Not yet open / Awaiting draw / Ballot
+  drawn / Closed / Sold out / Completed / Not open yet / Dates TBA
+- race name (18px medium, links to the official site)
+- `organizer-or-series · country · year` meta line (11px tracked caps)
 - real-distance chips (`40K 70K 161K`), from `distancesKm`
 
-### 6b. Facts (middle)
+### 6b. Facts (bottom block, above a zinc-200 top border)
 
-- **Race Date** — formatted `raceDate`, `TBA` when null
-- **Entry** — `registrationType` (Lottery / First come, first served /
-  Qualification)
-- **Requires** — `entryRequirement` (only when present)
-- small print — `entryNotes` (only when present)
-
-### 6c. Registration (right)
-
-- **short status badge**, colored by `status.urgency`
-  (red = critical, amber = warning, green = normal, gray = none).
-  Labels via `shortStatusLabels`: Open now / Closing soon / Ballot open /
-  Not yet open / Awaiting draw / Ballot drawn / Closed / Sold out /
-  Completed / Not open yet / Dates TBA
-- **contextual countdown** — small-caps label + big value, via
-  `countdownRow(status)`:
+- **key date + type row** — left: `dateRow(race, status, now)`, the next
+  calendar date that matters (Opens / Closes / Draw / Race day + "05 DEC"
+  short format; Dates TBA when nothing is known). Right: **Type** —
+  Lottery / FCFS / Qualification
+- **Requires** — `entryRequirement`; small print `entryNotes` (only when
+  present)
+- **contextual countdown** — small-caps label + the card's one big
+  figure, via `countdownRow(status)`:
 
   | Status                  | Label                 | Value        |
   | ----------------------- | --------------------- | ------------ |
@@ -172,34 +172,24 @@ mobile):
   | closed / completed TBA  | Next cycle            | TBA          |
   | dates TBA               | Dates                 | TBA          |
 
-  The value is the card's one big figure: `font-mono` 18px semibold
-  zinc-800 (a step lighter than zinc-900 body black), `leading-none`
-  (so the box hugs the text and it reads vertically centered, not
-  top-biased — Geist Mono's metrics sit high with looser leading).
+  The figure is `font-mono` 18px semibold zinc-800, `leading-none`
+  (Geist Mono's metrics sit high with looser leading).
 
-  **Spacing rule — keep it balanced when the figure's size changes.**
-  The figure must sit with equal *visual* space above (to the STATUS
-  label) and below (to the action button). Two gotchas:
-  - Use `leading-none` on the figure; otherwise extra line-height pushes
-    the glyph to the top of its box and it looks top-biased.
-  - The action button is a filled pill with its own `py-1.5` (~6px) top
-    padding, so its **text** sits ~6px below its edge. Equal margins
-    therefore look unequal. Compensate: the button container's top margin
-    is ~6px *less* than the figure's top margin (currently figure
-    `mt-2.5` ≈ 10px, button `mt-1.5` ≈ 6px). If the figure's font size
-    changes, re-check both so the text-to-text gaps stay equal.
+### 6c. Action (full-width pill, three-tier hierarchy)
 
-- **Opens / Closes dates** — only while the window is live
-  (`status.actionable && !status.completed`); stale past-edition dates are
-  hidden
-- **Set reminder button** — `Set reminder` / `Reminder set ✓` (emerald
-  when set; first click expands an inline email form, the email is
-  remembered in `localStorage`; POST/DELETE `/api/subscribe`). Hovering a
-  set reminder turns it red and reads `Cancel reminder` (watch-style
-  toggle); clicking cancels and emails a receipt.
+- **solid black** — act now: `Open now — register ↗` (open, no deadline;
+  external link to the official site)
+- **outlined** — reminders: `Remind me when it opens` / `Remind me
+  before it closes` via `reminderAffordance` (the button never promises
+  what the notifier can't deliver). Subscribed state is emerald
+  `Reminder set ✓`; hovering turns it red and reads `Cancel reminder`
+  (watch-style toggle); clicking cancels and emails a receipt. First
+  click expands an inline email form; the email is remembered in
+  `localStorage`; POST/DELETE `/api/subscribe`
+- **gray, inert** — `Dates not announced yet`
 
-**Code:** `renderRace`, `shortStatusLabels`, `countdownRow` in
-`app/components/race-browser.tsx`.
+**Code:** `renderRace`, `shortStatusLabels`, `countdownRow`, `dateRow` in
+`app/components/race-browser.tsx`; `lib/reminderAffordance.ts`.
 
 ---
 
