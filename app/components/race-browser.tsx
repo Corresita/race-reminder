@@ -542,7 +542,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               </span>
             </h1>
           </div>
-          <div className="flex gap-6 text-[0.825rem] tracking-wide uppercase">
+          <div className="flex gap-6 text-xs tracking-wide uppercase">
             <button
               type="button"
               onClick={() => setActiveStatusGroup(null)}
