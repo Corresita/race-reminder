@@ -542,7 +542,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               </span>
             </h1>
           </div>
-          <div className="flex gap-6 text-xs tracking-wide uppercase">
+          <div className="flex gap-6 text-[0.825rem] tracking-wide uppercase">
             <button
               type="button"
               onClick={() => setActiveStatusGroup(null)}
@@ -552,7 +552,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   : "text-zinc-500 hover:text-zinc-900"
               }`}
             >
-              <span className="mr-1.5 font-semibold text-zinc-900">
+              <span className="font-semibold text-zinc-900">
                 {counts.total}
               </span>
               races
@@ -568,9 +568,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   : "text-zinc-500 hover:text-zinc-900"
               }`}
             >
-              <span className="mr-1.5 font-semibold text-zinc-900">
-                {counts.open}
-              </span>
+              <span className="font-semibold text-zinc-900">{counts.open}</span>
               open
             </button>
             <button
@@ -586,7 +584,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   : "text-zinc-500 hover:text-zinc-900"
               }`}
             >
-              <span className="mr-1.5 font-semibold text-zinc-900">
+              <span className="font-semibold text-zinc-900">
                 {counts.upcoming}
               </span>
               upcoming
@@ -602,7 +600,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   : "text-zinc-500 hover:text-zinc-900"
               }`}
             >
-              <span className="mr-1.5 font-semibold text-zinc-900">
+              <span className="font-semibold text-zinc-900">
                 {counts.closed}
               </span>
               closed
