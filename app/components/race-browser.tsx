@@ -554,7 +554,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             >
               <span className="font-semibold text-zinc-900">
                 {counts.total}
-              </span>
+              </span>{" "}
               races
             </button>
             <button
@@ -586,7 +586,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             >
               <span className="font-semibold text-zinc-900">
                 {counts.upcoming}
-              </span>
+              </span>{" "}
               upcoming
             </button>
             <button
@@ -602,7 +602,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             >
               <span className="font-semibold text-zinc-900">
                 {counts.closed}
-              </span>
+              </span>{" "}
               closed
             </button>
           </div>
