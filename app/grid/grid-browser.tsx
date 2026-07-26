@@ -389,12 +389,12 @@ export function GridBrowser({
                           href={act.href}
                           target={act.href === "/" ? undefined : "_blank"}
                           rel={act.href === "/" ? undefined : "noopener"}
-                          className="mt-5 block border border-zinc-400 px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
+                          className="mt-5 block rounded-full border border-zinc-400 px-4 py-2.5 text-center text-[11px] font-semibold tracking-[0.15em] text-zinc-900 uppercase transition-colors hover:bg-zinc-900 hover:text-zinc-50"
                         >
                           {act.label}
                         </a>
                       ) : (
-                        <p className="mt-5 border border-zinc-200 px-4 py-2.5 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
+                        <p className="mt-5 rounded-full border border-zinc-200 px-4 py-2.5 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
                           {act.label}
                         </p>
                       )}
