@@ -342,7 +342,16 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   ) {
     const countdown = countdownRow(status);
     const date = dateRow(race, status, now);
-    const year = race.raceDate ? race.raceDate.slice(0, 4) : null;
+    // A completed edition's card is about the NEXT cycle — show its year
+    // once the organizer has announced it. Facts only: no announced next
+    // race date, no +1 guessing; the completed year stays (honest next to
+    // the "Completed" pill).
+    const year =
+      status.completed && race.nextEdition?.raceDate
+        ? race.nextEdition.raceDate.slice(0, 4)
+        : race.raceDate
+          ? race.raceDate.slice(0, 4)
+          : null;
     const affordance = reminderAffordance(race, status);
     const subscribed = subscribedIds.has(race.id);
 

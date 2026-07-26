@@ -146,7 +146,11 @@ Cards with nothing to act on render dimmed. Top to bottom:
   Closing soon / Ballot open / Not yet open / Awaiting draw / Ballot
   drawn / Closed / Sold out / Completed / Not open yet / Dates TBA
 - race name (18px medium, links to the official site)
-- `organizer-or-series · country · year` meta line (11px tracked caps)
+- `organizer-or-series · country · year` meta line (11px tracked caps).
+  The year is the edition the card is about: once this edition completes
+  and the organizer announces the next one, `nextEdition.raceDate`'s
+  year takes over; with nothing announced the completed year stays
+  (facts only — never +1 guessing)
 - real-distance chips (`40K 70K 161K`), from `distancesKm`
 
 ### 6b. Facts (bottom block, above a zinc-200 top border)
