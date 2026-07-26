@@ -1657,7 +1657,11 @@
     "officialUrl": "https://centurionrunning.com/",
     "distancesKm": [
       161
-    ]
+    ],
+    "nextEdition": {
+      "raceDate": "2027-06-12T06:00:00+01:00",
+      "registrationOpens": null
+    }
   },
   {
     "id": "quebec-mega-trail",
@@ -1670,14 +1674,18 @@
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "officialUrl": "https://quebecmegatrail.com/",
+    "officialUrl": "https://ultratrailcanada.com/",
     "distancesKm": [
       25,
       50,
       80,
       110,
       160
-    ]
+    ],
+    "nextEdition": {
+      "raceDate": "2027-07-01T05:00:00-04:00",
+      "registrationOpens": "2026-08-01T08:00:00-04:00"
+    }
   },
   {
     "id": "vietnam-mountain-marathon",
