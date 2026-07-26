@@ -568,7 +568,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                   : "text-zinc-500 hover:text-zinc-900"
               }`}
             >
-              <span className="font-semibold text-zinc-900">{counts.open}</span>
+              <span className="font-semibold text-zinc-900">{counts.open}</span>{" "}
               open
             </button>
             <button
