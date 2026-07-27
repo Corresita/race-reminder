@@ -774,8 +774,8 @@
     "entryRequirement": null,
     "officialUrl": "https://nice.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-07-27T10:08:49.596Z"
     },
     "distancesKm": [
       23,
@@ -783,7 +783,8 @@
       50,
       109,
       165
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "chihuahua",
@@ -1492,7 +1493,6 @@
       28,
       44,
       84,
-      90,
       119
     ]
   },
