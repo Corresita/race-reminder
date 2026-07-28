@@ -727,7 +727,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               setActiveRegion((event.target.value || null) as Region | null)
             }
             aria-label="Filter races by region"
-            className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[31px] pl-3 text-xs tracking-wide uppercase transition-colors focus:outline-none ${
+            className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[26px] pl-3 text-xs leading-none tracking-wide uppercase transition-colors focus:outline-none ${
               activeRegion
                 ? "border-zinc-900 bg-zinc-900 text-zinc-50"
                 : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
@@ -736,7 +736,13 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             <option value="">All regions</option>
             {REGIONS.map((region) => (
               <option key={region} value={region}>
-                {region}
+                {/* Short display labels keep the widest option no wider than
+                    "All regions", so the icon hugs the text in every state. */}
+                {region === "North America"
+                  ? "N. America"
+                  : region === "South America"
+                    ? "S. America"
+                    : region}
               </option>
             ))}
           </select>
@@ -748,7 +754,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             stroke="currentColor"
             strokeWidth={3.5}
             strokeLinecap="round"
-            className={`pointer-events-none absolute top-1/2 right-3 h-3.5 w-3.5 -translate-y-1/2 ${
+            className={`pointer-events-none absolute top-1/2 right-2.5 h-3.5 w-3.5 -translate-y-1/2 ${
               activeRegion ? "text-zinc-50" : "text-zinc-500"
             }`}
           >
