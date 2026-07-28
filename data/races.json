@@ -516,8 +516,8 @@
     "entryRequirement": null,
     "officialUrl": "https://borealys.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-21T06:50:12.623Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-07-28T03:35:08.720Z"
     },
     "distancesKm": [
       6,
@@ -525,8 +525,7 @@
       27,
       46,
       81
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "ultra-trail-whistler",
