@@ -4,6 +4,10 @@ on:
   schedule:
     # Daily at 06:00 UTC
     - cron: "0 6 * * *"
+    # And at 16:00 UTC — midnight in UTC+8, the moment Asian races open
+    # at 00:00 local, so "it's open" emails land at the opening bell
+    # instead of the next morning. Dedup keys make double runs safe.
+    - cron: "0 16 * * *"
   workflow_dispatch:
 
 jobs:
