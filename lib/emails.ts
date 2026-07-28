@@ -258,7 +258,7 @@ export function openEmail(
     `Unsubscribe: ${unsubUrl}`,
   ].join("\n");
   const noteHtml = personalNote?.length
-    ? `<p style="margin:24px 0 0;">${personalNote.map(esc).join("<br>")}</p>`
+    ? `<p style="margin:24px 0 0;color:#fda4af;font-weight:600;">${personalNote.map(esc).join("<br>")}</p>`
     : "";
   const html = shell(
     `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">It's open.</p>

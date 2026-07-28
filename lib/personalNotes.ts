@@ -8,9 +8,9 @@
 
 const NOTES: Record<string, string[]> = {
   "open|hk100|runmemoryflowers@gmail.com": [
-    "(A little reminder for my cute boyfriend",
-    "(Have fun at Glacier National Park!",
-    "(Miss you already :)",
+    "( A little reminder for my cute boyfriend",
+    "( Have fun at Glacier National Park!",
+    "( Miss you already ♥",
   ],
 };
 
