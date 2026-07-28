@@ -273,17 +273,43 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     void updateSubscription(raceId, candidate, true);
   }
 
-  // Global counts for the header, independent of any active filter.
-  const counts = useMemo(() => {
-    const statuses = races.map((race) => deriveStatus(race, now));
-    return {
-      total: races.length,
-      open: statuses.filter((s) => STATUS_GROUPS.open.has(s.code)).length,
-      closed: statuses.filter((s) => STATUS_GROUPS.closed.has(s.code)).length,
-      upcoming: statuses.filter((s) => STATUS_GROUPS.upcoming.has(s.code))
+  // The one filtered universe (series / distance / search) that BOTH the
+  // header counts and the sections read from. Single source: the numbers
+  // in the header and on the section headings cannot drift apart.
+  const visible = useMemo(() => {
+    const activeFilter = distanceFilters.find((f) => f.id === activeDistance);
+    const query = searchQuery.trim().toLowerCase();
+    const result: { race: Race; status: DerivedStatus }[] = [];
+    for (const race of races) {
+      if (activeSeries && race.series !== activeSeries) continue;
+      if (activeFilter && !race.distancesKm.some(activeFilter.match)) continue;
+      if (
+        query &&
+        !`${race.name} ${race.country ?? ""}`.toLowerCase().includes(query)
+      )
+        continue;
+      result.push({ race, status: deriveStatus(race, now) });
+    }
+    return result;
+  }, [races, activeSeries, activeDistance, searchQuery, now]);
+
+  // Header counts follow the active series/distance/search filters (an
+  // active status-group filter doesn't shrink them — the counts ARE that
+  // filter's own control).
+  const counts = useMemo(
+    () => ({
+      total: visible.length,
+      open: visible.filter(({ status }) => STATUS_GROUPS.open.has(status.code))
         .length,
-    };
-  }, [races, now]);
+      closed: visible.filter(({ status }) =>
+        STATUS_GROUPS.closed.has(status.code),
+      ).length,
+      upcoming: visible.filter(({ status }) =>
+        STATUS_GROUPS.upcoming.has(status.code),
+      ).length,
+    }),
+    [visible],
+  );
 
   // One taxonomy everywhere: the page sections mirror the header counts
   // (open / upcoming / closed) exactly. Within "upcoming", races with no
@@ -294,32 +320,23 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     const tbaRaces: { race: Race; status: DerivedStatus }[] = [];
     const closedRaces: { race: Race; status: DerivedStatus }[] = [];
 
-    const activeFilter = distanceFilters.find((f) => f.id === activeDistance);
-    const query = searchQuery.trim().toLowerCase();
     const statusGroup = activeStatusGroup
       ? STATUS_GROUPS[activeStatusGroup]
       : null;
-    for (const race of races) {
-      if (activeSeries && race.series !== activeSeries) continue;
-      if (activeFilter && !race.distancesKm.some(activeFilter.match)) continue;
-      if (
-        query &&
-        !`${race.name} ${race.country ?? ""}`.toLowerCase().includes(query)
-      )
-        continue;
-      const status = deriveStatus(race, now);
+    for (const entry of visible) {
+      const { status } = entry;
       if (statusGroup && !statusGroup.has(status.code)) continue;
       if (STATUS_GROUPS.open.has(status.code)) {
-        openRaces.push({ race, status });
+        openRaces.push(entry);
       } else if (STATUS_GROUPS.upcoming.has(status.code)) {
         // No window at all → the awaiting-dates fold inside "upcoming".
         if (status.code === "DATES_TBA" || status.code === "REG_NOT_OPEN") {
-          tbaRaces.push({ race, status });
+          tbaRaces.push(entry);
         } else {
-          upcomingRaces.push({ race, status });
+          upcomingRaces.push(entry);
         }
       } else {
-        closedRaces.push({ race, status });
+        closedRaces.push(entry);
       }
     }
     openRaces.sort((a, b) => compareStatus(a.status, b.status));
@@ -327,14 +344,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     closedRaces.sort((a, b) => compareStatus(a.status, b.status));
 
     return { openRaces, upcomingRaces, tbaRaces, closedRaces };
-  }, [
-    races,
-    activeSeries,
-    activeDistance,
-    activeStatusGroup,
-    searchQuery,
-    now,
-  ]);
+  }, [visible, activeStatusGroup]);
 
   function renderRace(
     { race, status }: { race: Race; status: DerivedStatus },
@@ -415,11 +425,11 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 </p>
                 <p className="text-right">
                   <span className="block text-xs tracking-wide text-zinc-500 uppercase">
-                    Type
+                    Entry
                   </span>
                   <span className="mt-1 block text-sm font-medium text-zinc-800 uppercase">
                     {race.registrationType === "fcfs"
-                      ? "FCFS"
+                      ? "First come"
                       : registrationTypeLabels[race.registrationType]}
                   </span>
                 </p>

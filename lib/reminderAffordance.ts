@@ -41,7 +41,8 @@ export function reminderAffordance(
   if (OPEN_NOW.has(status.code)) {
     return race.registrationCloses
       ? { kind: "REMIND_CLOSE", label: "Remind me before it closes" }
-      : { kind: "REGISTER_NOW", label: "Open now — register" };
+      : // The status pill already says "Open now" — the button is pure verb.
+        { kind: "REGISTER_NOW", label: "Register" };
   }
 
   // A future opening we can fire on (date known, or next edition announced).

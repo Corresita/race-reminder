@@ -46,19 +46,19 @@ export interface Race {
 // ---------- Derived status ----------
 
 export type StatusCode =
-  | "REG_OPENS_SOON"      // opens date known, in the future
-  | "REG_OPEN"            // inside the window
-  | "REG_CLOSING_SOON"    // inside window, ≤ urgencyDays left  ← the core product value
-  | "REG_CLOSED"          // window passed, race not yet run
+  | "REG_OPENS_SOON" // opens date known, in the future
+  | "REG_OPEN" // inside the window
+  | "REG_CLOSING_SOON" // inside window, ≤ urgencyDays left  ← the core product value
+  | "REG_CLOSED" // window passed, race not yet run
   | "SOLD_OUT"
   | "LOTTERY_OPENS_SOON"
   | "LOTTERY_OPEN"
-  | "AWAITING_DRAW"       // lottery entry closed, draw date pending
+  | "AWAITING_DRAW" // lottery entry closed, draw date pending
   | "LOTTERY_DRAWN"
-  | "COMPLETED_NEXT_KNOWN"   // race ran; next edition's reg date is known
-  | "COMPLETED_NEXT_TBA"     // race ran; watching for next edition announcement
-  | "REG_NOT_OPEN"           // race date known, registration not open yet
-  | "DATES_TBA";             // not enough facts to conclude anything
+  | "COMPLETED_NEXT_KNOWN" // race ran; next edition's reg date is known
+  | "COMPLETED_NEXT_TBA" // race ran; watching for next edition announcement
+  | "REG_NOT_OPEN" // race date known, registration not open yet
+  | "DATES_TBA"; // not enough facts to conclude anything
 
 export type Urgency = "critical" | "warning" | "normal" | "none";
 
@@ -101,7 +101,7 @@ function parse(iso: string | null | undefined): Date | null {
 export function deriveStatus(
   race: Race,
   now: Date = new Date(),
-  urgencyDays = 14
+  urgencyDays = 14,
 ): DerivedStatus {
   const raceDate = parse(race.raceDate);
   const opens = parse(race.registrationOpens);
@@ -326,10 +326,17 @@ export function deriveStatus(
   };
 }
 
-/** Canonical list order: actionable races first (nearest actionable date
- *  wins), then everything the runner can only look at, TBA last. */
+/** Canonical list order: actionable races first. Among them, having a
+ *  countdown at all beats having none — a race with a real deadline or
+ *  open date outranks "open until full" no matter how near the latter's
+ *  race day is — and then the nearest date wins. Undated actionables
+ *  order by race day among themselves; TBA sorts last. */
 export function compareStatus(a: DerivedStatus, b: DerivedStatus): number {
-  return Number(b.actionable) - Number(a.actionable) || a.sortKey - b.sortKey;
+  return (
+    Number(b.actionable) - Number(a.actionable) ||
+    Number(a.daysUntil == null) - Number(b.daysUntil == null) ||
+    a.sortKey - b.sortKey
+  );
 }
 
 export function sortRaces(races: Race[], now: Date = new Date()): Race[] {

@@ -16,10 +16,14 @@ countdowns.
 **Shows:** `RACE REMINDER™` wordmark, the description line, and live
 counts: `{total} races · {open} open · {upcoming} upcoming · {closed}
 closed`. **The counts are buttons**: open/upcoming/closed toggle a status
-filter on the list; the races count clears it. The numbers stay global
-(never affected by any filter).
+filter on the list; the races count clears it. The numbers follow the
+active series/distance/search filters (counts and section headings read
+the same `visible` array — a single source, so they can never disagree);
+only the status-group filter leaves them untouched, because the counts
+are that filter's own control.
 
-**Data:** counts from `deriveStatus` over all races via `STATUS_GROUPS`.
+**Data:** counts from `deriveStatus` over the visible races via
+`STATUS_GROUPS`.
 Every status code lands in exactly one group, so the three always sum to
 the total:
 
@@ -109,8 +113,10 @@ changes are a one-file edit here.
 exactly — same words, same numbers. Clicking a header count filters to
 precisely one section.
 
-1. **Open now (N)** — the `open` group, sorted by `compareStatus`
-   (nearest deadline first).
+1. **Open now (N)** — the `open` group, sorted by `compareStatus`:
+   races with a real countdown first (nearest deadline wins), then
+   "open until full" races (no time pressure) in the back half, ordered
+   by race day. Urgency outranks proximity of the race itself.
 2. **Upcoming — not open yet (N)** — the `upcoming` group. Races with a
    known future open date list directly (sorted by open date); races with
    no window at all collapse inside the `Awaiting dates (M)` `<details>`
@@ -157,8 +163,9 @@ Cards with nothing to act on render dimmed. Top to bottom:
 
 - **key date + type row** — left: `dateRow(race, status, now)`, the next
   calendar date that matters (Opens / Closes / Draw / Race day + "05 DEC"
-  short format; Dates TBA when nothing is known). Right: **Type** —
-  Lottery / FCFS / Qualification
+  short format; Dates TBA when nothing is known). Right: **Entry** —
+  Lottery / First come / Qualification (no "FCFS" — domain jargon stays
+  out of the UI)
 - **Requires** — `entryRequirement`; small print `entryNotes` (only when
   present)
 - **contextual countdown** — small-caps label + the card's one big
@@ -181,8 +188,10 @@ Cards with nothing to act on render dimmed. Top to bottom:
 
 ### 6c. Action (full-width pill, three-tier hierarchy)
 
-- **solid black** — act now: `Open now — register ↗` (open, no deadline;
-  external link to the official site)
+- **solid black** — act now: `Register ↗` (open, no deadline; external
+  link to the official site). No status words on buttons — the pill
+  reports state, the button is pure verb; across a full screen of open
+  cards, repeating "Open now" twice per card reads as shouting
 - **outlined** — reminders: `Remind me when it opens` / `Remind me
   before it closes` via `reminderAffordance` (the button never promises
   what the notifier can't deliver). Subscribed state is emerald
