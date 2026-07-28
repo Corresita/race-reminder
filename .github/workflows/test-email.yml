@@ -15,6 +15,10 @@ on:
       to:
         description: "Recipient email"
         required: true
+      personal_as:
+        description: "Preview another recipient's personal note (optional)"
+        required: false
+        default: ""
 
 jobs:
   send:
@@ -31,6 +35,7 @@ jobs:
           TEMPLATE: ${{ inputs.template }}
           RACE_ID: ${{ inputs.race_id }}
           TO: ${{ inputs.to }}
+          PERSONAL_AS: ${{ inputs.personal_as }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           SITE_URL: https://racereminder.run

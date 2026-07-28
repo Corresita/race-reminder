@@ -26,6 +26,7 @@ import {
   openEmail,
   opensSoonEmail,
 } from "../lib/emails";
+import { personalNote } from "../lib/personalNotes";
 
 type RaceRecord = Race & { name: string; officialUrl: string };
 
@@ -46,6 +47,10 @@ async function main() {
   const unsubscribe = unsubscribeUrl(to, race.id);
   const days = status.daysUntil ?? 3;
 
+  // PERSONAL_AS lets a test preview another recipient's personal note
+  // while still delivering to TO (e.g. preview what a specific
+  // subscriber will get without emailing them).
+  const noteRecipient = process.env.PERSONAL_AS || to;
   const content =
     template === "confirm"
       ? confirmEmail(race, unsubscribe)
@@ -54,7 +59,11 @@ async function main() {
         : template === "opens-soon"
           ? opensSoonEmail(race, days, unsubscribe)
           : template === "open"
-            ? openEmail(race, unsubscribe)
+            ? openEmail(
+                race,
+                unsubscribe,
+                personalNote("open", raceId, noteRecipient),
+              )
             : template === "closing"
               ? closingEmail(race, days, unsubscribe)
               : null;

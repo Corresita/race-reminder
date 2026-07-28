@@ -234,7 +234,13 @@ export function opensSoonEmail(
 }
 
 // ── 2. OPEN — registration has opened ──────────────────────────────────────
-export function openEmail(race: RaceLike, unsubUrl: string) {
+export function openEmail(
+  race: RaceLike,
+  unsubUrl: string,
+  /** Optional hand-written lines for one specific recipient, rendered
+   *  verbatim after the sign-off line. */
+  personalNote?: string[] | null,
+) {
   const closesClause = race.registrationCloses
     ? ` — closes ${fmt(race.registrationCloses)}`
     : "";
@@ -247,14 +253,19 @@ export function openEmail(race: RaceLike, unsubUrl: string) {
     `Register: ${race.officialUrl}`,
     ``,
     `This is the part you've been waiting for. See you on the start line.`,
+    ...(personalNote?.length ? [``, ...personalNote] : []),
     ``,
     `Unsubscribe: ${unsubUrl}`,
   ].join("\n");
+  const noteHtml = personalNote?.length
+    ? `<p style="margin:24px 0 0;">${personalNote.map(esc).join("<br>")}</p>`
+    : "";
   const html = shell(
     `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">It's open.</p>
      <p>Registration for <strong>${esc(race.name)}</strong> just opened${esc(closesClause)}.</p>
      ${cta(race.officialUrl, "Secure your place →")}
-     <p style="color:#71717a;margin-bottom:0;">This is the part you've been waiting for. See you on the start line.</p>`,
+     <p style="color:#71717a;margin-bottom:0;">This is the part you've been waiting for. See you on the start line.</p>
+     ${noteHtml}`,
     unsubUrl,
     "A reminder from",
   );

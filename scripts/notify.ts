@@ -26,7 +26,12 @@ import {
   sendEmail,
 } from "../lib/email";
 import { closingEmail, openEmail, opensSoonEmail } from "../lib/emails";
-import { listNotified, listSubscriptions, markNotified } from "../lib/subscriptions";
+import { personalNote } from "../lib/personalNotes";
+import {
+  listNotified,
+  listSubscriptions,
+  markNotified,
+} from "../lib/subscriptions";
 
 type RaceRecord = Race & {
   name: string;
@@ -62,7 +67,10 @@ async function notifySubscriber(
  * closing are due together (it opened straight into the closing window),
  * only "closing" is sent — its email already says it's open.
  */
-function dueEvents(race: RaceRecord, status: ReturnType<typeof deriveStatus>): EventType[] {
+function dueEvents(
+  race: RaceRecord,
+  status: ReturnType<typeof deriveStatus>,
+): EventType[] {
   if (OPENS_SOON_CODES.has(status.code)) {
     return status.daysUntil != null && status.daysUntil <= OPENS_LEAD_DAYS
       ? ["opens-soon"]
@@ -122,14 +130,22 @@ async function main() {
           event === "opens-soon"
             ? opensSoonEmail(race, status.daysUntil ?? 0, unsubscribe)
             : event === "open"
-              ? openEmail(race, unsubscribe)
+              ? openEmail(
+                  race,
+                  unsubscribe,
+                  personalNote(event, race.id, sub.email),
+                )
               : closingEmail(race, status.daysUntil ?? 0, unsubscribe);
 
         // One undeliverable address (e.g. Resend's test sender can only reach
         // the account owner until a domain is verified) must not block the
         // other subscribers. Unmarked failures retry on the next run.
         try {
-          await notifySubscriber(sub.email, content, unsubscribeHeaders(unsubscribe));
+          await notifySubscriber(
+            sub.email,
+            content,
+            unsubscribeHeaders(unsubscribe),
+          );
           sentKeys.push(key);
         } catch (error) {
           failedSends += 1;
