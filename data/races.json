@@ -242,7 +242,6 @@
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://torrencial.utmb.world",
-    "soldOut": true,
     "observed": {
       "status": "registration_sold_out",
       "checkedAt": "2026-07-19T00:52:53.836Z"
