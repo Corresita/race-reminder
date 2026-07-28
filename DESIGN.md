@@ -63,11 +63,11 @@ description in `app/layout.tsx` are separate and tuned for search.
 
 ---
 
-## 3. Control row (series · distance · search)
+## 3. Control row (series · distance · region · search)
 
 One wrapping row: series tabs, a thin divider, distance chips, and a
-live search field (right-aligned, grows on mobile). All filters AND
-together.
+right-aligned pair — region dropdown + live search field (search grows
+on mobile). All filters AND together.
 
 ### Series tabs
 
@@ -75,6 +75,18 @@ together.
 
 **Data:** `race.series` — one of `utmb-world-series`, `world-trail-majors`,
 `independent`. `All Events` = no series filter (`activeSeries === null`).
+
+### Region dropdown
+
+**Shows:** a pill-shaped `<select>`: All regions / Europe / North
+America / South America / Asia / Oceania / Africa. Dark pill while a
+region is active. A dropdown, not chips — six more chips would blow up
+the row.
+
+**Data:** `COUNTRY_REGION`, a country→continent map derived in code (no
+data-file changes). Judgment call: Türkiye files under Europe — that's
+where users look for Kaçkar. No sort controls beyond this: "most
+urgent" is already the canonical order, and A–Z is outdone by search.
 
 ### Search
 

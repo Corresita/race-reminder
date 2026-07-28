@@ -178,6 +178,57 @@ const distanceFilters: {
   { id: "100M", label: "100M", match: (km) => km >= 130 },
 ];
 
+// Continent buckets, derived from the country fact — no data changes.
+// Judgment call: Türkiye files under Europe (Kaçkar is geographically
+// Anatolia, but that's where users will look for it).
+const REGIONS = [
+  "Europe",
+  "North America",
+  "South America",
+  "Asia",
+  "Oceania",
+  "Africa",
+] as const;
+type Region = (typeof REGIONS)[number];
+
+const COUNTRY_REGION: Record<string, Region> = {
+  Andorra: "Europe",
+  Austria: "Europe",
+  Croatia: "Europe",
+  France: "Europe",
+  Germany: "Europe",
+  Italy: "Europe",
+  Latvia: "Europe",
+  Portugal: "Europe",
+  Romania: "Europe",
+  Slovenia: "Europe",
+  Spain: "Europe",
+  Sweden: "Europe",
+  Switzerland: "Europe",
+  Türkiye: "Europe",
+  "United Kingdom": "Europe",
+  Canada: "North America",
+  Mexico: "North America",
+  "United States": "North America",
+  Argentina: "South America",
+  Brazil: "South America",
+  Chile: "South America",
+  Ecuador: "South America",
+  China: "Asia",
+  "Chinese Taipei": "Asia",
+  "Hong Kong": "Asia",
+  Indonesia: "Asia",
+  Japan: "Asia",
+  Malaysia: "Asia",
+  Oman: "Asia",
+  "South Korea": "Asia",
+  Thailand: "Asia",
+  Vietnam: "Asia",
+  Australia: "Oceania",
+  "New Zealand": "Oceania",
+  "South Africa": "Africa",
+};
+
 const EMAIL_STORAGE_KEY = "race-reminder-email";
 const SUBSCRIPTIONS_STORAGE_KEY = "race-reminder-subscriptions";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -185,6 +236,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   const [activeSeries, setActiveSeries] = useState<Series | null>(null);
   const [activeDistance, setActiveDistance] = useState<string | null>(null);
+  const [activeRegion, setActiveRegion] = useState<Region | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeStatusGroup, setActiveStatusGroup] =
     useState<StatusGroup | null>(null);
@@ -284,6 +336,11 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       if (activeSeries && race.series !== activeSeries) continue;
       if (activeFilter && !race.distancesKm.some(activeFilter.match)) continue;
       if (
+        activeRegion &&
+        (!race.country || COUNTRY_REGION[race.country] !== activeRegion)
+      )
+        continue;
+      if (
         query &&
         !`${race.name} ${race.country ?? ""}`.toLowerCase().includes(query)
       )
@@ -291,7 +348,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       result.push({ race, status: deriveStatus(race, now) });
     }
     return result;
-  }, [races, activeSeries, activeDistance, searchQuery, now]);
+  }, [races, activeSeries, activeDistance, activeRegion, searchQuery, now]);
 
   // Header counts follow the active series/distance/search filters (an
   // active status-group filter doesn't shrink them — the counts ARE that
@@ -663,13 +720,32 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           </button>
         ))}
 
+        <select
+          value={activeRegion ?? ""}
+          onChange={(event) =>
+            setActiveRegion((event.target.value || null) as Region | null)
+          }
+          aria-label="Filter races by region"
+          className={`ml-auto cursor-pointer rounded-full border px-3 py-1.5 text-xs tracking-wide uppercase transition-colors focus:outline-none ${
+            activeRegion
+              ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+              : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+          }`}
+        >
+          <option value="">All regions</option>
+          {REGIONS.map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
+        </select>
         <input
           type="search"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
           placeholder="Search races…"
           aria-label="Search races by name or country"
-          className="ml-auto w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
+          className="w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
         />
       </section>
 
@@ -704,6 +780,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               open={
                 activeSeries !== null ||
                 activeDistance !== null ||
+                activeRegion !== null ||
                 activeStatusGroup !== null ||
                 searchQuery.trim() !== ""
               }
