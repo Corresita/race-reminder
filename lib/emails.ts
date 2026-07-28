@@ -59,11 +59,11 @@ function wordmark(px: number): string {
 
 /** The site's dot-dash rule, email-safe: a 3-cell table (dot / dashes / dot). */
 function dotRule(): string {
-  const dot = `<div style="width:6px;height:6px;border-radius:3px;background:#d4d4d8;font-size:0;line-height:0;">&nbsp;</div>`;
+  const dot = `<div style="width:6px;height:6px;border-radius:3px;background:#a1a1aa;font-size:0;line-height:0;">&nbsp;</div>`;
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
     <tr>
       <td width="6" style="width:6px;">${dot}</td>
-      <td style="vertical-align:middle;"><div style="border-top:1px dashed #d4d4d8;font-size:0;line-height:0;">&nbsp;</div></td>
+      <td style="vertical-align:middle;"><div style="border-top:1px dashed #a1a1aa;font-size:0;line-height:0;">&nbsp;</div></td>
       <td width="6" style="width:6px;">${dot}</td>
     </tr>
   </table>`;
@@ -76,7 +76,7 @@ function dotRule(): string {
  */
 function shell(inner: string, unsubUrl: string, kicker: string): string {
   return `<div style="padding:24px 12px;">
-  <div style="max-width:600px;margin:0 auto;background:#fbfbfb;border:1px solid #e4e4e7;border-radius:24px;padding:36px 32px;font-family:${FONT_STACK};font-size:16px;color:#18181b;line-height:1.55;">
+  <div style="max-width:600px;margin:0 auto;background:#fbfbfb;border:1px solid #a1a1aa;border-radius:24px;padding:36px 32px;font-family:${FONT_STACK};font-size:16px;color:#18181b;line-height:1.55;">
     <p style="margin:0 0 14px;font-family:${DISPLAY_STACK};font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:#3f3f46;">${kicker}&nbsp; ${wordmark(13)}</p>
     ${dotRule()}
     <div style="margin:36px 0;">
