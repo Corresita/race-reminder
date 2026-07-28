@@ -278,14 +278,14 @@ Tailwind utilities in `app/globals.css`:
   headers; `/api/unsubscribe` (GET + POST) removes one race or all.
 - **Email template rules** (`shell()` in `lib/emails.ts`):
   - card frame: everything sits inside a rounded outer frame (1px
-    zinc-400 border, radius 24, background #fbfbfb, `max-width:600px;
+    zinc-200 border, radius 24, background #fbfbfb, `max-width:600px;
     margin:0 auto`) — outside the frame the email client's own
     background shows through. The body copy sits directly on the frame
     background (no white panel), flush-left with the kicker and footer;
     the frame centers, the text stays left-aligned
   - the card is bracketed by the site's dot-dash rule (email-safe 3-cell
-    table; zinc-400 here for contrast on the gray canvas), mirroring the
-    web page's bookends
+    table; zinc-300, same as the site's), mirroring the web page's
+    bookends — frame and rule colors match the site exactly
   - kicker above the top rule, per template: "Welcome to" (confirm), "A
     message from" (cancel), "A heads-up from" (opens-soon), "A reminder
     from" (open, closing) — always ending in the wordmark; understated
