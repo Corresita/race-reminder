@@ -282,10 +282,22 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     setBusyRaceId(raceId);
     setSubscribeError(null);
     try {
+      // Silently capture the browser's IANA timezone on subscribe so
+      // emails can one day render "your time" — no GeoIP, no form field.
+      let timezone: string | null = null;
+      try {
+        timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? null;
+      } catch {
+        // Older browsers: fine without.
+      }
       const response = await fetch("/api/subscribe", {
         method: subscribe ? "POST" : "DELETE",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: subscriberEmail, raceId }),
+        body: JSON.stringify(
+          subscribe
+            ? { email: subscriberEmail, raceId, timezone }
+            : { email: subscriberEmail, raceId },
+        ),
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
 

@@ -12,16 +12,29 @@ import {
   removeSubscription,
 } from "@/lib/subscriptions";
 
-async function parseBody(
-  request: Request,
-): Promise<{ email: string; raceId: string } | null> {
+// IANA zone names ("Asia/Hong_Kong", "America/New_York", "UTC").
+const TIMEZONE_PATTERN = /^[A-Za-z0-9_+\-/]{1,64}$/;
+
+async function parseBody(request: Request): Promise<{
+  email: string;
+  raceId: string;
+  timezone: string | null;
+} | null> {
   try {
-    const body = (await request.json()) as { email?: unknown; raceId?: unknown };
+    const body = (await request.json()) as {
+      email?: unknown;
+      raceId?: unknown;
+      timezone?: unknown;
+    };
     const email =
       typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     const raceId = typeof body.raceId === "string" ? body.raceId : "";
+    const timezone =
+      typeof body.timezone === "string" && TIMEZONE_PATTERN.test(body.timezone)
+        ? body.timezone
+        : null;
     if (!EMAIL_PATTERN.test(email) || !raceId) return null;
-    return { email, raceId };
+    return { email, raceId, timezone };
   } catch {
     return null;
   }
@@ -40,7 +53,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Unknown race" }, { status: 404 });
   }
 
-  const created = await addSubscription(body.email, body.raceId);
+  const created = await addSubscription(body.email, body.raceId, body.timezone);
 
   if (created) {
     // Confirmation is best-effort: a failed email must not fail the subscribe.

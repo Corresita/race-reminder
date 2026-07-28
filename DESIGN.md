@@ -284,6 +284,12 @@ Tailwind utilities in `app/globals.css`:
   `lib/emails.ts`: subject is the action signal, warmth in the last line,
   plain-text part included. `NOTIFY_NOW=<iso>` time-travels dry runs for
   testing.
+- **Subscriber timezone** — subscribing silently records the browser's
+  IANA timezone (`Intl.DateTimeFormat().resolvedOptions().timeZone`; no
+  GeoIP, no form field) into the subscription record, for future "your
+  time" rendering in emails. Only to be used for races whose data holds
+  a REAL clock time — converting placeholder midnights would fabricate
+  precision. Pre-existing subscriptions have no timezone (legacy).
 - **Emails** — confirmation ("We're watching {race} for you."), a
   cancellation receipt for site-side cancels (with a re-subscribe path;
   email-link unsubscribes deliberately send nothing), and every reminder

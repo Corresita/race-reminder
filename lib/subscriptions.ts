@@ -8,7 +8,8 @@
  *    required in production, where serverless filesystems are ephemeral.
  *  - Local JSON files in data/ otherwise, so `npm run dev` needs no accounts.
  *
- * Layout in Redis: hash "subscriptions" (field "raceId|email" → createdAt),
+ * Layout in Redis: hash "subscriptions" (field "raceId|email" → JSON
+ * {createdAt, timezone}; legacy values are bare createdAt strings),
  * set "notified" (members "raceId|raceDate|email").
  */
 import { readFile, writeFile } from "node:fs/promises";
@@ -18,6 +19,10 @@ export interface Subscription {
   email: string;
   raceId: string;
   createdAt: string;
+  /** IANA timezone captured from the subscriber's browser (Intl) at
+   *  subscribe time — for future "your time" rendering in emails.
+   *  Absent on subscriptions made before this field existed. */
+  timezone?: string | null;
 }
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,7 +54,11 @@ async function redis(command: (string | number)[]): Promise<unknown> {
 
 // ---------- Local file backend ----------
 
-const subscriptionsPath = path.join(process.cwd(), "data", "subscriptions.json");
+const subscriptionsPath = path.join(
+  process.cwd(),
+  "data",
+  "subscriptions.json",
+);
 const notifiedPath = path.join(process.cwd(), "data", "notified.json");
 
 async function readJsonFile<T>(filePath: string, fallback: T): Promise<T> {
@@ -67,16 +76,41 @@ async function writeJsonFile(filePath: string, value: unknown): Promise<void> {
 
 // ---------- Public interface ----------
 
+/** Hash values are either a bare ISO string (legacy) or a JSON object
+ *  `{"createdAt":...,"timezone":...}` (since timezone capture). */
+function parseHashValue(value: string): {
+  createdAt: string;
+  timezone: string | null;
+} {
+  if (value.startsWith("{")) {
+    try {
+      const parsed = JSON.parse(value) as {
+        createdAt?: string;
+        timezone?: string | null;
+      };
+      return {
+        createdAt: parsed.createdAt ?? "",
+        timezone: parsed.timezone ?? null,
+      };
+    } catch {
+      // Fall through: treat as a legacy bare string.
+    }
+  }
+  return { createdAt: value, timezone: null };
+}
+
 export async function listSubscriptions(): Promise<Subscription[]> {
   if (upstashConfig()) {
     const flat = (await redis(["HGETALL", "subscriptions"])) as string[];
     const subscriptions: Subscription[] = [];
     for (let i = 0; i < flat.length; i += 2) {
       const separator = flat[i].indexOf("|");
+      const { createdAt, timezone } = parseHashValue(flat[i + 1]);
       subscriptions.push({
         raceId: flat[i].slice(0, separator),
         email: flat[i].slice(separator + 1),
-        createdAt: flat[i + 1],
+        createdAt,
+        timezone,
       });
     }
     return subscriptions;
@@ -85,32 +119,56 @@ export async function listSubscriptions(): Promise<Subscription[]> {
 }
 
 /** Returns true when this is a new subscription, false if it already existed. */
-export async function addSubscription(email: string, raceId: string): Promise<boolean> {
+export async function addSubscription(
+  email: string,
+  raceId: string,
+  timezone: string | null = null,
+): Promise<boolean> {
   if (upstashConfig()) {
     const created = await redis([
       "HSETNX",
       "subscriptions",
       `${raceId}|${email}`,
-      new Date().toISOString(),
+      JSON.stringify({ createdAt: new Date().toISOString(), timezone }),
     ]);
     return created === 1;
   }
-  const subscriptions = await readJsonFile<Subscription[]>(subscriptionsPath, []);
-  if (subscriptions.some((sub) => sub.email === email && sub.raceId === raceId)) {
+  const subscriptions = await readJsonFile<Subscription[]>(
+    subscriptionsPath,
+    [],
+  );
+  if (
+    subscriptions.some((sub) => sub.email === email && sub.raceId === raceId)
+  ) {
     return false;
   }
-  subscriptions.push({ email, raceId, createdAt: new Date().toISOString() });
+  subscriptions.push({
+    email,
+    raceId,
+    createdAt: new Date().toISOString(),
+    timezone,
+  });
   await writeJsonFile(subscriptionsPath, subscriptions);
   return true;
 }
 
 /** Returns true when a subscription actually existed and was removed. */
-export async function removeSubscription(email: string, raceId: string): Promise<boolean> {
+export async function removeSubscription(
+  email: string,
+  raceId: string,
+): Promise<boolean> {
   if (upstashConfig()) {
-    const removed = await redis(["HDEL", "subscriptions", `${raceId}|${email}`]);
+    const removed = await redis([
+      "HDEL",
+      "subscriptions",
+      `${raceId}|${email}`,
+    ]);
     return removed === 1;
   }
-  const subscriptions = await readJsonFile<Subscription[]>(subscriptionsPath, []);
+  const subscriptions = await readJsonFile<Subscription[]>(
+    subscriptionsPath,
+    [],
+  );
   const remaining = subscriptions.filter(
     (sub) => !(sub.email === email && sub.raceId === raceId),
   );
@@ -133,7 +191,10 @@ export async function removeAllSubscriptions(email: string): Promise<number> {
     if (fields.length > 0) await redis(["HDEL", "subscriptions", ...fields]);
     return fields.length;
   }
-  const subscriptions = await readJsonFile<Subscription[]>(subscriptionsPath, []);
+  const subscriptions = await readJsonFile<Subscription[]>(
+    subscriptionsPath,
+    [],
+  );
   const remaining = subscriptions.filter((sub) => sub.email !== email);
   if (remaining.length !== subscriptions.length) {
     await writeJsonFile(subscriptionsPath, remaining);
