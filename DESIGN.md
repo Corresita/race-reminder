@@ -46,7 +46,7 @@ the counts can drive filter state).
 (the h1): "Know the day registration opens. Every lottery draw, every
 deadline that matters — for the trail ultras you're chasing." No divider
 splits it; it sits inside the brand block, above the shared header rule
-(`DotRule`: a 1px zinc-400 dashed line with a 6px round dot at each end
+(`DotRule`: a 1px zinc-300 dashed line with a 6px round dot at each end
 — decorative, `aria-hidden`). The same rule reappears above the footer
 and nowhere else: the pair reads as bookends framing the page, and a
 third use would demote it to ornament. Group dividers stay plain.
@@ -284,8 +284,8 @@ Tailwind utilities in `app/globals.css`:
     background (no white panel), flush-left with the kicker and footer;
     the frame centers, the text stays left-aligned
   - the card is bracketed by the site's dot-dash rule (email-safe 3-cell
-    table; zinc-400, same as the site's), mirroring the web page's
-    bookends — rule color matches the site exactly
+    table; zinc-400 — one step darker than the site's zinc-300 rule,
+    for weight on the email canvas), mirroring the web page's bookends
   - kicker above the top rule, per template: "Welcome to" (confirm), "A
     message from" (cancel), "A heads-up from" (opens-soon), "A reminder
     from" (open, closing) — always ending in the wordmark; understated
