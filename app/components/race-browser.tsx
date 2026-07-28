@@ -264,6 +264,16 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     }
   }, []);
 
+  // Phones only: the filter row isn't sticky there, so surface a
+  // back-to-top button once the user is meaningfully deep in the list.
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   async function updateSubscription(
     raceId: string,
     subscriberEmail: string,
@@ -677,9 +687,11 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         <DotRule />
       </header>
 
-      {/* Sticky: the filters are the page's steering wheel — they ride along
-          so deep in the list you can re-filter without scrolling back up. */}
-      <section className="bg-background/85 sticky top-0 z-20 mb-8 flex flex-wrap items-center gap-2 py-3 backdrop-blur-sm">
+      {/* The filters are the page's steering wheel. On sm+ the row is
+          sticky and rides along while scrolling; on phones sticking it
+          would eat ~1/5 of the screen, so it scrolls away and a floating
+          back-to-top button (below) covers the trip back instead. */}
+      <section className="sm:bg-background/85 mb-8 flex flex-wrap items-center gap-2 sm:sticky sm:top-0 sm:z-20 sm:py-3 sm:backdrop-blur-sm">
         {seriesTabs.map((tab) => (
           <button
             key={tab.slug ?? "all"}
@@ -858,6 +870,29 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             No races match the current filters.
           </p>
         </section>
+      ) : null}
+
+      {showBackToTop ? (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Back to top"
+          className="fixed right-5 bottom-5 z-30 flex size-11 items-center justify-center rounded-full bg-zinc-900 text-zinc-50 shadow-lg sm:hidden"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-5 w-5"
+          >
+            <path d="M12 19V5" />
+            <path d="m5 12 7-7 7 7" />
+          </svg>
+        </button>
       ) : null}
     </>
   );

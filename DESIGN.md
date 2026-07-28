@@ -67,11 +67,15 @@ description in `app/layout.tsx` are separate and tuned for search.
 
 One wrapping row: series tabs, a thin divider, distance chips, and a
 right-aligned pair — region dropdown + live search field (search grows
-on mobile). All filters AND together. The row is **sticky** (top-0,
-translucent page-background + backdrop blur): filters are the page's
-navigation, so they ride along while scrolling the 77 cards — which is
-also why there is no back-to-top button. Only this row sticks; the
-header (wordmark/hero/counts) scrolls away, it's too tall to pin.
+on mobile). All filters AND together. On sm+ the row is **sticky**
+(top-0, translucent page-background + backdrop blur): filters are the
+page's navigation, so they ride along while scrolling the 77 cards —
+which is why desktop has no back-to-top button. Only this row sticks;
+the header (wordmark/hero/counts) scrolls away, it's too tall to pin.
+On phones sticking the (wrapped, ~3-row) block would eat a fifth of the
+screen, so it scrolls away and a floating back-to-top button (bottom
+right, appears after ~600px of scroll, phones only) covers the trip
+back to the filters instead.
 
 ### Series tabs
 
