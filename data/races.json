@@ -266,7 +266,7 @@
     "registrationOpens": null,
     "registrationCloses": "2026-02-10T23:59:59+01:00",
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 100K",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://valdaran.utmb.world",
     "soldOut": true,
     "observed": {
@@ -365,7 +365,7 @@
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "ITRA 600 / UTMB 50K",
+    "entryRequirement": "ITRA Index",
     "officialUrl": "https://eiger.utmb.world",
     "observed": {
       "status": "available_soon",
@@ -561,7 +561,7 @@
     "registrationCloses": "2026-01-19T23:59:59+01:00",
     "registrationType": "lottery",
     "lotteryDrawDate": "2026-01-22T11:00:00+01:00",
-    "entryRequirement": "UTMB Index 100M + Running Stones",
+    "entryRequirement": "UTMB Index + Running Stones",
     "officialUrl": "https://montblanc.utmb.world/",
     "observed": {
       "status": "registration_closed",
@@ -930,7 +930,7 @@
     "registrationOpens": "2025-11-20T14:00:00+01:00",
     "registrationCloses": "2026-10-10T23:59:59+02:00",
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://kullamannen.utmb.world/",
     "observed": {
       "status": "registration_open",
@@ -997,7 +997,7 @@
     "registrationOpens": "2026-04-14T18:00:00+08:00",
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 20K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://translantau.utmb.world/",
     "observed": {
       "status": "registration_open",
@@ -1074,7 +1074,7 @@
     "registrationOpens": "2026-03-12T11:00:00+11:00",
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 20K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://kosciuszko.utmb.world/",
     "observed": {
       "status": "registration_open",
@@ -1169,7 +1169,7 @@
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://tarawera.utmb.world/",
     "observed": {
       "status": "registration_open",
@@ -1241,7 +1241,7 @@
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://chianti.utmb.world/",
     "observed": {
       "status": "registration_open",
@@ -1338,7 +1338,7 @@
     "registrationCloses": null,
     "registrationType": "lottery",
     "lotteryDrawDate": null,
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://canyons.utmb.world/",
     "observed": {
       "status": "available_soon",
@@ -1529,7 +1529,7 @@
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
-    "entryRequirement": "UTMB Index 50K+",
+    "entryRequirement": "UTMB Index",
     "officialUrl": "https://lavaredo.utmb.world/",
     "observed": {
       "status": "available_soon",
@@ -1613,7 +1613,7 @@
     "registrationCloses": null,
     "registrationType": "lottery",
     "lotteryDrawDate": null,
-    "entryRequirement": "Qualifying races (ITRA points)",
+    "entryRequirement": "Qualifying races",
     "officialUrl": "https://en.mtfuji100.com/",
     "distancesKm": [
       40,

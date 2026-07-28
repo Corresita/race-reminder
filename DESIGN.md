@@ -187,7 +187,12 @@ Cards with nothing to act on render dimmed. Top to bottom:
   Lottery / First come / Qualification (no "FCFS" — domain jargon stays
   out of the UI)
 - **Requires** — `entryRequirement`; small print `entryNotes` (only when
-  present)
+  present). Wording rule: multi-distance races name only the mechanism
+  ("UTMB Index", "Qualifying races") — thresholds live on the official
+  site, and category detail ("Index 50K+") next to distance chips reads
+  as if it bound every course. Single-distance races keep full detail
+  (WSER's qualifying window, Hardrock's qualifier) — there it applies to
+  the whole race and is genuinely load-bearing.
 - **contextual countdown** — small-caps label + the card's one big
   figure, via `countdownRow(status)`:
 
