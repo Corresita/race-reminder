@@ -250,9 +250,9 @@ export function openEmail(
     ``,
     `Registration for ${race.name} just opened${closesClause}.`,
     ``,
-    `Register: ${race.officialUrl}`,
+    `This is the part you've been waiting for. See you at the start line.`,
     ``,
-    `This is the part you've been waiting for. See you on the start line.`,
+    `Register: ${race.officialUrl}`,
     ...(personalNote?.length ? [``, ...personalNote] : []),
     ``,
     `Unsubscribe: ${unsubUrl}`,
@@ -263,8 +263,8 @@ export function openEmail(
   const html = shell(
     `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">It's open.</p>
      <p>Registration for <strong>${esc(race.name)}</strong> just opened${esc(closesClause)}.</p>
+     <p style="color:#71717a;">This is the part you've been waiting for. See you at the start line.</p>
      ${cta(race.officialUrl, "Secure your place →")}
-     <p style="color:#71717a;margin-bottom:0;">This is the part you've been waiting for. See you on the start line.</p>
      ${noteHtml}`,
     unsubUrl,
     "A reminder from",
