@@ -67,7 +67,11 @@ description in `app/layout.tsx` are separate and tuned for search.
 
 One wrapping row: series tabs, a thin divider, distance chips, and a
 right-aligned pair — region dropdown + live search field (search grows
-on mobile). All filters AND together.
+on mobile). All filters AND together. The row is **sticky** (top-0,
+translucent page-background + backdrop blur): filters are the page's
+navigation, so they ride along while scrolling the 77 cards — which is
+also why there is no back-to-top button. Only this row sticks; the
+header (wordmark/hero/counts) scrolls away, it's too tall to pin.
 
 ### Series tabs
 

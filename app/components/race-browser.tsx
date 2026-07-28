@@ -677,7 +677,9 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         <DotRule />
       </header>
 
-      <section className="mb-8 flex flex-wrap items-center gap-2">
+      {/* Sticky: the filters are the page's steering wheel — they ride along
+          so deep in the list you can re-filter without scrolling back up. */}
+      <section className="bg-background/85 sticky top-0 z-20 mb-8 flex flex-wrap items-center gap-2 py-3 backdrop-blur-sm">
         {seriesTabs.map((tab) => (
           <button
             key={tab.slug ?? "all"}
