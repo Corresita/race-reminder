@@ -51,6 +51,12 @@ const urgencyStyles: Record<Urgency, string> = {
   none: "border-zinc-300 text-zinc-600 bg-zinc-100",
 };
 
+const registrationTypeLabels: Record<string, string> = {
+  lottery: "Lottery",
+  fcfs: "First come, first served",
+  qualification: "Qualification",
+};
+
 // Status groups behind the clickable header counts. Every StatusCode lands
 // in exactly one group, so open + closed + upcoming always sums to the total.
 type StatusGroup = "open" | "closed" | "upcoming";
@@ -90,74 +96,73 @@ const shortStatusLabels: Record<DerivedStatus["code"], string> = {
   DATES_TBA: "Dates TBA",
 };
 
-/** "5 Aug"-style day + month, on the date's own calendar day. */
+/** The card's big number: what to count down to (or the terminal state). */
+function countdownRow(status: DerivedStatus): { label: string; value: string } {
+  const days = status.daysUntil != null ? `${status.daysUntil}d` : null;
+  switch (status.code) {
+    case "REG_OPENS_SOON":
+    case "LOTTERY_OPENS_SOON":
+      return { label: "Opens in", value: days ?? "TBA" };
+    case "COMPLETED_NEXT_KNOWN":
+      return { label: "Next edition opens in", value: days ?? "TBA" };
+    case "REG_OPEN":
+    case "REG_CLOSING_SOON":
+      // Open with no announced deadline — a truthful mechanism, not a blank.
+      return days
+        ? { label: "Closes in", value: days }
+        : { label: "Status", value: "Open until full" };
+    case "LOTTERY_OPEN":
+      return days
+        ? { label: "Ballot ends in", value: days }
+        : { label: "Ballot", value: "Open" };
+    case "AWAITING_DRAW":
+      return { label: "Draw in", value: days ?? "TBA" };
+    case "LOTTERY_DRAWN":
+      return { label: "Ballot", value: "Drawn" };
+    case "SOLD_OUT":
+      return { label: "Status", value: "Sold out" };
+    case "REG_CLOSED":
+    case "COMPLETED_NEXT_TBA":
+      return { label: "Next cycle", value: "TBA" };
+    case "REG_NOT_OPEN":
+      return { label: "Registration", value: "Opens later" };
+    default:
+      return { label: "Dates", value: "TBA" };
+  }
+}
+
+/** "05 DEC"-style day + month, on the date's own calendar day. */
 function fmtShort(iso: string): string {
-  return new Date(`${iso.slice(0, 10)}T00:00:00Z`).toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    timeZone: "UTC",
-  });
+  return new Date(`${iso.slice(0, 10)}T00:00:00Z`)
+    .toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      timeZone: "UTC",
+    })
+    .toUpperCase();
 }
 
-/** "Jan 23, 2027" — the race day, on its authored calendar day. */
-function formatDate(iso: string | null | undefined): string | null {
-  if (!iso) return null;
-  const parsed = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
-  if (Number.isNaN(parsed.getTime())) return null;
-  return parsed.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-}
-
-/**
- * One sentence: mechanism + state + the date that matters. This absorbed
- * the old ENTRY column — the registration mechanism lives in the wording
- * ("Ballot opens…" vs "Opens…"; "until full" IS first-come-first-served),
- * so no separate jargon label is needed. Every date is future-checked so a
- * past edition's dates can never leak into the sentence; when a lottery
- * has no dates yet the line degrades gracefully (never "closes undefined").
- */
-function statusLine(race: Race, status: DerivedStatus, now: Date): string {
-  const future = (iso?: string | null) =>
-    iso && new Date(iso).getTime() > now.getTime() ? fmtShort(iso) : null;
+/** The card's key date: the next calendar date that matters. */
+function dateRow(
+  race: Race,
+  status: DerivedStatus,
+  now: Date,
+): { label: string; value: string } {
+  const future = (iso: string | null | undefined) =>
+    iso && new Date(iso).getTime() > now.getTime() ? iso : null;
   const opens =
     future(race.registrationOpens) ??
     future(race.nextEdition?.registrationOpens);
   const closes = future(race.registrationCloses);
-  switch (status.code) {
-    case "REG_OPENS_SOON":
-      return opens ? `Opens ${opens}` : "Opens soon";
-    case "LOTTERY_OPENS_SOON":
-      return opens ? `Ballot opens ${opens}` : "Ballot opens soon";
-    case "REG_OPEN":
-    case "REG_CLOSING_SOON":
-      return closes ? `Open · closes ${closes}` : "Open · until full";
-    case "LOTTERY_OPEN":
-      return closes ? `Ballot open · closes ${closes}` : "Ballot open";
-    case "AWAITING_DRAW": {
-      const draw = future(race.lotteryDrawDate);
-      return draw ? `Ballot closed · draw ${draw}` : "Ballot closed · draw TBA";
-    }
-    case "LOTTERY_DRAWN":
-      return "Ballot drawn";
-    case "SOLD_OUT":
-      return "Full";
-    case "REG_CLOSED":
-      return "Closed";
-    case "COMPLETED_NEXT_KNOWN":
-      return opens ? `Completed · next opens ${opens}` : "Completed";
-    case "COMPLETED_NEXT_TBA":
-      return "Completed · next TBA";
-    case "REG_NOT_OPEN":
-      return race.registrationType === "lottery"
-        ? "Ballot not open yet"
-        : "Not open yet";
-    default:
-      return "Dates TBA";
+  if (status.code === "AWAITING_DRAW" || status.code === "LOTTERY_DRAWN") {
+    const draw = future(race.lotteryDrawDate);
+    if (draw) return { label: "Draw", value: fmtShort(draw) };
   }
+  if (opens) return { label: "Opens", value: fmtShort(opens) };
+  if (closes) return { label: "Closes", value: fmtShort(closes) };
+  const raceDay = future(race.raceDate);
+  if (raceDay) return { label: "Race day", value: fmtShort(raceDay) };
+  return { label: "Dates", value: "TBA" };
 }
 
 // Distance-range buckets over real km, so a 70K race is findable as
@@ -412,17 +417,18 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
     { race, status }: { race: Race; status: DerivedStatus },
     index: number,
   ) {
-    const line = statusLine(race, status, now);
-    // A completed edition's card is about the NEXT cycle — show its dates
-    // once the organizer has announced them. Facts only: no announced next
+    const countdown = countdownRow(status);
+    const date = dateRow(race, status, now);
+    // A completed edition's card is about the NEXT cycle — show its year
+    // once the organizer has announced it. Facts only: no announced next
     // race date, no +1 guessing; the completed year stays (honest next to
     // the "Completed" pill).
-    const nextRaceDate =
+    const year =
       status.completed && race.nextEdition?.raceDate
-        ? race.nextEdition.raceDate
-        : race.raceDate;
-    const year = nextRaceDate ? nextRaceDate.slice(0, 4) : null;
-    const raceDay = formatDate(nextRaceDate);
+        ? race.nextEdition.raceDate.slice(0, 4)
+        : race.raceDate
+          ? race.raceDate.slice(0, 4)
+          : null;
     const affordance = reminderAffordance(race, status);
     const subscribed = subscribedIds.has(race.id);
 
@@ -475,14 +481,26 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
 
           <div className="mt-auto pt-6">
             <div className="border-t border-zinc-200 pt-3.5">
-              <p>
-                <span className="block text-xs tracking-wide text-zinc-500 uppercase">
-                  Race day
-                </span>
-                <span className="mt-1 block text-sm font-medium text-zinc-800">
-                  {raceDay ?? "TBA"}
-                </span>
-              </p>
+              <div className="flex items-start justify-between gap-3">
+                <p>
+                  <span className="block text-xs tracking-wide text-zinc-500 uppercase">
+                    {date.label}
+                  </span>
+                  <span className="mt-1 block text-sm font-medium text-zinc-800">
+                    {date.value}
+                  </span>
+                </p>
+                <p className="text-right">
+                  <span className="block text-xs tracking-wide text-zinc-500 uppercase">
+                    Entry
+                  </span>
+                  <span className="mt-1 block text-sm font-medium text-zinc-800 uppercase">
+                    {race.registrationType === "fcfs"
+                      ? "First come"
+                      : registrationTypeLabels[race.registrationType]}
+                  </span>
+                </p>
+              </div>
               {race.entryRequirement ? (
                 <p className="mt-2 text-xs text-zinc-500">
                   Requires: {race.entryRequirement}
@@ -493,17 +511,12 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               ) : null}
               <p className="mt-3">
                 <span className="block text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-                  Status
+                  {countdown.label}
                 </span>
-                <span className="mt-1 block text-sm font-medium text-zinc-800">
-                  {line}
+                <span className="mt-2 block font-mono text-lg leading-none font-semibold tracking-tight text-zinc-800">
+                  {countdown.value}
                 </span>
               </p>
-              {status.daysUntil != null ? (
-                <p className="mt-2.5 font-mono text-lg leading-none font-semibold tracking-tight text-zinc-800">
-                  {status.daysUntil}d
-                </p>
-              ) : null}
             </div>
 
             <div className="mt-5">
