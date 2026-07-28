@@ -79,7 +79,7 @@ function shell(inner: string, unsubUrl: string, kicker: string): string {
   <div style="max-width:600px;margin:0 auto;background:#fbfbfb;border:1px solid #a1a1aa;border-radius:24px;padding:36px 32px;font-family:${FONT_STACK};font-size:16px;color:#18181b;line-height:1.55;">
     <p style="margin:0 0 14px;font-family:${DISPLAY_STACK};font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:#3f3f46;">${kicker}&nbsp; ${wordmark(13)}</p>
     ${dotRule()}
-    <div style="margin:36px 0;">
+    <div style="margin:36px 0 45px;">
       ${inner}
     </div>
     ${dotRule()}
