@@ -722,57 +722,61 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           </button>
         ))}
 
-        <span className="relative ml-auto">
-          <select
-            value={activeRegion ?? ""}
-            onChange={(event) =>
-              setActiveRegion((event.target.value || null) as Region | null)
-            }
-            aria-label="Filter races by region"
-            className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[29px] pl-3 text-xs leading-none tracking-wide uppercase transition-colors focus:outline-none ${
-              activeRegion
-                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-            }`}
-          >
-            <option value="">All regions</option>
-            {REGIONS.map((region) => (
-              <option key={region} value={region}>
-                {/* Short display labels keep the widest option no wider than
+        {/* On phones the dropdown and search share one row (dropdown left,
+            search filling the rest); on sm+ they sit right-aligned. */}
+        <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
+          <span className="relative shrink-0">
+            <select
+              value={activeRegion ?? ""}
+              onChange={(event) =>
+                setActiveRegion((event.target.value || null) as Region | null)
+              }
+              aria-label="Filter races by region"
+              className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[29px] pl-3 text-xs leading-none tracking-wide uppercase transition-colors focus:outline-none ${
+                activeRegion
+                  ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                  : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+              }`}
+            >
+              <option value="">All regions</option>
+              {REGIONS.map((region) => (
+                <option key={region} value={region}>
+                  {/* Short display labels keep the widest option no wider than
                     "All regions", so the icon hugs the text in every state. */}
-                {region === "North America"
-                  ? "N. America"
-                  : region === "South America"
-                    ? "S. America"
-                    : region}
-              </option>
-            ))}
-          </select>
-          {/* Funnel glyph in place of the native select arrow */}
-          <svg
-            aria-hidden
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={3.5}
-            strokeLinecap="round"
-            className={`pointer-events-none absolute top-1/2 right-2.5 h-3.5 w-3.5 -translate-y-1/2 ${
-              activeRegion ? "text-zinc-50" : "text-zinc-500"
-            }`}
-          >
-            <line x1="4" y1="6" x2="20" y2="6" />
-            <line x1="7" y1="12" x2="17" y2="12" />
-            <line x1="10" y1="18" x2="14" y2="18" />
-          </svg>
-        </span>
-        <input
-          type="search"
-          value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
-          placeholder="Search races…"
-          aria-label="Search races by name or country"
-          className="w-full min-w-40 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56"
-        />
+                  {region === "North America"
+                    ? "N. America"
+                    : region === "South America"
+                      ? "S. America"
+                      : region}
+                </option>
+              ))}
+            </select>
+            {/* Funnel glyph in place of the native select arrow */}
+            <svg
+              aria-hidden
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={3.5}
+              strokeLinecap="round"
+              className={`pointer-events-none absolute top-1/2 right-2.5 h-3.5 w-3.5 -translate-y-1/2 ${
+                activeRegion ? "text-zinc-50" : "text-zinc-500"
+              }`}
+            >
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="7" y1="12" x2="17" y2="12" />
+              <line x1="10" y1="18" x2="14" y2="18" />
+            </svg>
+          </span>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search races…"
+            aria-label="Search races by name or country"
+            className="min-w-0 flex-1 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56 sm:flex-none"
+          />
+        </div>
       </section>
 
       {openRaces.length > 0 ? (
