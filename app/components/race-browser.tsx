@@ -727,7 +727,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               setActiveRegion((event.target.value || null) as Region | null)
             }
             aria-label="Filter races by region"
-            className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-9 pl-3 text-xs tracking-wide uppercase transition-colors focus:outline-none ${
+            className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[31px] pl-3 text-xs tracking-wide uppercase transition-colors focus:outline-none ${
               activeRegion
                 ? "border-zinc-900 bg-zinc-900 text-zinc-50"
                 : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
