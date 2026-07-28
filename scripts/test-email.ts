@@ -71,7 +71,12 @@ async function main() {
 
   const sent = await sendEmail(
     to,
-    { ...content, subject: `[TEST] ${content.subject}` },
+    {
+      // Timestamped so each test is its own Gmail thread — otherwise Gmail
+      // collapses the identical footer of successive tests behind "...".
+      ...content,
+      subject: `[TEST ${new Date().toISOString().slice(11, 16)}] ${content.subject}`,
+    },
     unsubscribeHeaders(unsubscribe),
   );
   console.log(
