@@ -181,30 +181,41 @@ Cards with nothing to act on render dimmed. Top to bottom:
 
 ### 6b. Facts (bottom block, above a zinc-200 top border)
 
-- **key date + type row** — left: `dateRow(race, status, now)`, the next
-  calendar date that matters (Opens / Closes / Draw / Race day + "05 DEC"
-  short format; Dates TBA when nothing is known). Right: **Entry** —
-  Lottery / First come / Qualification (no "FCFS" — domain jargon stays
-  out of the UI)
+- **Race day** — the edition's actual date ("Jan 23, 2027"; the
+  announced next edition's once this one completes; TBA when unknown)
 - **Requires** — `entryRequirement`; small print `entryNotes` (only when
   present)
-- **contextual countdown** — small-caps label + the card's one big
-  figure, via `countdownRow(status)`:
+- **Status sentence** — `statusLine(race, status, now)`: ONE line that
+  fuses mechanism + state + the date that matters. This absorbed the old
+  ENTRY column: the mechanism lives in the wording ("Ballot opens…" vs
+  "Opens…"; "until full" IS first-come-first-served), so no jargon label
+  (FCFS) exists anywhere. Each fact appears exactly once on the card:
+  the pill carries urgency color + short state, the sentence carries
+  mechanism + calendar date, the figure carries days.
 
-  | Status                  | Label                 | Value        |
-  | ----------------------- | --------------------- | ------------ |
-  | opens announced         | Opens in              | `{n}d`       |
-  | completed, next known   | Next edition opens in | `{n}d`       |
-  | open / closing soon     | Closes in             | `{n}d` / TBA |
-  | ballot open             | Ballot ends in        | `{n}d` / Open|
-  | awaiting draw           | Draw in               | `{n}d`       |
-  | ballot drawn            | Ballot                | Drawn        |
-  | sold out                | Status                | Sold out     |
-  | closed / completed TBA  | Next cycle            | TBA          |
-  | dates TBA               | Dates                 | TBA          |
+  | Status                  | Sentence                            |
+  | ----------------------- | ----------------------------------- |
+  | opens announced         | Opens 30 Aug                        |
+  | ballot opens announced  | Ballot opens 30 Jul                 |
+  | open, deadline known    | Open · closes 10 Oct                |
+  | open, no deadline       | Open · until full                   |
+  | ballot open             | Ballot open · closes 4 Aug          |
+  | awaiting draw           | Ballot closed · draw 5 Dec (or TBA) |
+  | ballot drawn            | Ballot drawn                        |
+  | sold out                | Full                                |
+  | closed                  | Closed                              |
+  | completed, next known   | Completed · next opens 1 Aug        |
+  | completed, next TBA     | Completed · next TBA                |
+  | not open yet            | (Ballot) not open yet               |
+  | dates TBA               | Dates TBA                           |
 
-  The figure is `font-mono` 18px semibold zinc-800, `leading-none`
-  (Geist Mono's metrics sit high with looser leading).
+  Dates inside the sentence are future-checked (a past edition's dates
+  never leak in) and short-form ("4 Aug"); missing lottery dates degrade
+  gracefully — never "closes undefined".
+- **the big figure** — `font-mono` 18px semibold zinc-800,
+  `leading-none`: `{n}d` to the next actionable moment, rendered ONLY
+  when a real countdown exists (stateful text like "Open until full"
+  now lives in the sentence, not the figure).
 
 ### 6c. Action (full-width pill, three-tier hierarchy)
 
@@ -221,7 +232,7 @@ Cards with nothing to act on render dimmed. Top to bottom:
   `localStorage`; POST/DELETE `/api/subscribe`
 - **gray, inert** — `Dates not announced yet`
 
-**Code:** `renderRace`, `shortStatusLabels`, `countdownRow`, `dateRow` in
+**Code:** `renderRace`, `shortStatusLabels`, `statusLine` in
 `app/components/race-browser.tsx`; `lib/reminderAffordance.ts`.
 
 ---
