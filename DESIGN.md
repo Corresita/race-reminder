@@ -276,9 +276,13 @@ Tailwind utilities in `app/globals.css`:
   treats charity-bibs-only as sold out, and detects between-editions sites
   (announced next date but last edition's races still listed) as "not open
   yet" instead of carrying the old sold-out forward.
-- **Notifier** (`scripts/notify.ts`, twice daily: 06:00 UTC and 16:00
-  UTC — the latter is midnight UTC+8, so Asian openings notify at the
-  opening bell) fires three dedup'd events per
+- **Notifier** (`lib/notifyCore.ts`) fires twice daily at 06:00 and
+  16:00 UTC — the latter is midnight UTC+8, so Asian openings notify at
+  the opening bell. Primary trigger: QStash schedule → POST /api/notify
+  (minute-punctual, NOTIFY_SECRET-protected); fallback: GitHub Actions
+  cron via `scripts/notify.ts` (regularly runs 1-2h late — that's why
+  QStash is primary). Dedupe keys make the double trigger safe. Fires
+  three dedup'd events per
   race edition — **opens-soon** (a known opening date within 3 days),
   **open** (entered an open state), **closing** (an open window within 3
   days of its deadline) — each subscriber gets each once: heads-up → open →
