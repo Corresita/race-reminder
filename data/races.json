@@ -149,7 +149,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "France",
-    "raceDate": "2026-06-12",
+    "raceDate": "2027-06-18",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
@@ -163,8 +163,8 @@
       12,
       28,
       55,
-      86,
-      139
+      88,
+      140
     ]
   },
   {
@@ -261,16 +261,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Spain",
-    "raceDate": "2026-07-03T06:00:00+02:00",
+    "raceDate": "2027-07-07",
     "registrationOpens": null,
     "registrationCloses": "2026-02-10T23:59:59+01:00",
     "registrationType": "fcfs",
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://valdaran.utmb.world",
-    "soldOut": true,
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-03T10:05:42.459Z"
     },
     "distancesKm": [
       10,
@@ -340,10 +339,9 @@
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://mrww.utmb.world",
-    "soldOut": true,
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-03T10:05:42.459Z"
     },
     "distancesKm": [
       4,
@@ -1362,8 +1360,8 @@
     "entryRequirement": null,
     "officialUrl": "https://ohmeudeus.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-03T10:05:42.459Z"
     },
     "distancesKm": [
       22,
