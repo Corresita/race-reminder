@@ -1073,8 +1073,8 @@
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://kosciuszko.utmb.world/",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-08-07T00:15:50.877Z"
     },
     "entryNotes": "No announced closing date — open until each distance sells out.",
     "distancesKm": [
@@ -1082,7 +1082,8 @@
       50,
       106,
       161
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "oman",
