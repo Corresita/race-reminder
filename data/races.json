@@ -114,6 +114,7 @@
       4,
       17,
       26,
+      55,
       91,
       116
     ]
@@ -242,16 +243,16 @@
     "entryRequirement": null,
     "officialUrl": "https://torrencial.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-10T13:43:34.558Z"
     },
     "distancesKm": [
       7,
-      12,
+      10,
       20,
-      44,
-      62,
-      106
+      45,
+      63,
+      100
     ]
   },
   {
@@ -743,8 +744,8 @@
     "entryRequirement": null,
     "officialUrl": "https://julianalps.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-08-10T13:43:34.558Z"
     },
     "distancesKm": [
       10,
@@ -753,7 +754,8 @@
       50,
       80,
       124
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "nice-cote-d-azur",
