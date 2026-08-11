@@ -156,8 +156,8 @@
     "entryRequirement": null,
     "officialUrl": "https://saint-jacques.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-29T09:08:30.413Z"
+      "status": "registration_open",
+      "checkedAt": "2026-08-11T13:42:23.342Z"
     },
     "distancesKm": [
       12,
@@ -210,16 +210,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Germany",
-    "raceDate": "2026-06-18",
+    "raceDate": "2027-06-17",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://zugspitz.utmb.world",
-    "soldOut": true,
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-11T13:42:23.342Z"
     },
     "distancesKm": [
       16,
@@ -227,7 +226,7 @@
       44,
       69,
       74,
-      107
+      167
     ]
   },
   {
