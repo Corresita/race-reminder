@@ -346,6 +346,7 @@
       4,
       9,
       15,
+      35,
       43,
       82,
       120
@@ -415,8 +416,8 @@
     "entryRequirement": "Experience on technical terrain",
     "officialUrl": "https://speedgoat.utmb.world/",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-13T13:47:14.993Z"
     },
     "distancesKm": [
       4,
@@ -1336,8 +1337,8 @@
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://canyons.utmb.world/",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_open",
+      "checkedAt": "2026-08-13T13:47:14.993Z"
     },
     "distancesKm": [
       25,
@@ -1432,8 +1433,8 @@
     "entryRequirement": null,
     "officialUrl": "https://rothrock.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_open",
+      "checkedAt": "2026-08-13T13:47:14.993Z"
     },
     "distancesKm": [
       27,
