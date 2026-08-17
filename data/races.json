@@ -537,8 +537,8 @@
     "entryRequirement": null,
     "officialUrl": "https://whistler.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-08-17T13:05:11.606Z"
     },
     "distancesKm": [
       12,
@@ -749,12 +749,12 @@
       "checkedAt": "2026-08-10T13:43:34.558Z"
     },
     "distancesKm": [
-      10,
-      15,
+      11,
+      17,
       25,
-      50,
+      55,
       80,
-      124
+      122
     ],
     "soldOut": true
   },
