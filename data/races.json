@@ -384,15 +384,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Romania",
-    "raceDate": "2026-07-24",
+    "raceDate": "2027-07-23",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://bucovina.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-08-18T13:07:43.030Z"
     },
     "distancesKm": [
       5,
