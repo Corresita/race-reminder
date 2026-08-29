@@ -587,8 +587,8 @@
     "entryRequirement": null,
     "officialUrl": "https://wildstrubel.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-08-29T16:43:07.076Z"
     },
     "distancesKm": [
       10,
@@ -597,7 +597,8 @@
       55,
       72,
       113
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "snowbasin",
