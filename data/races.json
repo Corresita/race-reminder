@@ -481,15 +481,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Austria",
-    "raceDate": "2026-08-06",
+    "raceDate": "2027-08-05",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://kat.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-21T06:13:25.480Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-04T11:22:43.637Z"
     },
     "distancesKm": [
       8,
@@ -497,8 +497,7 @@
       51,
       75,
       169
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "borealys-mont-tremblant",
@@ -746,8 +745,8 @@
     "entryRequirement": null,
     "officialUrl": "https://julianalps.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-08-10T13:43:34.558Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-09-04T11:22:43.637Z"
     },
     "distancesKm": [
       11,
@@ -756,8 +755,7 @@
       55,
       80,
       122
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "nice-cote-d-azur",
