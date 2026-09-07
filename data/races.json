@@ -28,24 +28,23 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Argentina",
-    "raceDate": "2026-03-20",
+    "raceDate": "2027-04-01",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://ushuaia.utmb.world",
-    "soldOut": true,
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-07T21:31:03.833Z"
     },
     "distancesKm": [
-      13,
-      22,
+      5,
+      12,
+      21,
       34,
       50,
-      87,
-      113
+      87
     ]
   },
   {
