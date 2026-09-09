@@ -242,8 +242,8 @@
     "entryRequirement": null,
     "officialUrl": "https://torrencial.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-08-10T13:43:34.558Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-09T16:38:17.294Z"
     },
     "distancesKm": [
       7,
@@ -493,7 +493,7 @@
     "distancesKm": [
       8,
       24,
-      51,
+      52,
       75,
       169
     ]
@@ -819,15 +819,16 @@
     "entryRequirement": null,
     "officialUrl": "https://transjeju.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-09-09T16:38:17.294Z"
     },
     "distancesKm": [
       20,
       60,
       104,
       148
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "kodiak-ultra-marathons",
@@ -1124,7 +1125,6 @@
       "checkedAt": "2026-07-19T00:52:53.836Z"
     },
     "distancesKm": [
-      5,
       11,
       24,
       56,
