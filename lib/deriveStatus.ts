@@ -16,6 +16,15 @@
 
 export type RegistrationType = "fcfs" | "lottery" | "qualification";
 
+export interface Milestone {
+  /** ISO 8601 with timezone offset — the moment the email becomes due. */
+  date: string;
+  /** Short, subject-line ready: "Lottery results out", "Second draw". */
+  label: string;
+  /** One or two sentences: what to do, and by when. */
+  note?: string | null;
+}
+
 export interface Race {
   id: string;
   name: string;
@@ -26,6 +35,10 @@ export interface Race {
   registrationType: RegistrationType;
   /** Lottery races only: when results are drawn (WSER, Hardrock) */
   lotteryDrawDate?: string | null;
+  /** Dated moments between "open" and "race day" that a subscriber must act
+   *  on but no status can express — lottery results, a second draw, a
+   *  payment deadline. The notifier emails each one on its day. */
+  milestones?: Milestone[] | null;
   /** The ONLY manual status. Code cannot know a race sold out. */
   soldOut?: boolean;
   /** Optional: known info about the next edition, for completed races.

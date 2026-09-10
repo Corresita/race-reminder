@@ -5,18 +5,24 @@
  *   - scripts/notify.ts   (GitHub Actions cron — best-effort timing, fallback)
  *   - /api/notify         (QStash schedule — minute-punctual, primary)
  *
- * Three events per race edition — "opens-soon", "open", "closing" — each
- * subscriber gets each at most once ever (dedupe markers in storage), so
- * both triggers can fire on the same day without double-sending.
+ * Three events per race edition — "opens-soon", "open", "closing" — plus
+ * one "milestone" per dated milestone (lottery results, second draw…).
+ * Each subscriber gets each at most once ever (dedupe markers in storage),
+ * so both triggers can fire on the same day without double-sending.
  */
-import { type Race, deriveStatus } from "./deriveStatus";
+import { type Milestone, type Race, deriveStatus } from "./deriveStatus";
 import {
   type EmailContent,
   sendEmail,
   unsubscribeHeaders,
   unsubscribeUrl,
 } from "./email";
-import { closingEmail, openEmail, opensSoonEmail } from "./emails";
+import {
+  closingEmail,
+  milestoneEmail,
+  openEmail,
+  opensSoonEmail,
+} from "./emails";
 import { personalNote } from "./personalNotes";
 import { listNotified, listSubscriptions, markNotified } from "./subscriptions";
 
@@ -25,7 +31,13 @@ export type RaceRecord = Race & {
   officialUrl: string;
 };
 
-export type EventType = "opens-soon" | "open" | "closing";
+export type EventType = "opens-soon" | "open" | "closing" | "milestone";
+
+export type DueEvent =
+  | { type: "opens-soon"; key: string }
+  | { type: "open"; key: string }
+  | { type: "closing"; key: string }
+  | { type: "milestone"; key: string; milestone: Milestone };
 
 const OPEN_CODES = new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]);
 // States whose daysUntil counts down to a KNOWN opening date.
@@ -36,30 +48,60 @@ const OPENS_SOON_CODES = new Set([
 ]);
 const CLOSING_LEAD_DAYS = 3;
 const OPENS_LEAD_DAYS = 3;
+// A milestone email is due from its moment until this long after — enough
+// for a missed run (or a same-week subscriber) to still get it, without
+// greeting a new subscriber with last month's news.
+const MILESTONE_GRACE_MS = 3 * 86_400_000;
+
+/** Milestones whose moment has arrived (and not long passed). */
+function dueMilestones(race: RaceRecord, now: Date): DueEvent[] {
+  return (race.milestones ?? [])
+    .filter((m) => {
+      const at = new Date(m.date).getTime();
+      return (
+        !isNaN(at) &&
+        at <= now.getTime() &&
+        now.getTime() - at < MILESTONE_GRACE_MS
+      );
+    })
+    .map((milestone) => ({
+      type: "milestone" as const,
+      key: `milestone:${milestone.date}`,
+      milestone,
+    }));
+}
 
 /**
  * Which events are due for this race right now. "opens-soon" when a known
  * opening date enters its lead window; "open" whenever it's in an open
  * state; "closing" when the deadline is within its lead window. If open and
  * closing are due together (it opened straight into the closing window),
- * only "closing" is sent — its email already says it's open.
+ * only "closing" is sent — its email already says it's open. Milestones are
+ * independent of status: each is due on its own day, whatever the state.
  */
 export function dueEvents(
   race: RaceRecord,
   status: ReturnType<typeof deriveStatus>,
-): EventType[] {
+  now: Date = new Date(),
+): DueEvent[] {
+  const milestones = dueMilestones(race, now);
   if (OPENS_SOON_CODES.has(status.code)) {
-    return status.daysUntil != null && status.daysUntil <= OPENS_LEAD_DAYS
-      ? ["opens-soon"]
-      : [];
+    const soon =
+      status.daysUntil != null && status.daysUntil <= OPENS_LEAD_DAYS;
+    return soon
+      ? [{ type: "opens-soon", key: "opens-soon" }, ...milestones]
+      : milestones;
   }
-  if (!OPEN_CODES.has(status.code)) return [];
+  if (!OPEN_CODES.has(status.code)) return milestones;
   const closingSoon =
     !status.completed &&
     status.daysUntil != null &&
     status.daysUntil <= CLOSING_LEAD_DAYS &&
     !!race.registrationCloses;
-  return closingSoon ? ["closing"] : ["open"];
+  const primary: DueEvent = closingSoon
+    ? { type: "closing", key: "closing" }
+    : { type: "open", key: "open" };
+  return [primary, ...milestones];
 }
 
 async function notifySubscriber(
@@ -97,27 +139,31 @@ export async function runNotify(
     if (subscribers.length === 0) continue;
 
     const status = deriveStatus(race, now);
-    const events = dueEvents(race, status);
+    const events = dueEvents(race, status, now);
     if (events.length === 0) continue;
 
-    log(`${race.name} — ${status.label} [${events.join(", ")}]`);
+    log(
+      `${race.name} — ${status.label} [${events.map((e) => e.key).join(", ")}]`,
+    );
 
     for (const sub of subscribers) {
       for (const event of events) {
-        const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}|${event}`;
+        const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}|${event.key}`;
         if (notified.has(key)) continue;
 
         const unsubscribe = unsubscribeUrl(sub.email, race.id);
         const content =
-          event === "opens-soon"
+          event.type === "opens-soon"
             ? opensSoonEmail(race, status.daysUntil ?? 0, unsubscribe)
-            : event === "open"
+            : event.type === "open"
               ? openEmail(
                   race,
                   unsubscribe,
-                  personalNote(event, race.id, sub.email),
+                  personalNote(event.type, race.id, sub.email),
                 )
-              : closingEmail(race, status.daysUntil ?? 0, unsubscribe);
+              : event.type === "closing"
+                ? closingEmail(race, status.daysUntil ?? 0, unsubscribe)
+                : milestoneEmail(race, event.milestone, unsubscribe);
 
         // One undeliverable address must not block the other subscribers.
         // Unmarked failures retry on the next run.

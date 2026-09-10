@@ -4,7 +4,8 @@
  * subscriptions or notification markers.
  *
  * Driven by env vars (set by the test-email GitHub Actions workflow):
- *   TEMPLATE = confirm | cancel | opens-soon | open | closing
+ *   TEMPLATE = confirm | cancel | opens-soon | open | closing | milestone
+ *   MILESTONE = (milestone only) 0-based index into the race's milestones, default 0
  *   RACE_ID  = a race id from data/races.json
  *   TO       = recipient address
  *
@@ -23,12 +24,22 @@ import {
   cancelEmail,
   closingEmail,
   confirmEmail,
+  milestoneEmail,
   openEmail,
   opensSoonEmail,
 } from "../lib/emails";
 import { personalNote } from "../lib/personalNotes";
 
 type RaceRecord = Race & { name: string; officialUrl: string };
+
+function pickMilestone(race: RaceRecord) {
+  const index = Number(process.env.MILESTONE ?? 0);
+  const milestone = race.milestones?.[index];
+  if (!milestone) {
+    throw new Error(`${race.id} has no milestone at index ${index}`);
+  }
+  return milestone;
+}
 
 async function main() {
   const template = process.env.TEMPLATE ?? "";
@@ -66,7 +77,9 @@ async function main() {
               )
             : template === "closing"
               ? closingEmail(race, days, unsubscribe)
-              : null;
+              : template === "milestone"
+                ? milestoneEmail(race, pickMilestone(race), unsubscribe)
+                : null;
   if (!content) throw new Error(`Unknown template: ${template}`);
 
   const sent = await sendEmail(

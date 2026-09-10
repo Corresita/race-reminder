@@ -6,8 +6,7 @@
  * run, so local dev needs no account.
  */
 
-export const SITE_URL =
-  process.env.SITE_URL || "https://racereminder.run";
+export const SITE_URL = process.env.SITE_URL || "https://racereminder.run";
 
 /** One-click unsubscribe link for a given subscriber + race. */
 export function unsubscribeUrl(email: string, raceId?: string): string {

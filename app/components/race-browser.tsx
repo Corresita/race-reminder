@@ -160,6 +160,13 @@ function dateRow(
   }
   if (opens) return { label: "Opens", value: fmtShort(opens) };
   if (closes) return { label: "Closes", value: fmtShort(closes) };
+  // Between closing and race day, the next dated step (results, second
+  // draw…) is what the runner is actually waiting for.
+  const milestone = (race.milestones ?? [])
+    .filter((m) => future(m.date))
+    .sort((a, b) => a.date.localeCompare(b.date))[0];
+  if (milestone)
+    return { label: milestone.label, value: fmtShort(milestone.date) };
   const raceDay = future(race.raceDate);
   if (raceDay) return { label: "Race day", value: fmtShort(raceDay) };
   return { label: "Dates", value: "TBA" };
@@ -441,7 +448,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
         : race.raceDate
           ? race.raceDate.slice(0, 4)
           : null;
-    const affordance = reminderAffordance(race, status);
+    const affordance = reminderAffordance(race, status, now);
     const subscribed = subscribedIds.has(race.id);
 
     return (

@@ -33,8 +33,13 @@ const FUTURE_OPEN = new Set<DerivedStatus["code"]>([
 ]);
 
 export function reminderAffordance(
-  race: { registrationCloses: string | null; officialUrl: string },
+  race: {
+    registrationCloses: string | null;
+    officialUrl: string;
+    milestones?: { date: string; label: string }[] | null;
+  },
   status: DerivedStatus,
+  now: Date = new Date(),
 ): Affordance {
   // Open right now: remind before it closes if we know the deadline,
   // otherwise there's nothing to wait for — push them to register.
@@ -48,6 +53,18 @@ export function reminderAffordance(
   // A future opening we can fire on (date known, or next edition announced).
   if (FUTURE_OPEN.has(status.code)) {
     return { kind: "REMIND_OPEN", label: "Remind me when it opens" };
+  }
+
+  // Closed, but a dated step is still ahead (lottery results, second draw):
+  // the notifier emails on that day, so promise exactly that.
+  const milestone = (race.milestones ?? [])
+    .filter((m) => new Date(m.date).getTime() > now.getTime())
+    .sort((a, b) => a.date.localeCompare(b.date))[0];
+  if (milestone) {
+    return {
+      kind: "REMIND_OPEN",
+      label: `Remind me: ${milestone.label.toLowerCase()}`,
+    };
   }
 
   // No date yet, but the scraper watches this race — when its official site

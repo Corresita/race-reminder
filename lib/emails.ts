@@ -1,7 +1,7 @@
 /**
  * emails.ts — Race Reminder
  *
- * Five emails: confirm / cancel / opens-soon / open / closing.
+ * Six emails: confirm / cancel / opens-soon / open / closing / milestone.
  *
  * Voice: the SUBJECT is pure information + action (race, status, date) so it
  * groks in one inbox glance. WARMTH lives in the last line of the body — a
@@ -21,6 +21,12 @@
  * recipient's timezone.
  */
 
+interface MilestoneLike {
+  date: string;
+  label: string;
+  note?: string | null;
+}
+
 interface RaceLike {
   name: string;
   officialUrl: string;
@@ -28,6 +34,7 @@ interface RaceLike {
   registrationCloses: string | null;
   registrationType?: string;
   nextEdition?: { registrationOpens?: string | null } | null;
+  milestones?: MilestoneLike[] | null;
 }
 
 /** Month + day + year in the race's authored timezone (no viewer-tz drift). */
@@ -127,12 +134,35 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
       ? `Registration closes <strong>${esc(closesDate)}</strong>. We&rsquo;ll email you before it does.`
       : `We&rsquo;re watching its official site — we&rsquo;ll email you the day registration opens.`;
 
+  // Dated steps still ahead (lottery results, a second draw…): promise each
+  // one explicitly, so the subscriber knows what else will land in their inbox.
+  const ahead = (race.milestones ?? []).filter(
+    (m) => new Date(m.date).getTime() > now,
+  );
+  const aheadText = ahead.length
+    ? [
+        ``,
+        `We'll also email you on the day of:`,
+        ...ahead.map((m) => `  • ${m.label} — ${fmt(m.date)}`),
+      ]
+    : [];
+  const aheadHtml = ahead.length
+    ? `<p style="margin-bottom:6px;">We&rsquo;ll also email you on the day of:</p>
+     <ul style="margin:0 0 16px;padding-left:20px;">${ahead
+       .map(
+         (m) =>
+           `<li>${esc(m.label)} &mdash; <strong>${esc(fmt(m.date))}</strong></li>`,
+       )
+       .join("")}</ul>`
+    : "";
+
   const subject = `We're watching ${race.name} for you.`;
   const text = [
     `Got it — you're subscribed to ${race.name}.`,
     `We'll keep an eye on it for you!`,
     ``,
     whenText,
+    ...aheadText,
     ``,
     `Nothing to do now. Go run.`,
     `Wishing you a fine day :)`,
@@ -148,6 +178,7 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
   const html = shell(
     `<p>Got it — you&rsquo;re subscribed to <strong>${esc(race.name)}</strong>.<br>We&rsquo;ll keep an eye on it for you!</p>
      <p>${whenHtml}</p>
+     ${aheadHtml}
      <p>Nothing to do now. Go run.<br>Wishing you a fine day :)</p>
      <p style="margin:56px 0 0;"><a href="${esc(race.officialUrl)}" style="color:#18181b;">View the race →</a></p>`,
     unsubUrl,
@@ -299,6 +330,38 @@ export function closingEmail(
      <p>Registration for <strong>${esc(race.name)}</strong> closes <strong>${esc(closesOn)}</strong> — that's ${daysLeft} ${dayWord} away.</p>
      ${cta(race.officialUrl, "Lock in your place →")}
      <p style="color:#71717a;margin-bottom:0;">If you're still deciding — this is the nudge. Miss it and it's a year. No pressure. (Okay, a little pressure.)</p>`,
+    unsubUrl,
+    "A reminder from",
+  );
+  return { subject, text, html };
+}
+
+// ── 4. MILESTONE — a dated step arrived: results, second draw, deadline ────
+export function milestoneEmail(
+  race: RaceLike,
+  milestone: MilestoneLike,
+  unsubUrl: string,
+) {
+  const subject = `${race.name} — ${milestone.label}`;
+  const note = milestone.note?.trim() || null;
+  const text = [
+    `${milestone.label}.`,
+    ``,
+    `${race.name}: ${milestone.label.toLowerCase()} today (${fmt(milestone.date)}).`,
+    ...(note ? [``, note] : []),
+    ``,
+    `Check: ${race.officialUrl}`,
+    ``,
+    `Fingers crossed. Whatever it says, there's a trail waiting.`,
+    ``,
+    `Unsubscribe: ${unsubUrl}`,
+  ].join("\n");
+  const html = shell(
+    `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">${esc(milestone.label)}.</p>
+     <p><strong>${esc(race.name)}</strong>: ${esc(milestone.label.toLowerCase())} today (${esc(fmt(milestone.date))}).</p>
+     ${note ? `<p>${esc(note)}</p>` : ""}
+     ${cta(race.officialUrl, "Check now →")}
+     <p style="color:#71717a;margin-bottom:0;">Fingers crossed. Whatever it says, there&rsquo;s a trail waiting.</p>`,
     unsubUrl,
     "A reminder from",
   );

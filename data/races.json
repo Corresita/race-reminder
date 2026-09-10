@@ -1520,11 +1520,25 @@
     "organizer": null,
     "country": "Italy",
     "raceDate": "2027-06-25T06:00:00+02:00",
-    "registrationOpens": null,
-    "registrationCloses": null,
-    "registrationType": "fcfs",
+    "registrationOpens": "2026-09-07T14:00:00+02:00",
+    "registrationCloses": "2026-09-14T23:59:59+02:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": "2026-09-16T12:00:00+02:00",
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://lavaredo.utmb.world/",
+    "entryNotes": "2027 edition. Lottery pre-registration Sep 7 14:00 - Sep 14 23:59 CEST (120K/80K/50K/20K); results Sep 16 in My UTMB only, not emailed; winners pay by Sep 21; unclaimed bibs redrawn from the waiting list Sep 22, those winners pay by Sep 28. Refused in both 2025 and 2026 = guaranteed entry.",
+    "milestones": [
+      {
+        "date": "2026-09-16T12:00:00+02:00",
+        "label": "Lottery results out",
+        "note": "Results only show in your My UTMB account, nothing is emailed. Drawn? Complete registration and payment by September 21 or the spot is forfeited. Waiting list? You are automatically in the second draw on September 22."
+      },
+      {
+        "date": "2026-09-22T12:00:00+02:00",
+        "label": "Second draw",
+        "note": "Unclaimed bibs were redrawn among the waiting list today. Check My UTMB. If you are in, register and pay by September 28, 23:59 CEST."
+      }
+    ],
     "observed": {
       "status": "registration_open",
       "checkedAt": "2026-09-07T12:32:19.570Z"
