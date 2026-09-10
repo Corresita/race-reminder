@@ -528,15 +528,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Canada",
-    "raceDate": "2026-08-21",
+    "raceDate": "2027-06-24",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://whistler.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-08-17T13:05:11.606Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-10T16:24:07.990Z"
     },
     "distancesKm": [
       12,
