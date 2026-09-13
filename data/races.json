@@ -843,8 +843,8 @@
     "entryRequirement": null,
     "officialUrl": "https://kodiak.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-09-13T04:47:26.144Z"
     },
     "distancesKm": [
       11,
@@ -852,7 +852,8 @@
       48,
       99,
       100
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ultra-trail-mount-yun",
