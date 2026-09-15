@@ -1408,8 +1408,8 @@
     "entryRequirement": null,
     "officialUrl": "https://uta.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-15T04:54:16.649Z"
     },
     "distancesKm": [
       1,
@@ -1541,8 +1541,8 @@
       }
     ],
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-09-07T12:32:19.570Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-09-15T04:54:16.649Z"
     },
     "distancesKm": [
       10,
