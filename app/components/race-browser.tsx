@@ -730,7 +730,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           sticky and rides along while scrolling; on phones sticking it
           would eat ~1/5 of the screen, so it scrolls away and a floating
           back-to-top button (below) covers the trip back instead. */}
-      <section className="sm:bg-background/85 mb-8 flex flex-wrap items-center gap-2 sm:sticky sm:top-0 sm:z-20 sm:py-3 sm:backdrop-blur-sm">
+      <section className="sm:bg-background/85 mb-8 flex flex-wrap items-center gap-1 sm:sticky sm:top-0 sm:z-20 sm:py-3 sm:backdrop-blur-sm">
         {seriesTabs.map((tab) => (
           <button
             key={tab.slug ?? "all"}
@@ -739,7 +739,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               setActiveSeries(tab.slug);
               setActiveDistance(null);
             }}
-            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+            className={`rounded-full border px-2.5 py-1.5 text-[11px] tracking-wide uppercase transition-colors ${
               activeSeries === tab.slug
                 ? "border-zinc-900 bg-zinc-900 text-zinc-50"
                 : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
@@ -763,7 +763,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 current === filter.id ? null : filter.id,
               )
             }
-            className={`rounded-full border px-4 py-1.5 text-xs tracking-wide uppercase transition-colors ${
+            className={`rounded-full border px-2.5 py-1.5 text-[11px] tracking-wide uppercase transition-colors ${
               activeDistance === filter.id
                 ? "border-zinc-900 bg-zinc-900 text-zinc-50"
                 : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
@@ -775,7 +775,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
 
         {/* On phones the dropdown and search share one row (dropdown left,
             search filling the rest); on sm+ they sit right-aligned. */}
-        <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
+        <div className="flex w-full items-center gap-1.5 sm:ml-auto sm:w-auto">
           <span className="relative shrink-0">
             <select
               value={activeRegion ?? ""}
@@ -783,7 +783,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 setActiveRegion((event.target.value || null) as Region | null)
               }
               aria-label="Filter races by region"
-              className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[29px] pl-3 text-xs leading-none tracking-wide uppercase transition-colors focus:outline-none ${
+              className={`cursor-pointer appearance-none rounded-full border py-1.5 pr-[29px] pl-3 text-[11px] leading-none tracking-wide uppercase transition-colors focus:outline-none ${
                 activeRegion
                   ? "border-zinc-900 bg-zinc-900 text-zinc-50"
                   : "border-zinc-300 bg-white text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
@@ -825,7 +825,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             onChange={(event) => setSearchQuery(event.target.value)}
             placeholder="Search races…"
             aria-label="Search races by name or country"
-            className="min-w-0 flex-1 rounded-full border border-zinc-300 bg-white px-4 py-1.5 text-xs text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-56 sm:flex-none"
+            className="min-w-0 flex-1 rounded-full border border-zinc-300 bg-white px-3 py-1.5 text-[11px] text-zinc-800 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none sm:w-40 sm:flex-none"
           />
         </div>
       </section>
