@@ -1758,6 +1758,85 @@
     ]
   },
   {
+    "id": "cocodona-250",
+    "name": "Cocodona 250",
+    "series": "independent",
+    "organizer": "Aravaipa Running",
+    "country": "United States",
+    "raceDate": "2027-05-02T05:00:00-07:00",
+    "registrationOpens": "2026-05-01T14:50:00-07:00",
+    "registrationCloses": "2026-05-18T14:50:00-07:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": "2026-06-01T17:00:00-07:00",
+    "entryRequirement": null,
+    "officialUrl": "https://www.aravaiparunning.com/cocodona/",
+    "entryNotes": "2027 edition, the first by lottery. Entry May 1-18 2026, drawn Jun 1 2026: 475 places, then 150 female / 150 male waitlists (3 days to accept an invite). Finishers and volunteers earn extra tickets. $1,995. Black Canyon City to Flagstaff, AZ.",
+    "distancesKm": [
+      402
+    ]
+  },
+  {
+    "id": "tahoe-200",
+    "name": "Tahoe 200",
+    "series": "independent",
+    "organizer": "Destination Trail",
+    "country": "United States",
+    "raceDate": "2027-06-21T09:00:00-07:00",
+    "registrationOpens": "2026-06-08T08:00:00-07:00",
+    "registrationCloses": "2026-06-24T23:59:59-07:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": null,
+    "entryRequirement": null,
+    "officialUrl": "https://www.destinationtrailrun.com/tahoe",
+    "entryNotes": "2027 edition. Lottery Jun 8-24 2026; unselected entrants roll onto the waitlist in entry order. Skip the lottery via the Triple Crown (Tahoe + Bigfoot + Moab in one year), registered May 1-31, first come. 200.4 mi loop from Stateline, NV.",
+    "distancesKm": [
+      322
+    ]
+  },
+  {
+    "id": "bigfoot-200",
+    "name": "Bigfoot 200",
+    "series": "independent",
+    "organizer": "Destination Trail",
+    "country": "United States",
+    "raceDate": "2027-08-13T12:00:00-07:00",
+    "registrationOpens": "2026-08-10T08:00:00-07:00",
+    "registrationCloses": "2026-08-26T23:59:59-07:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": "2026-08-28T10:00:00-07:00",
+    "entryRequirement": null,
+    "officialUrl": "https://www.destinationtrailrun.com/bigfoot",
+    "entryNotes": "2027 edition. Lottery Aug 10-26 2026, drawn Aug 28 2026; unselected entrants roll onto the waitlist in entry order. Skip the lottery via the Triple Crown, registered May 1-31, first come. 200.1 mi point to point around Mt St Helens, WA.",
+    "distancesKm": [
+      322
+    ]
+  },
+  {
+    "id": "moab-240",
+    "name": "Moab 240",
+    "series": "independent",
+    "organizer": "Destination Trail",
+    "country": "United States",
+    "raceDate": "2027-10-08T06:00:00-06:00",
+    "registrationOpens": "2027-01-05T08:00:00-07:00",
+    "registrationCloses": "2027-01-24T23:59:59-07:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": "2027-01-26T10:00:00-07:00",
+    "entryRequirement": null,
+    "officialUrl": "https://www.destinationtrailrun.com/moab",
+    "entryNotes": "2027 edition. Lottery Jan 5 08:00 - Jan 24 23:59 MST 2027, drawn Jan 26 10:00 MST; unselected entrants roll onto the waitlist in entry order. Skip the lottery via the Triple Crown, registered May 1-31 2026, first come. 241.8 mi loop from Moab, UT.",
+    "milestones": [
+      {
+        "date": "2027-01-26T08:59:00-07:00",
+        "label": "Lottery drawing",
+        "note": "The drawing starts today at 10:00 MST. Check UltraSignup afterwards: your card is charged only if you are drawn, and everyone else is placed on the waitlist in entry order."
+      }
+    ],
+    "distancesKm": [
+      389
+    ]
+  },
+  {
     "id": "western-states-100",
     "name": "Western States 100",
     "series": "independent",

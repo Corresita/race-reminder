@@ -182,7 +182,10 @@ const distanceFilters: {
   { id: "sub50", label: "≤50K", match: (km) => km <= 50 },
   { id: "50-100", label: "50–100K", match: (km) => km > 50 && km < 85 },
   { id: "100K", label: "100K", match: (km) => km >= 85 && km < 130 },
-  { id: "100M", label: "100M", match: (km) => km >= 130 },
+  { id: "100M", label: "100M", match: (km) => km >= 130 && km < 300 },
+  // 200-milers and up (Cocodona, the Triple Crown of 200s) — a different
+  // sport from a 100M: several days out, sleep stations, crews.
+  { id: "200M", label: "200+ / Multi-day", match: (km) => km >= 300 },
 ];
 
 // Continent buckets, derived from the country fact — no data changes.

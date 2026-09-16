@@ -4,7 +4,7 @@ Never miss a trail ultra registration.
 
 **Live Site**: [racereminder.run](https://racereminder.run)
 
-Race Reminder tracks **77 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States and Hardrock — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
+Race Reminder tracks **81 ultra-trail races** — the full UTMB World Series calendar (65 events), the World Trail Majors, and independent classics like Western States, Hardrock, and the US 200-milers (Cocodona, Tahoe, Bigfoot, Moab) — with race dates, registration windows, entry methods (lottery vs. first come, first served), and index requirements in one clean calendar.
 
 ## Why
 
@@ -12,8 +12,8 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 
 ## Features
 
-- **Browse 77 races** across UTMB World Series, World Trail Majors, and independents
-- **Filter** by series and distance range (≤50K / 50–100K / 100K / 100M), computed from each race's real course distances
+- **Browse 81 races** across UTMB World Series, World Trail Majors, and independents
+- **Filter** by series and distance range (≤50K / 50–100K / 100K / 100M / 200+), computed from each race's real course distances
 - **Registration countdowns** — time until registration opens, or time left to register, sorted by what needs action next
 - **Derived race status** — announced → registration open → closing soon → closed / sold out → completed → next edition; computed at runtime from stored facts, never stored by hand
 - **Email reminders** — subscribe to a race with your email and get notified when its registration window opens, before it closes, and on the day of each dated step after that (lottery results, a second draw)
