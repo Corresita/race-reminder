@@ -19,8 +19,12 @@ export type Race = RaceFacts & {
   country: string | null;
   entryRequirement: string | null;
   entryNotes?: string | null;
-  /** Real course distances in km, per the organizer. */
+  /** Real course distances in km, per the organizer. Filters run on these. */
   distancesKm: number[];
+  /** Races branded in miles (Cocodona 250, Moab 240): the official mile
+   *  figures, shown on the card instead of the km conversion. Parallel to
+   *  distancesKm. */
+  distancesMi?: number[] | null;
   officialUrl: string;
 };
 
@@ -501,14 +505,17 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             {year ? ` · ${year}` : null}
           </p>
           <div className="mt-2 flex flex-wrap gap-1.5">
-            {race.distancesKm.map((km) => (
-              <span
-                key={`${race.id}-${km}`}
-                className="rounded-full border border-zinc-300 px-2 py-0.5 text-[10px] tracking-wide text-zinc-700 uppercase"
-              >
-                {km}K
-              </span>
-            ))}
+            {race.distancesKm.map((km, i) => {
+              const mi = race.distancesMi?.[i];
+              return (
+                <span
+                  key={`${race.id}-${km}`}
+                  className="rounded-full border border-zinc-300 px-2 py-0.5 text-[10px] tracking-wide text-zinc-700 uppercase"
+                >
+                  {mi != null ? `${mi} mi` : `${km}K`}
+                </span>
+              );
+            })}
           </div>
 
           <div className="mt-auto pt-6">
