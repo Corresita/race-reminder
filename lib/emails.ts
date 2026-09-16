@@ -12,7 +12,8 @@
  * the site's dot-dash rule (same bookend pair as the web page). A per-template
  * kicker sits above the top rule — "Welcome to" (confirm), "A message from"
  * (cancel), "A heads-up from" (opens-soon), "A reminder from" (open /
- * closing) — and the footer closes with the wordmark plus the site tagline.
+ * closing) — and the footer closes with the wordmark (linked back to the
+ * site) plus the site tagline.
  *
  * Each builder returns { subject, text, html }. Plain text is included for
  * deliverability; HTML is inline-styled (email clients are hostile to real
@@ -20,6 +21,8 @@
  * Dates render on their authored calendar day, never shifting with the
  * recipient's timezone.
  */
+
+import { SITE_URL } from "./email";
 
 interface MilestoneLike {
   date: string;
@@ -64,6 +67,12 @@ function wordmark(px: number): string {
   return `<span style="font-family:${DISPLAY_STACK};font-size:${px}px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#18181b;">Race&nbsp;Reminder&trade;</span>`;
 }
 
+/** The footer wordmark doubles as the way back to the site. Styled on the
+ *  anchor itself, not just the span — Gmail restyles bare links blue. */
+function wordmarkLink(px: number): string {
+  return `<a href="${esc(SITE_URL)}" style="text-decoration:none;color:#18181b;">${wordmark(px)}</a>`;
+}
+
 /** The site's dot-dash rule, email-safe: a 3-cell table (dot / dashes / dot). */
 function dotRule(): string {
   const dot = `<div style="width:6px;height:6px;border-radius:3px;background:#a1a1aa;font-size:0;line-height:0;">&nbsp;</div>`;
@@ -93,7 +102,7 @@ function shell(inner: string, unsubUrl: string, kicker: string): string {
     <p style="font-size:14px;color:#a1a1aa;margin:20px 0 0;">
       Don't want these? <a href="${unsubUrl}" style="color:#a1a1aa;">Unsubscribe</a>.
     </p>
-    <p style="margin:28px 0 10px;">${wordmark(14)}</p>
+    <p style="margin:28px 0 10px;">${wordmarkLink(14)}</p>
     <p style="font-size:14px;color:#71717a;margin:0;">
       Know the day registration opens. Every lottery draw, every deadline that
       matters — for the trail ultras you&rsquo;re chasing.
