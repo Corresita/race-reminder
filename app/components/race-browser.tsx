@@ -484,7 +484,17 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           </a>
           <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
             {race.organizer ?? seriesLabels[race.series]}
-            {race.country ? ` · ${race.country}` : null}
+            {race.country ? (
+              <>
+                {" · "}
+                {/* The country is the one word a browsing runner scans
+                    for — heavier and darker so it doesn't sink into the
+                    series/year noise around it. */}
+                <span className="font-semibold text-zinc-800">
+                  {race.country}
+                </span>
+              </>
+            ) : null}
             {year ? ` · ${year}` : null}
           </p>
           <div className="mt-2 flex flex-wrap gap-1.5">
