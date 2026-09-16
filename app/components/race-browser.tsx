@@ -731,47 +731,53 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
           would eat ~1/5 of the screen, so it scrolls away and a floating
           back-to-top button (below) covers the trip back instead. */}
       <section className="sm:bg-background/85 mb-8 flex flex-wrap items-center gap-1 sm:sticky sm:top-0 sm:z-20 sm:py-3 sm:backdrop-blur-sm">
-        {seriesTabs.map((tab) => (
-          <button
-            key={tab.slug ?? "all"}
-            type="button"
-            onClick={() => {
-              setActiveSeries(tab.slug);
-              setActiveDistance(null);
-            }}
-            className={`rounded-full border px-2.5 py-1.5 text-[11px] tracking-wide uppercase transition-colors ${
-              activeSeries === tab.slug
-                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {/* From ~1180px the pills share whatever width the region/search
+            pair leaves over: each grows a little, so a wide screen spreads
+            them out instead of parking a gap between the two groups. Below
+            that they take a full row and the pair drops to the next one. */}
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-1 min-[1180px]:w-auto min-[1180px]:flex-1">
+          {seriesTabs.map((tab) => (
+            <button
+              key={tab.slug ?? "all"}
+              type="button"
+              onClick={() => {
+                setActiveSeries(tab.slug);
+                setActiveDistance(null);
+              }}
+              className={`rounded-full border px-2.5 py-1.5 text-center text-[11px] tracking-wide whitespace-nowrap uppercase transition-colors min-[1180px]:grow ${
+                activeSeries === tab.slug
+                  ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                  : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
 
-        <span
-          aria-hidden
-          className="mx-1 hidden h-5 w-px bg-zinc-300 sm:block"
-        />
+          <span
+            aria-hidden
+            className="mx-1 hidden h-5 w-px bg-zinc-300 sm:block"
+          />
 
-        {distanceFilters.map((filter) => (
-          <button
-            key={filter.id}
-            type="button"
-            onClick={() =>
-              setActiveDistance((current) =>
-                current === filter.id ? null : filter.id,
-              )
-            }
-            className={`rounded-full border px-2.5 py-1.5 text-[11px] tracking-wide uppercase transition-colors ${
-              activeDistance === filter.id
-                ? "border-zinc-900 bg-zinc-900 text-zinc-50"
-                : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
-            }`}
-          >
-            {filter.label}
-          </button>
-        ))}
+          {distanceFilters.map((filter) => (
+            <button
+              key={filter.id}
+              type="button"
+              onClick={() =>
+                setActiveDistance((current) =>
+                  current === filter.id ? null : filter.id,
+                )
+              }
+              className={`rounded-full border px-2.5 py-1.5 text-center text-[11px] tracking-wide whitespace-nowrap uppercase transition-colors min-[1180px]:grow ${
+                activeDistance === filter.id
+                  ? "border-zinc-900 bg-zinc-900 text-zinc-50"
+                  : "border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
 
         {/* On phones the dropdown and search share one row (dropdown left,
             search filling the rest); on sm+ they sit right-aligned. */}
