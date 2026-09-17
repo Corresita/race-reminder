@@ -23,17 +23,18 @@
     ]
   },
   {
-    "id": "ushuaia",
-    "name": "Ushuaia by UTMB",
+    "id": "jujuy",
+    "name": "Jujuy Fuerza Sagrada by UTMB",
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Argentina",
     "raceDate": "2027-04-01",
-    "registrationOpens": null,
+    "registrationOpens": "2026-09-22T12:00:00-03:00",
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
-    "officialUrl": "https://ushuaia.utmb.world",
+    "officialUrl": "https://jujuy.utmb.world/",
+    "entryNotes": "Replaces Ushuaia by UTMB (last edition 2026). 2027 edition in Purmamarca / Tilcara, Jujuy. Registration opens Sep 22 2026; opening hour not announced, listed as noon local.",
     "observed": {
       "status": "available_soon",
       "checkedAt": "2026-09-07T21:31:03.833Z"
