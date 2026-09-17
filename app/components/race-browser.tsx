@@ -281,6 +281,16 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
   // Phones only: the filter row isn't sticky there, so surface a
   // back-to-top button once the user is meaningfully deep in the list.
   const [showBackToTop, setShowBackToTop] = useState(false);
+
+  /** Back to the unfiltered list: every filter, the search box, the
+   *  status-group pick. The wordmark and "All events" both land here. */
+  const resetFilters = () => {
+    setActiveSeries(null);
+    setActiveDistance(null);
+    setActiveRegion(null);
+    setSearchQuery("");
+    setActiveStatusGroup(null);
+  };
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 600);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -647,9 +657,18 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
       <header className="mb-10">
         <div className="flex flex-wrap items-start justify-between gap-4 pb-5">
           <div>
-            <p className="font-display text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase">
+            {/* The wordmark is the "home" button: clear everything and
+                scroll back up, like a site logo would. */}
+            <button
+              type="button"
+              onClick={() => {
+                resetFilters();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="font-display cursor-pointer text-base font-semibold tracking-[0.2em] text-zinc-900 uppercase transition-colors hover:text-zinc-500"
+            >
               Race Reminder™
-            </p>
+            </button>
             <h1 className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
               Know the day registration opens. Every lottery draw, every
               deadline that matters{" "}
@@ -741,6 +760,12 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
               key={tab.slug ?? "all"}
               type="button"
               onClick={() => {
+                // "All events" means all of them — a typed search or a
+                // region pick must not keep hiding races behind it.
+                if (tab.slug === null) {
+                  resetFilters();
+                  return;
+                }
                 setActiveSeries(tab.slug);
                 setActiveDistance(null);
               }}
