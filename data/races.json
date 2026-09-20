@@ -1409,8 +1409,8 @@
     "entryRequirement": null,
     "officialUrl": "https://uta.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-09-15T04:54:16.649Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-09-20T04:53:35.166Z"
     },
     "distancesKm": [
       1,
@@ -1419,7 +1419,8 @@
       51,
       101,
       161
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "rothrock",
