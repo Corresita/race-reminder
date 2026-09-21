@@ -104,15 +104,17 @@ export function dueEvents(
   return [primary, ...milestones];
 }
 
+/** Returns true only when an email actually went out. */
 async function notifySubscriber(
   to: string,
   content: EmailContent,
   headers: Record<string, string>,
   log: (line: string) => void,
-) {
+): Promise<boolean> {
   const sent = await sendEmail(to, content, headers);
   if (sent) log(`  emailed ${to}: ${content.subject}`);
   else log(`  [dry run] would email ${to}: ${content.subject}`);
+  return sent;
 }
 
 /** Run one notification sweep. Returns counts; narrates via `log`. */
@@ -166,15 +168,17 @@ export async function runNotify(
                 : milestoneEmail(race, event.milestone, unsubscribe);
 
         // One undeliverable address must not block the other subscribers.
-        // Unmarked failures retry on the next run.
+        // Unmarked failures retry on the next run. A dry run marks nothing:
+        // a local preview against the production store must never make
+        // production believe the email went out.
         try {
-          await notifySubscriber(
+          const sent = await notifySubscriber(
             sub.email,
             content,
             unsubscribeHeaders(unsubscribe),
             log,
           );
-          sentKeys.push(key);
+          if (sent) sentKeys.push(key);
         } catch (error) {
           failedSends += 1;
           log(
@@ -185,9 +189,9 @@ export async function runNotify(
     }
   }
 
-  await markNotified(sentKeys);
+  if (sentKeys.length > 0) await markNotified(sentKeys);
   log(
-    `\nDone — ${sentKeys.length} notification(s) ${process.env.RESEND_API_KEY ? "sent" : "in dry run"}${failedSends > 0 ? `, ${failedSends} failed (will retry next run)` : ""}.`,
+    `\nDone — ${sentKeys.length} notification(s) sent${process.env.RESEND_API_KEY ? "" : " (dry run, nothing marked)"}${failedSends > 0 ? `, ${failedSends} failed (will retry next run)` : ""}.`,
   );
   return { sent: sentKeys.length, failed: failedSends };
 }
