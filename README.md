@@ -22,7 +22,8 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 ## Roadmap
 
 - [ ] iCal feed (`.ics`) so you can subscribe from Apple/Google Calendar
-- [x] Email notifications when a subscribed race opens registration (minute-punctual QStash schedule hitting `/api/notify`, with a GitHub Actions cron as fallback)
+- [x] Email notifications when a subscribed race opens registration (GitHub Actions cron twice daily, plus a run right after the scraper commits a change)
+- [ ] Minute-punctual trigger: a QStash schedule hitting `/api/notify` (endpoint ready; schedule not yet created)
 - [x] Automated data updates via GitHub Actions (`scripts/scrape.ts` syncs official UTMB sites every 2 hours)
 - [ ] Exact registration open/close dates for the full UTMB calendar (sites expose live status, not dates — those stay hand-curated)
 - [ ] 2027 season data as races are announced

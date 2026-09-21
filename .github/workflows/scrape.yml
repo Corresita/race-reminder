@@ -30,4 +30,16 @@ jobs:
             git add data/races.json
             git commit -m "Update race data from official sites"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+        id: commit
+      # A status flip is exactly the moment subscribers are waiting for:
+      # notify right away instead of leaving it to the next cron slot.
+      - name: Notify subscribers about what changed
+        if: steps.commit.outputs.changed == 'true'
+        run: npm run notify
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
