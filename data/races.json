@@ -745,8 +745,8 @@
     "entryRequirement": null,
     "officialUrl": "https://julianalps.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-09-04T11:22:43.637Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-21T21:59:43.325Z"
     },
     "distancesKm": [
       11,
@@ -1021,8 +1021,8 @@
     "entryRequirement": null,
     "officialUrl": "https://bariloche.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-09-21T21:59:43.325Z"
     },
     "distancesKm": [
       13,
@@ -1031,7 +1031,8 @@
       58,
       88,
       131
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "chiang-mai-thailand",
