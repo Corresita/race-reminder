@@ -84,8 +84,8 @@
     "entryRequirement": null,
     "officialUrl": "https://ventoux.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-21T12:47:49.534Z"
     },
     "distancesKm": [
       26,
@@ -367,8 +367,8 @@
     "entryRequirement": "ITRA Index",
     "officialUrl": "https://eiger.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-07-21T06:46:20.290Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-21T12:47:49.534Z"
     },
     "distancesKm": [
       15,
@@ -536,8 +536,8 @@
     "entryRequirement": null,
     "officialUrl": "https://whistler.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-09-10T16:24:07.990Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-09-21T12:47:49.534Z"
     },
     "distancesKm": [
       12,
@@ -848,8 +848,8 @@
       "checkedAt": "2026-09-13T04:47:26.144Z"
     },
     "distancesKm": [
-      11,
-      13,
+      10,
+      14,
       49,
       100
     ],
