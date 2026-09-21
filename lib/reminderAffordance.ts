@@ -5,7 +5,7 @@
  *
  * Adapted to our status-driven engine. A reminder actually fires when
  * deriveStatus enters an open state — which happens either because a real
- * date window arrives, OR because the 6-hourly scraper flips a monitored
+ * date window arrives, OR because the 2-hourly scraper flips a monitored
  * race's observed status to "registration_open". So "can we remind?" is
  * broader than "does it have dates": a dateless UTMB race is still
  * remindable because the scraper watches it.

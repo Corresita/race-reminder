@@ -17,13 +17,13 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 - **Registration countdowns** — time until registration opens, or time left to register, sorted by what needs action next
 - **Derived race status** — announced → registration open → closing soon → closed / sold out → completed → next edition; computed at runtime from stored facts, never stored by hand
 - **Email reminders** — subscribe to a race with your email and get notified when its registration window opens, before it closes, and on the day of each dated step after that (lottery results, a second draw)
-- **Auto-updating data** — a scraper syncs every UTMB race against its official site (event dates, distances, sold-out and registration status) every 6 hours via GitHub Actions
+- **Auto-updating data** — a scraper syncs every UTMB race against its official site (event dates, distances, sold-out and registration status) every 2 hours via GitHub Actions
 
 ## Roadmap
 
 - [ ] iCal feed (`.ics`) so you can subscribe from Apple/Google Calendar
 - [x] Email notifications when a subscribed race opens registration (minute-punctual QStash schedule hitting `/api/notify`, with a GitHub Actions cron as fallback)
-- [x] Automated data updates via GitHub Actions (`scripts/scrape.ts` syncs official UTMB sites every 6 hours)
+- [x] Automated data updates via GitHub Actions (`scripts/scrape.ts` syncs official UTMB sites every 2 hours)
 - [ ] Exact registration open/close dates for the full UTMB calendar (sites expose live status, not dates — those stay hand-curated)
 - [ ] 2027 season data as races are announced
 - [ ] Mobile app
