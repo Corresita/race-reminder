@@ -361,11 +361,25 @@
     "organizer": null,
     "country": "Switzerland",
     "raceDate": "2027-07-14",
-    "registrationOpens": null,
-    "registrationCloses": null,
-    "registrationType": "fcfs",
-    "entryRequirement": "ITRA Index",
+    "registrationOpens": "2026-09-21T14:00:00+02:00",
+    "registrationCloses": "2026-09-28T23:59:59+02:00",
+    "registrationType": "lottery",
+    "lotteryDrawDate": "2026-09-30T12:00:00+02:00",
+    "entryRequirement": "UTMB Index (E101)",
     "officialUrl": "https://eiger.utmb.world",
+    "entryNotes": "2027 edition. E101/E51/E35 by lottery: pre-registration Sep 21 14:00 - Sep 28 23:59 CEST; results Sep 30 in My UTMB; winners pay by Oct 5; second lottery Oct 6, those winners pay by Oct 12. E250/E16 first come: UTMB Index holders Oct 13 14:00 CEST, everyone Oct 15 14:00 CEST. Refused twice = guaranteed 2028 entry.",
+    "milestones": [
+      {
+        "date": "2026-09-30T12:00:00+02:00",
+        "label": "Lottery results out",
+        "note": "Results only show in your My UTMB account. Drawn? Complete registration and payment by October 5, 23:59 CEST. Not drawn? You are automatically in the second lottery on October 6."
+      },
+      {
+        "date": "2026-10-06T12:00:00+02:00",
+        "label": "Second lottery",
+        "note": "Unclaimed bibs were redrawn today among everyone not selected the first time. Check My UTMB. If you are in, register and pay by October 12, 23:59 CEST."
+      }
+    ],
     "observed": {
       "status": "registration_open",
       "checkedAt": "2026-09-21T12:47:49.534Z"
