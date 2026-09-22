@@ -502,8 +502,8 @@
     "entryRequirement": null,
     "officialUrl": "https://kat.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-09-04T11:22:43.637Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-22T13:26:05.685Z"
     },
     "distancesKm": [
       8,
@@ -647,8 +647,8 @@
     "entryRequirement": null,
     "officialUrl": "https://malaysia.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-09-22T13:26:05.685Z"
     },
     "distancesKm": []
   },
