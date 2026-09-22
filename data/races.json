@@ -36,8 +36,8 @@
     "officialUrl": "https://jujuy.utmb.world/",
     "entryNotes": "Replaces Ushuaia by UTMB (last edition 2026). 2027 edition in Purmamarca / Tilcara, Jujuy. Registration opens Sep 22 2026; opening hour not announced, listed as noon local.",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-09-07T21:31:03.833Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-09-22T18:06:33.069Z"
     },
     "distancesKm": [
       5,
@@ -46,7 +46,8 @@
       34,
       50,
       87
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ultra-trail-mogan",
@@ -593,15 +594,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Switzerland",
-    "raceDate": "2026-09-10",
+    "raceDate": "2027-09-09",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://wildstrubel.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-08-29T16:43:07.076Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-22T18:06:33.069Z"
     },
     "distancesKm": [
       10,
@@ -610,8 +611,7 @@
       55,
       72,
       113
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "snowbasin",
