@@ -705,15 +705,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Brazil",
-    "raceDate": "2026-09-17",
+    "raceDate": "2027-09-23",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://paraty.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-09-01T21:02:03.868Z"
+      "status": "available_soon",
+      "checkedAt": "2026-09-25T23:19:08.348Z"
     },
     "distancesKm": [
       7,
