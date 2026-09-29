@@ -434,8 +434,8 @@
     "entryRequirement": "Experience on technical terrain",
     "officialUrl": "https://speedgoat.utmb.world/",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-08-13T13:47:14.993Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-29T16:31:54.367Z"
     },
     "distancesKm": [
       4,
@@ -552,8 +552,8 @@
     "entryRequirement": null,
     "officialUrl": "https://whistler.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-09-21T12:47:49.534Z"
+      "status": "registration_open",
+      "checkedAt": "2026-09-29T16:31:54.367Z"
     },
     "distancesKm": [
       12,
