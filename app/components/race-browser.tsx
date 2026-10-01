@@ -571,7 +571,8 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             <div className="mt-5">
               {subscribed ||
               affordance.kind === "REMIND_OPEN" ||
-              affordance.kind === "REMIND_CLOSE" ? (
+              affordance.kind === "REMIND_CLOSE" ||
+              affordance.kind === "REMIND_DATES" ? (
                 <button
                   type="button"
                   onClick={() => onSubscribeClick(race.id)}
@@ -598,7 +599,7 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                     affordance.label
                   )}
                 </button>
-              ) : affordance.kind === "REGISTER_NOW" ? (
+              ) : (
                 <a
                   href={race.officialUrl}
                   target="_blank"
@@ -607,10 +608,6 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 >
                   {affordance.label} ↗
                 </a>
-              ) : (
-                <p className="rounded-full border border-zinc-200 px-4 py-2.5 text-center text-[11px] tracking-[0.15em] text-zinc-400 uppercase select-none">
-                  {affordance.label}
-                </p>
               )}
 
               {emailFormRaceId === race.id ? (

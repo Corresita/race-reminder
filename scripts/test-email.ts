@@ -4,7 +4,7 @@
  * subscriptions or notification markers.
  *
  * Driven by env vars (set by the test-email GitHub Actions workflow):
- *   TEMPLATE = confirm | cancel | opens-soon | open | closing | milestone
+ *   TEMPLATE = confirm | cancel | announced | opens-soon | open | closing | milestone
  *   MILESTONE = (milestone only) 0-based index into the race's milestones, default 0
  *   RACE_ID  = a race id from data/races.json
  *   TO       = recipient address
@@ -21,6 +21,7 @@ import {
   unsubscribeUrl,
 } from "../lib/email";
 import {
+  announcedEmail,
   cancelEmail,
   closingEmail,
   confirmEmail,
@@ -67,19 +68,21 @@ async function main() {
       ? confirmEmail(race, unsubscribe)
       : template === "cancel"
         ? cancelEmail(race, SITE_URL, unsubscribeUrl(to))
-        : template === "opens-soon"
-          ? opensSoonEmail(race, days, unsubscribe)
-          : template === "open"
-            ? openEmail(
-                race,
-                unsubscribe,
-                personalNote("open", raceId, noteRecipient),
-              )
-            : template === "closing"
-              ? closingEmail(race, days, unsubscribe)
-              : template === "milestone"
-                ? milestoneEmail(race, pickMilestone(race), unsubscribe)
-                : null;
+        : template === "announced"
+          ? announcedEmail(race, days, unsubscribe)
+          : template === "opens-soon"
+            ? opensSoonEmail(race, days, unsubscribe)
+            : template === "open"
+              ? openEmail(
+                  race,
+                  unsubscribe,
+                  personalNote("open", raceId, noteRecipient),
+                )
+              : template === "closing"
+                ? closingEmail(race, days, unsubscribe)
+                : template === "milestone"
+                  ? milestoneEmail(race, pickMilestone(race), unsubscribe)
+                  : null;
   if (!content) throw new Error(`Unknown template: ${template}`);
 
   const sent = await sendEmail(

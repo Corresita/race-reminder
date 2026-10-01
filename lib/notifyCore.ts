@@ -5,8 +5,9 @@
  *   - scripts/notify.ts   (GitHub Actions cron — best-effort timing, fallback)
  *   - /api/notify         (QStash schedule — minute-punctual, primary)
  *
- * Three events per race edition — "opens-soon", "open", "closing" — plus
- * one "milestone" per dated milestone (lottery results, second draw…).
+ * Four events per race edition — "announced" (an opening date entered the
+ * data), "opens-soon", "open", "closing" — plus one "milestone" per dated
+ * milestone (lottery results, second draw…).
  * Each subscriber gets each at most once ever (dedupe markers in storage),
  * so both triggers can fire on the same day without double-sending.
  */
@@ -18,6 +19,7 @@ import {
   unsubscribeUrl,
 } from "./email";
 import {
+  announcedEmail,
   closingEmail,
   milestoneEmail,
   openEmail,
@@ -31,9 +33,11 @@ export type RaceRecord = Race & {
   officialUrl: string;
 };
 
-export type EventType = "opens-soon" | "open" | "closing" | "milestone";
+export type EventType =
+  "announced" | "opens-soon" | "open" | "closing" | "milestone";
 
 export type DueEvent =
+  | { type: "announced"; key: string }
   | { type: "opens-soon"; key: string }
   | { type: "open"; key: string }
   | { type: "closing"; key: string }
@@ -41,7 +45,7 @@ export type DueEvent =
 
 const OPEN_CODES = new Set(["REG_OPEN", "REG_CLOSING_SOON", "LOTTERY_OPEN"]);
 // States whose daysUntil counts down to a KNOWN opening date.
-const OPENS_SOON_CODES = new Set([
+export const OPENS_SOON_CODES = new Set([
   "REG_OPENS_SOON",
   "LOTTERY_OPENS_SOON",
   "COMPLETED_NEXT_KNOWN",
@@ -52,6 +56,15 @@ const OPENS_LEAD_DAYS = 3;
 // for a missed run (or a same-week subscriber) to still get it, without
 // greeting a new subscriber with last month's news.
 const MILESTONE_GRACE_MS = 3 * 86_400_000;
+
+/** Dedupe marker for one (race edition, subscriber, event). */
+export function notificationKey(
+  race: Pick<Race, "id" | "raceDate">,
+  email: string,
+  eventKey: string,
+): string {
+  return `${race.id}|${race.raceDate ?? "tba"}|${email}|${eventKey}`;
+}
 
 /** Milestones whose moment has arrived (and not long passed). */
 function dueMilestones(race: RaceRecord, now: Date): DueEvent[] {
@@ -86,11 +99,15 @@ export function dueEvents(
 ): DueEvent[] {
   const milestones = dueMilestones(race, now);
   if (OPENS_SOON_CODES.has(status.code)) {
+    // A known opening date: far out, that's news ("announced", once);
+    // within the lead window, it's the heads-up instead. Subscribing to a
+    // race whose date is already known pre-marks "announced" — the confirm
+    // email said the date — so this only reaches people who waited for it.
     const soon =
       status.daysUntil != null && status.daysUntil <= OPENS_LEAD_DAYS;
     return soon
       ? [{ type: "opens-soon", key: "opens-soon" }, ...milestones]
-      : milestones;
+      : [{ type: "announced", key: "announced" }, ...milestones];
   }
   if (!OPEN_CODES.has(status.code)) return milestones;
   const closingSoon =
@@ -150,22 +167,24 @@ export async function runNotify(
 
     for (const sub of subscribers) {
       for (const event of events) {
-        const key = `${race.id}|${race.raceDate ?? "tba"}|${sub.email}|${event.key}`;
+        const key = notificationKey(race, sub.email, event.key);
         if (notified.has(key)) continue;
 
         const unsubscribe = unsubscribeUrl(sub.email, race.id);
         const content =
-          event.type === "opens-soon"
-            ? opensSoonEmail(race, status.daysUntil ?? 0, unsubscribe)
-            : event.type === "open"
-              ? openEmail(
-                  race,
-                  unsubscribe,
-                  personalNote(event.type, race.id, sub.email),
-                )
-              : event.type === "closing"
-                ? closingEmail(race, status.daysUntil ?? 0, unsubscribe)
-                : milestoneEmail(race, event.milestone, unsubscribe);
+          event.type === "announced"
+            ? announcedEmail(race, status.daysUntil ?? 0, unsubscribe)
+            : event.type === "opens-soon"
+              ? opensSoonEmail(race, status.daysUntil ?? 0, unsubscribe)
+              : event.type === "open"
+                ? openEmail(
+                    race,
+                    unsubscribe,
+                    personalNote(event.type, race.id, sub.email),
+                  )
+                : event.type === "closing"
+                  ? closingEmail(race, status.daysUntil ?? 0, unsubscribe)
+                  : milestoneEmail(race, event.milestone, unsubscribe);
 
         // One undeliverable address must not block the other subscribers.
         // Unmarked failures retry on the next run. A dry run marks nothing:

@@ -1,7 +1,8 @@
 /**
  * emails.ts — Race Reminder
  *
- * Six emails: confirm / cancel / opens-soon / open / closing / milestone.
+ * Seven emails: confirm / cancel / announced / opens-soon / open / closing /
+ * milestone.
  *
  * Voice: the SUBJECT is pure information + action (race, status, date) so it
  * groks in one inbox glance. WARMTH lives in the last line of the body — a
@@ -136,12 +137,12 @@ export function confirmEmail(race: RaceLike, unsubUrl: string) {
     ? `Registration is expected to open around ${opensDate}. We'll email you the day it does.`
     : closesDate
       ? `Registration closes ${closesDate}. We'll email you before it does.`
-      : `We're watching its official site — we'll email you the day registration opens.`;
+      : `Dates aren't announced yet. We'll email you the day they are, and again when registration opens.`;
   const whenHtml = opensDate
     ? `Registration is expected to open around <strong>${esc(opensDate)}</strong>. We&rsquo;ll email you the day it does.`
     : closesDate
       ? `Registration closes <strong>${esc(closesDate)}</strong>. We&rsquo;ll email you before it does.`
-      : `We&rsquo;re watching its official site — we&rsquo;ll email you the day registration opens.`;
+      : `Dates aren&rsquo;t announced yet. We&rsquo;ll email you the day they are, and again when registration opens.`;
 
   // Dated steps still ahead (lottery results, a second draw…): promise each
   // one explicitly, so the subscriber knows what else will land in their inbox.
@@ -223,6 +224,57 @@ export function cancelEmail(
      <p style="margin:56px 0 0;"><a href="${esc(siteUrl)}" style="color:#18181b;">Changed your mind? Set it again →</a></p>`,
     unsubAllUrl,
     "A message from",
+  );
+  return { subject, text, html };
+}
+
+// ── 1c. ANNOUNCED — an opening date just entered the data ──────────────────
+export function announcedEmail(
+  race: RaceLike,
+  daysLeft: number,
+  unsubUrl: string,
+) {
+  const now = Date.now();
+  const opensIso = [
+    race.registrationOpens,
+    race.nextEdition?.registrationOpens,
+  ].find((iso) => iso && new Date(iso).getTime() > now);
+  const opensOn = opensIso ? fmt(opensIso) : "soon";
+  const closesClause =
+    race.registrationCloses && new Date(race.registrationCloses).getTime() > now
+      ? ` and closes ${fmt(race.registrationCloses)}`
+      : "";
+  const mechanism =
+    race.registrationType === "lottery"
+      ? `It's a lottery, so the window is all that matters — no need to be first.`
+      : `It's first come, first served — popular races fill fast, so plan to be there when it opens.`;
+
+  const subject = `${race.name} — registration opens ${opensOn}`;
+  const text = [
+    `Dates are out.`,
+    ``,
+    `${race.name} opens for registration on ${opensOn}${closesClause}. That's ${daysLeft} days away.`,
+    ``,
+    mechanism,
+    ``,
+    ``,
+    ``,
+    `View the race: ${race.officialUrl}`,
+    ``,
+    `We'll email you again a few days before, and the day it opens.`,
+    ``,
+    `Don't want these? Unsubscribe: ${unsubUrl}`,
+    ``,
+    `— Race Reminder`,
+  ].join("\n");
+  const html = shell(
+    `<p style="font-size:18px;font-weight:600;margin:0 0 12px;">Dates are out.</p>
+     <p><strong>${esc(race.name)}</strong> opens for registration on <strong>${esc(opensOn)}</strong>${esc(closesClause)}. That&rsquo;s ${daysLeft} days away.</p>
+     <p>${esc(mechanism)}</p>
+     <p style="margin:56px 0 24px;"><a href="${esc(race.officialUrl)}" style="color:#18181b;">View the race →</a></p>
+     <p style="color:#71717a;margin-bottom:0;">We&rsquo;ll email you again a few days before, and the day it opens.</p>`,
+    unsubUrl,
+    "A heads-up from",
   );
   return { subject, text, html };
 }

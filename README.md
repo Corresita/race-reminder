@@ -16,7 +16,7 @@ Popular ultra-trail races sell out within days (sometimes hours) of registration
 - **Filter** by series and distance range (≤50K / 50–100K / 100K / 100M / 200+), computed from each race's real course distances
 - **Registration countdowns** — time until registration opens, or time left to register, sorted by what needs action next
 - **Derived race status** — announced → registration open → closing soon → closed / sold out → completed → next edition; computed at runtime from stored facts, never stored by hand
-- **Email reminders** — subscribe to a race with your email and get notified when its registration window opens, before it closes, and on the day of each dated step after that (lottery results, a second draw)
+- **Email reminders** — subscribe to a race with your email and get notified when its dates are announced, when its registration window opens, before it closes, and on the day of each dated step after that (lottery results, a second draw)
 - **Auto-updating data** — a scraper syncs every UTMB race against its official site (event dates, distances, sold-out and registration status) every 2 hours via GitHub Actions
 
 ## Roadmap

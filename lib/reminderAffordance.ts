@@ -2,6 +2,8 @@
  * reminderAffordance.ts — Race Reminder
  *
  * THE RULE: the button must not promise what the notifier can't deliver.
+ * (Since the "announced" event, even a dateless race is a promise we keep:
+ * the day its dates enter the data, subscribers hear about it.)
  *
  * Adapted to our status-driven engine. A reminder actually fires when
  * deriveStatus enters an open state — which happens either because a real
@@ -18,7 +20,7 @@ export type Affordance =
   | { kind: "REMIND_OPEN"; label: string } // future open we can fire on
   | { kind: "REMIND_CLOSE"; label: string } // open now + real close date
   | { kind: "REGISTER_NOW"; label: string } // open now, no deadline — act now
-  | { kind: "NO_DATES"; label: string }; // nothing to fire on — say so
+  | { kind: "REMIND_DATES"; label: string }; // no dates yet — fire when they land
 
 const OPEN_NOW = new Set<DerivedStatus["code"]>([
   "REG_OPEN",
@@ -73,6 +75,7 @@ export function reminderAffordance(
     return { kind: "REMIND_OPEN", label: "Remind me when it opens" };
   }
 
-  // No date, not watched: a reminder would go into a black hole. Be honest.
-  return { kind: "NO_DATES", label: "Dates not announced yet" };
+  // No date and no scraper: nothing fires until someone adds the dates —
+  // and the "announced" event fires the moment they land. Still honest.
+  return { kind: "REMIND_DATES", label: "Remind me when dates are announced" };
 }

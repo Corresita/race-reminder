@@ -6,9 +6,12 @@ import {
   unsubscribeUrl,
 } from "@/lib/email";
 import { cancelEmail, confirmEmail } from "@/lib/emails";
+import { type Race, deriveStatus } from "@/lib/deriveStatus";
+import { OPENS_SOON_CODES, notificationKey } from "@/lib/notifyCore";
 import {
   EMAIL_PATTERN,
   addSubscription,
+  markNotified,
   removeSubscription,
 } from "@/lib/subscriptions";
 
@@ -56,6 +59,11 @@ export async function POST(request: Request) {
   const created = await addSubscription(body.email, body.raceId, body.timezone);
 
   if (created) {
+    // The confirm email below already states a known opening date, so the
+    // "announced" event has nothing to add for this subscriber. Mark it.
+    if (OPENS_SOON_CODES.has(deriveStatus(race as unknown as Race).code)) {
+      await markNotified([notificationKey(race, body.email, "announced")]);
+    }
     // Confirmation is best-effort: a failed email must not fail the subscribe.
     const unsubscribe = unsubscribeUrl(body.email, race.id);
     try {
