@@ -1656,12 +1656,44 @@
     "organizer": null,
     "country": "Portugal",
     "raceDate": "2027-04-24T07:00:00+01:00",
-    "registrationOpens": null,
-    "registrationCloses": null,
-    "registrationType": "lottery",
-    "lotteryDrawDate": null,
+    "registrationOpens": "2026-10-12T15:00:00+01:00",
+    "registrationCloses": "2027-03-15T23:59:59+00:00",
+    "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://miutmadeira.com/",
+    "entryNotes": "2027 edition. 80% of ~3,300 places first come, opening at 15:00 Madeira time (UTC+1) by distance: Legend 115K Oct 12, Advanced 85K Oct 13, Discover 56K Oct 14, Marathon 42K Oct 15, Starter 16K Oct 16; open until full or Mar 15 2027. The other 20% by lottery: pre-registration Oct 26 - Nov 9, drawn Nov 14. Fees via Rockthesport.",
+    "milestones": [
+      {
+        "date": "2026-10-13T15:00:00+01:00",
+        "label": "Advanced 85K opens",
+        "note": "Direct registration for MIUT Advanced (85K) opens today at 15:00 Madeira time, first come, 600 places."
+      },
+      {
+        "date": "2026-10-14T15:00:00+01:00",
+        "label": "Discover 56K opens",
+        "note": "Direct registration for MIUT Discover (56K) opens today at 15:00 Madeira time, first come, 600 places."
+      },
+      {
+        "date": "2026-10-15T15:00:00+01:00",
+        "label": "Marathon 42K opens",
+        "note": "Direct registration for MIUT Marathon (42K) opens today at 15:00 Madeira time, first come, 800 places."
+      },
+      {
+        "date": "2026-10-16T15:00:00+01:00",
+        "label": "Starter 16K opens",
+        "note": "Direct registration for MIUT Starter (16K) opens today at 15:00 Madeira time, first come, 800 places."
+      },
+      {
+        "date": "2026-10-26T12:00:00+00:00",
+        "label": "Lottery pre-registration opens",
+        "note": "The lottery for the remaining 20% of places takes pre-registrations from today until November 9. Drawn November 14."
+      },
+      {
+        "date": "2026-11-14T12:00:00+00:00",
+        "label": "Lottery draw",
+        "note": "The MIUT lottery is drawn today. Check miutmadeira.com and your Rockthesport account; pay within the deadline given on your form or the place expires."
+      }
+    ],
     "distancesKm": [
       16,
       42,
