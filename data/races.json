@@ -1899,6 +1899,13 @@
     "entryRequirement": "Qualifying race required",
     "entryNotes": "2027 ballot: Oct 1-14 2026 on UltraSignup; lottery drawn Dec 5 2026. Finished/Never-Finished pools with accumulating tickets.",
     "officialUrl": "https://hardrock100.com/",
+    "milestones": [
+      {
+        "date": "2026-12-05T08:59:00-07:00",
+        "label": "Lottery drawing",
+        "note": "The Hardrock lottery is drawn today, Saturday December 5, starting 9:00 MST in Silverton and streamed live. Results appear on hardrock100.com and UltraSignup afterwards."
+      }
+    ],
     "distancesKm": [
       161
     ]
