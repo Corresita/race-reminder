@@ -102,15 +102,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Thailand",
-    "raceDate": "2026-04-30",
+    "raceDate": "2027-04-29",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://amazean.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-21T06:13:25.480Z"
+      "status": "available_soon",
+      "checkedAt": "2026-10-02T05:40:26.961Z"
     },
     "distancesKm": [
       4,
@@ -193,16 +193,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Japan",
-    "raceDate": "2026-06-18",
+    "raceDate": "2027-06-17",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://kagaspa.utmb.world",
-    "soldOut": true,
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-10-02T05:40:26.961Z"
     },
     "distancesKm": []
   },
