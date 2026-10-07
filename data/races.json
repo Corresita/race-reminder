@@ -269,8 +269,8 @@
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://valdaran.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-09-23T13:39:59.381Z"
+      "status": "available_soon",
+      "checkedAt": "2026-10-07T08:41:54.824Z"
     },
     "distancesKm": [
       10,
@@ -659,7 +659,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Türkiye",
-    "raceDate": "2026-09-11",
+    "raceDate": "2027-09-10",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
