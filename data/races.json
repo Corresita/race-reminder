@@ -853,15 +853,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "United States",
-    "raceDate": "2026-10-08",
+    "raceDate": "2027-10-07",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://kodiak.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-09-13T04:47:26.144Z"
+      "status": "available_soon",
+      "checkedAt": "2026-10-16T18:04:54.543Z"
     },
     "distancesKm": [
       6,
@@ -869,8 +869,7 @@
       49,
       100,
       101
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "ultra-trail-mount-yun",
