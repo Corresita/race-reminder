@@ -109,8 +109,8 @@
     "entryRequirement": null,
     "officialUrl": "https://amazean.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-10-02T05:40:26.961Z"
+      "status": "registration_open",
+      "checkedAt": "2026-10-21T07:41:34.794Z"
     },
     "distancesKm": [
       4,
@@ -1141,8 +1141,8 @@
     "entryRequirement": null,
     "officialUrl": "https://vietnamhighlands.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-10-21T07:41:34.794Z"
     },
     "distancesKm": [
       11,
