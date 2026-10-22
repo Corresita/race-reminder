@@ -603,8 +603,8 @@
     "entryRequirement": null,
     "officialUrl": "https://wildstrubel.utmb.world",
     "observed": {
-      "status": "registration_sold_out",
-      "checkedAt": "2026-10-20T17:10:13.066Z"
+      "status": "available_soon",
+      "checkedAt": "2026-10-22T17:12:31.568Z"
     },
     "distancesKm": [
       10,
@@ -613,8 +613,7 @@
       55,
       72,
       113
-    ],
-    "soldOut": true
+    ]
   },
   {
     "id": "snowbasin",
@@ -755,7 +754,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Slovenia",
-    "raceDate": "2026-09-18",
+    "raceDate": "2027-09-17",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
@@ -908,8 +907,8 @@
     "entryRequirement": null,
     "officialUrl": "https://puglia.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-10-22T17:12:31.568Z"
     },
     "distancesKm": [
       10,
