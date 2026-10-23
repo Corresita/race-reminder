@@ -500,7 +500,11 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
             {race.name}
           </a>
           <p className="mt-1 text-[11px] tracking-[0.12em] text-zinc-500 uppercase">
-            {race.organizer ?? seriesLabels[race.series]}
+            {/* Series first, so a card always matches the series tab it
+                was filtered under; organizer only for independents. */}
+            {race.series === "independent"
+              ? (race.organizer ?? seriesLabels.independent)
+              : seriesLabels[race.series]}
             {race.country ? (
               <>
                 {" · "}
