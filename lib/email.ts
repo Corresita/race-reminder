@@ -6,12 +6,16 @@
  * run, so local dev needs no account.
  */
 
+import { watchlistToken } from "./watchlistToken";
+
 export const SITE_URL = process.env.SITE_URL || "https://racereminder.run";
 
-/** One-click unsubscribe link for a given subscriber + race. */
+/** Signed one-click unsubscribe link for a given subscriber + race. */
 export function unsubscribeUrl(email: string, raceId?: string): string {
   const params = new URLSearchParams({ email });
   if (raceId) params.set("race", raceId);
+  const token = watchlistToken(email);
+  if (token) params.set("token", token);
   return `${SITE_URL}/api/unsubscribe?${params.toString()}`;
 }
 

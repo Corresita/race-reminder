@@ -38,4 +38,5 @@ jobs:
           PERSONAL_AS: ${{ inputs.personal_as }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          WATCHLIST_SECRET: ${{ secrets.WATCHLIST_SECRET }}
           SITE_URL: https://racereminder.run

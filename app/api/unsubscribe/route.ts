@@ -1,6 +1,12 @@
 import races from "@/data/races.json";
-import { SITE_URL } from "@/lib/email";
+import { SITE_URL, unsubscribeUrl } from "@/lib/email";
 import { removeAllSubscriptions, removeSubscription } from "@/lib/subscriptions";
+import { verifyWatchlistToken } from "@/lib/watchlistToken";
+
+// Emails sent before links were signed carry no token. Until this date an
+// unsigned link may still drop its own single race (never "all"), so those
+// readers can leave; any email sent since carries a signed link.
+const UNSIGNED_SINGLE_RACE_UNTIL = new Date("2026-11-22T00:00:00Z");
 
 function escapeHtml(value: string): string {
   return value.replace(
@@ -63,6 +69,17 @@ async function handle(request: Request): Promise<Response> {
     return page("Something's missing.", "This unsubscribe link is invalid.", 400);
   }
 
+  const signed = verifyWatchlistToken(email, url.searchParams.get("token"));
+  const legacyAllowed =
+    !all && !!raceId && Date.now() < UNSIGNED_SINGLE_RACE_UNTIL.getTime();
+  if (!signed && !legacyAllowed) {
+    return page(
+      "This link has expired.",
+      "Please use the unsubscribe link in your most recent Race Reminder email.",
+      403,
+    );
+  }
+
   const safeEmail = escapeHtml(email);
 
   if (all || !raceId) {
@@ -77,10 +94,15 @@ async function handle(request: Request): Promise<Response> {
 
   await removeSubscription(email, raceId);
   const race = races.find((r) => r.id === raceId);
+  // Only a signed request gets the (signed) unsubscribe-all link: handing a
+  // token to an unsigned request would let anyone mint one for any email.
+  const allLink = signed
+    ? ` <a href="${escapeHtml(unsubscribeUrl(email))}">Unsubscribe from all races</a>`
+    : "";
   return page(
     "You're unsubscribed.",
     `We'll stop watching <strong>${escapeHtml(race?.name ?? "this race")}</strong> for ${safeEmail}.` +
-      ` <a href="${SITE_URL}/api/unsubscribe?email=${encodeURIComponent(email)}&all=1">Unsubscribe from all races</a>`,
+      allLink,
     200,
     raceId,
   );
