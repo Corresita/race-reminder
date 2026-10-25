@@ -594,7 +594,9 @@ export function RaceBrowser({ races, initialNow }: RaceBrowserProps) {
                 >
                   {subscribed ? (
                     <>
-                      <span className="group-hover:hidden">Reminder set ✓</span>
+                      <span className="group-hover:hidden">
+                        {affordance.watching}
+                      </span>
                       <span className="hidden group-hover:inline">
                         Cancel reminder
                       </span>
