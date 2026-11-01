@@ -940,21 +940,21 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "Sweden",
-    "raceDate": "2026-10-30T06:00:00+01:00",
+    "raceDate": "2027-11-05",
     "registrationOpens": "2025-11-20T14:00:00+01:00",
     "registrationCloses": "2026-10-10T23:59:59+02:00",
     "registrationType": "fcfs",
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://kullamannen.utmb.world/",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-11-01T13:28:45.081Z"
     },
     "distancesKm": [
       22,
       53,
       108,
-      173
+      168
     ]
   },
   {
@@ -1171,7 +1171,7 @@
       22,
       49,
       83,
-      173
+      174
     ]
   },
   {
