@@ -633,7 +633,8 @@
     },
     "distancesKm": [
       29,
-      50
+      50,
+      100
     ]
   },
   {
@@ -854,15 +855,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "United States",
-    "raceDate": "2027-10-07",
+    "raceDate": "2026-10-08",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://kodiak.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-10-16T18:04:54.543Z"
+      "status": "registration_closed",
+      "checkedAt": "2026-11-04T19:48:03.372Z"
     },
     "distancesKm": [
       6,
