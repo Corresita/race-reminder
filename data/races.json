@@ -529,8 +529,8 @@
     "entryRequirement": null,
     "officialUrl": "https://borealys.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-28T03:35:08.720Z"
+      "status": "available_soon",
+      "checkedAt": "2026-11-10T20:50:49.615Z"
     },
     "distancesKm": [
       6,
@@ -628,8 +628,8 @@
     "entryRequirement": null,
     "officialUrl": "https://snowbasin.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-09-22T21:21:12.129Z"
+      "status": "registration_open",
+      "checkedAt": "2026-11-10T20:50:49.615Z"
     },
     "distancesKm": [
       29,
@@ -948,8 +948,8 @@
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://kullamannen.utmb.world/",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-11-01T13:28:45.081Z"
+      "status": "registration_open",
+      "checkedAt": "2026-11-10T20:50:49.615Z"
     },
     "distancesKm": [
       22,
