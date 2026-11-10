@@ -182,8 +182,8 @@
     "entryRequirement": null,
     "officialUrl": "https://laketoba.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-09-30T16:25:38.833Z"
+      "status": "registration_open",
+      "checkedAt": "2026-11-10T04:08:41.249Z"
     },
     "distancesKm": []
   },
@@ -994,13 +994,14 @@
     "entryRequirement": null,
     "officialUrl": "https://pacifictrails.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-11-10T04:08:41.249Z"
     },
     "distancesKm": [
       25,
       51
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "trans-lantau-by-utmb",
