@@ -55,15 +55,15 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "China",
-    "raceDate": "2026-04-10",
+    "raceDate": "2027-04-16",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
     "entryRequirement": null,
     "officialUrl": "https://mogan.utmb.world",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-11-11T01:56:56.045Z"
     },
     "distancesKm": [
       25,
