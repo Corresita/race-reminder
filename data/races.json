@@ -1150,9 +1150,9 @@
     },
     "distancesKm": [
       11,
-      24,
-      56,
-      101
+      22,
+      55,
+      102
     ]
   },
   {
@@ -1263,8 +1263,8 @@
     "entryRequirement": "UTMB Index",
     "officialUrl": "https://chianti.utmb.world/",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-11-16T18:35:46.688Z"
     },
     "distancesKm": [
       10,
@@ -1272,7 +1272,8 @@
       46,
       73,
       123
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "istria-100",
