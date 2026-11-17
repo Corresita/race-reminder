@@ -1335,8 +1335,8 @@
     "entryRequirement": null,
     "officialUrl": "https://tenerife.utmb.world",
     "observed": {
-      "status": "registration_open",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "registration_sold_out",
+      "checkedAt": "2026-11-17T02:57:11.256Z"
     },
     "distancesKm": [
       7,
@@ -1345,7 +1345,8 @@
       68,
       82,
       110
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "canyons-endurance-runs",
