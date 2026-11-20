@@ -571,7 +571,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "France",
-    "raceDate": "2026-08-28T06:00:00+02:00",
+    "raceDate": "2027-08-22",
     "registrationOpens": "2026-01-08T00:00:00+01:00",
     "registrationCloses": "2026-01-19T23:59:59+01:00",
     "registrationType": "lottery",
@@ -579,8 +579,8 @@
     "entryRequirement": "UTMB Index + Running Stones",
     "officialUrl": "https://montblanc.utmb.world/",
     "observed": {
-      "status": "registration_closed",
-      "checkedAt": "2026-07-19T00:52:53.836Z"
+      "status": "available_soon",
+      "checkedAt": "2026-11-20T12:56:30.529Z"
     },
     "distancesKm": [
       60,
