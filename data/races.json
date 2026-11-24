@@ -531,8 +531,8 @@
     "entryRequirement": null,
     "officialUrl": "https://borealys.utmb.world",
     "observed": {
-      "status": "available_soon",
-      "checkedAt": "2026-11-10T20:50:49.615Z"
+      "status": "registration_open",
+      "checkedAt": "2026-11-24T17:48:36.829Z"
     },
     "distancesKm": [
       6,
@@ -855,7 +855,7 @@
     "series": "utmb-world-series",
     "organizer": null,
     "country": "United States",
-    "raceDate": "2026-10-08",
+    "raceDate": "2027-10-07",
     "registrationOpens": null,
     "registrationCloses": null,
     "registrationType": "fcfs",
